@@ -22,4 +22,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::resource('users', 'CMS\UserController');
     Route::post('users/postProcess', 'CMS\UserController@postProcess');
+
+    ## BLOG
+    Route::resource('blog', 'CMS\BlogController');
+    Route::post('blog/postProcess', 'CMS\BlogController@postProcess');
 });

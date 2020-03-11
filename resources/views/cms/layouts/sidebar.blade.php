@@ -31,8 +31,8 @@
                         </div>
                     </div>
                     <ul class="sidebar-menu">
-                        <li class="treeview"><a href="<?php echo url('/users')?>"><i class="icon icon-account_box s-24"></i>Users</a>
-                        </li>
+                        <li class="treeview"><a href="<?php echo url('/users')?>"><i class="icon icon-account_box s-24"></i>Users</a></li>
+                        <li class="treeview"><a href="<?php echo url('/blog')?>"><i class="icon icon-account_box s-24"></i>Blog</a></li>
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
