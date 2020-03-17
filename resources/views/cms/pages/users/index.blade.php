@@ -78,7 +78,8 @@
                                                         <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Users</span></div></td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ route('users.destroy', $p->id)}}"><i class="icon-trash-can"></i></a>
+                                                        <a href="{{ url('users/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
+                                                     
                                                         <a href="{{ route('users.edit', $p->id)}}"><i class="icon-pencil"></i></a>
                                                     </td>
                                                 </tr>

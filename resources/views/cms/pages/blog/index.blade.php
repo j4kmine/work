@@ -75,7 +75,9 @@
                                                         <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">blog</span></div></td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ route('blog.destroy', $p->id)}}"><i class="icon-trash-can"></i></a>
+                                                        <a href="{{ url('blog/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
+                                        
+                                                           
                                                         <a href="{{ route('blog.edit', $p->id)}}"><i class="icon-pencil"></i></a>
                                                     </td>
                                                 </tr>

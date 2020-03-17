@@ -150,6 +150,12 @@ class UserController extends Controller
    
         return redirect('/users')->with('success', 'Deleted Successfully');
     }
+    public function hapus($id)
+    {
+        UserModel::where('id',$id)->delete();
+   
+        return redirect('/users')->with('success', 'Deleted Successfully');
+    }
     public function postProcess(Request $request){
         $postvalue =  $request->datacek;
  

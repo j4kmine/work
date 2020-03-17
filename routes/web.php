@@ -20,10 +20,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
         return view('templatecms');
     });
+    Route::get('users/hapus/{id}', 'CMS\UserController@hapus');
     Route::resource('users', 'CMS\UserController');
     Route::post('users/postProcess', 'CMS\UserController@postProcess');
 
+
     ## BLOG
+    Route::get('blog/hapus/{id}', 'CMS\BlogController@hapus');
     Route::resource('blog', 'CMS\BlogController');
     Route::post('blog/postProcess', 'CMS\BlogController@postProcess');
+
 });

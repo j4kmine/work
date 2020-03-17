@@ -77,6 +77,7 @@ class BlogController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -123,10 +124,16 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
+       
         BlogModel::where('id',$id)->delete();
         return redirect('/blog')->with('success', 'Deleted Successfully');
     }
-
+    public function hapus($id)
+    {
+       
+        BlogModel::where('id',$id)->delete();
+        return redirect('/blog')->with('success', 'Deleted Successfully');
+    }
     public function postProcess(Request $request){
         $postvalue =  $request->datacek;
  
