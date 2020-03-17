@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="col-md-9 text-right">
                                             <br/>
-                                            <a  href="{{ route('blog.create') }}" class="btn btn-success btn-sm"><i class="icon-trash mr-2"></i> Add Data</a>
+                                            <a  href="{{ route('kota.create') }}" class="btn btn-success btn-sm"><i class="icon-trash mr-2"></i> Add Data</a>
                                         </div>
                                     </div>
                                 </div>
@@ -44,14 +44,14 @@
                                                         class="custom-control-label" for="checkedAll"></label>
                                                 </div>
                                             </th>
-                                            <th>TITLE</th>
-                                            <th> <div class="d-none d-lg-block">KEYWORD</div></th>
+                                            <th>NAMA</th>
+                                            <th> <div class="d-none d-lg-block">KODE POS</div></th>
                                             <th> <div class="d-none d-lg-block">ROLE</div></th>
                                             <th></th>
                                         </tr>
                                         </thead>   
                                         <tbody>
-                                            @foreach($blog as $p)
+                                            @foreach($kota as $p)
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -62,23 +62,23 @@
                                                     <div class="d-flex">
                                                         <div>
                                                             <div>
-                                                                <strong>{{ $p->title }}</strong>
+                                                                <strong>{{ $p->nama }}</strong>
                                                             </div>
-                                                            <small> {{ $p->summary }}</small>
+                                                            <small> {{ $p->provinsi }}</small>
                                                         </div>
                                                     </div>
                                                     </td>
-                                                    <td> <div class="d-none d-lg-block">{{ $p->keyword }}</div></td>
+                                                    <td> <div class="d-none d-lg-block">{{ $p->kode_pos }}</div></td>
                                                     @if($p->role =='1')  
                                                         <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Administrator</span></div></td>
                                                     @else
                                                         <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Users</span></div></td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ url('blog/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
+                                                        <a href="{{ url('kota/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
                                         
                                                            
-                                                        <a href="{{ route('blog.edit', $p->id)}}"><i class="icon-pencil"></i></a>
+                                                        <a href="{{ route('kota.edit', $p->id)}}"><i class="icon-pencil"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <nav class="my-3" aria-label="Page navigation">
-                     {{ $blog->links() }}
+                     {{ $kota->links() }}
                 </nav>
                 
             </div>

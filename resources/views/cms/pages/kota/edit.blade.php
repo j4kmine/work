@@ -27,55 +27,55 @@
                 </script>
                 <div class="row my-3">
                     <div class="col-md-8 offset-md-2">
-                        <form method="post" action="{{ route('blog.update', $blog->id) }}">
+                        <form method="post" action="{{ route('kota.update', $kota->id) }}">
                             {{ method_field('PATCH') }}
                             <div class="card no-b">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h5 class="card-title">Edit Blog</h5>
+                                            <h5 class="card-title">Edit kota</h5>
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <a class="btn btn-primary btn-sm " href="{{url('blog')}}">List blog</a>
+                                            <a class="btn btn-primary btn-sm " href="{{url('kota')}}">List kota</a>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
-                                                <label for="title" class="col-form-label s-12">TITLE</label>
-                                                <input id="title" placeholder="Enter Blog Title" name="title" value="{{ $blog->title }}" class="form-control r-0 light s-12 " type="text">
+                                                <label for="nama" class="col-form-label s-12">Nama</label>
+                                                <input id="nama" placeholder="Enter kota nama" name="nama" value="{{ $kota->nama }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
-                                                <label for="summary" class="col-form-label s-12">SUMMARY</label>
-                                                <input id="summary" placeholder="Enter Blog summary" name="summary" value="{{ $blog->summary }}" class="form-control r-0 light s-12 " type="text">
+                                                <label for="provinsi" class="col-form-label s-12">Provinsi</label>
+                                                <input id="provinsi" placeholder="Enter kota provinsi" name="provinsi" value="{{ $kota->provinsi }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
-                                                <label for="summary" class="col-form-label s-12">CONTENT</label>
-                                                <textarea id="body" placeholder="Enter Blog Content" name="body" value="{{ $blog->body }}" class="form-control r-0 light s-12 " type="text">{{ $blog->body }}</textarea>
+                                                <label for="kode_pos" class="col-form-label s-12">Kode Pos</label>
+                                                <input id="kode_pos" placeholder="Enter kota kode_pos" name="kode_pos" value="{{ $kota->kode_pos }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
-                                                <label for="name" class="col-form-label s-12">KEYWORD</label>
-                                                <input id="keyword" placeholder="Enter Blog Keyword" name="keyword" value="{{ $blog->keyword }}" class="form-control r-0 light s-12 " type="text">
+                                                <label for="lang" class="col-form-label s-12">Longitude</label>
+                                                <input id="lang" placeholder="Enter kota Longitude" name="lang" value="{{ $kota->lang }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
-                                                <label for="name" class="col-form-label s-12">PATH</label>
-                                                <input id="path" placeholder="Enter Blog Path" name="path" value="{{ $blog->path }}" class="form-control r-0 light s-12 " type="text">
+                                                <label for="lat" class="col-form-label s-12">Latitude</label>
+                                                <input id="lat" placeholder="Enter kota Latitude" name="lat" value="{{ $kota->lat }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>

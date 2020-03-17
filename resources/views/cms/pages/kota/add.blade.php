@@ -27,15 +27,15 @@
                 </script>
             <div class="row my-3">
                 <div class="col-md-8 offset-md-2">
-                    <form enctype='multipart/form-data' method="post" action="{{ route('blog.store') }}">
+                    <form enctype='multipart/form-data' method="post" action="{{ route('kota.store') }}">
                         <div class="card no-b">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5 class="card-title">Add Blog</h5>
+                                        <h5 class="card-title">Add kota</h5>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <a class="btn btn-primary btn-sm " href="{{url('blog')}}">List Blog</a>
+                                        <a class="btn btn-primary btn-sm " href="{{url('kota')}}">List kota</a>
                                     </div>
                                 </div>
                                
@@ -43,32 +43,40 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="name" class="col-form-label s-12">Title</label>
-                                            <input id="title" placeholder="Enter Blog Title" name="title" value="{{ old('title') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="nama" class="col-form-label s-12">Nama</label>
+                                            <input id="nama" placeholder="Enter kota nama" name="nama" value="{{ old('nama') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="name" class="col-form-label s-12">Summary</label>
-                                            <input id="summary" placeholder="Enter Blog Summary" name="summary" value="{{ old('summary') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="provinsi" class="col-form-label s-12">Provinsi</label>
+                                            <input id="provinsi" placeholder="Enter kota provinsi" name="provinsi" value="{{ old('provinsi') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="address"  class="col-form-label s-12">Content</label>
-                                            <textarea name="body" value="{{ old('body') }}" class="form-control r-0 light s-12" id="body" placeholder="Enter Blog Content"></textarea>
+                                            <label for="kode_pos" class="col-form-label s-12">Kode Pos</label>
+                                            <input id="kode_pos" placeholder="Enter kota Kode Pos" name="kode_pos" value="{{ old('kode_pos') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="name" class="col-form-label s-12">Keyword</label>
-                                            <input id="keyword" placeholder="Enter Blog keyword" name="keyword" value="{{ old('keyword') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="lang" class="col-form-label s-12">Longitude</label>
+                                            <input id="lang" placeholder="Enter kota Longitude" name="lang" value="{{ old('lang') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="lat" class="col-form-label s-12">Latitude</label>
+                                            <input id="lat" placeholder="Enter kota Latitude" name="lat" value="{{ old('lat') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>

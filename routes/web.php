@@ -30,4 +30,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('blog', 'CMS\BlogController');
     Route::post('blog/postProcess', 'CMS\BlogController@postProcess');
 
+    ## KOTA
+    Route::get('kota/hapus/{id}', 'CMS\KotaController@hapus');
+    Route::resource('kota', 'CMS\KotaController');
+    Route::post('kota/postProcess', 'CMS\BlogController@postProcess');
 });
