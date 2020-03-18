@@ -14,6 +14,7 @@ class BlogModel extends Model
      * @var array
      */
     protected $table ="blog";
+
     protected $fillable = [
         'title', 'summary', 'body','keyword','path'
     ];
