@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="{{url('assets/css/app.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 </head>
+<style>
+    .thumb-list{
+        width: 300px;
+    }
+</style>
 <body class="light sidebar-mini sidebar-collapse">
 <!-- Pre loader -->
 @include('cms.layouts.loader')
