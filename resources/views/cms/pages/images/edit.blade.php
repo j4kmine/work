@@ -52,8 +52,11 @@
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
-                                                <input type="file" name="image" class="form-control r-0 light s-12">
+                                                <input type="file" name="image" id="uploadImage"  class="form-control r-0 light s-12">
                                               
+                                            </div>
+                                            <div id="image">
+                                                <img src="{{url('/images/'.$image->path)}}" class="image_preview" style="width:500px" />
                                             </div>
                                         </div>
                                     </div>
