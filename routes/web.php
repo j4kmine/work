@@ -34,4 +34,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('kota/hapus/{id}', 'CMS\KotaController@hapus');
     Route::resource('kota', 'CMS\KotaController');
     Route::post('kota/postProcess', 'CMS\BlogController@postProcess');
+    Route::get('configuration', 'CMS\ConfigurationController@index' );
+    Route::post('configuration', 'CMS\ConfigurationController@store' )->name('configuration.store');
+    Route::patch('configuration/{id}', 'CMS\ConfigurationController@update')->name('configuration.update');
+
 });
