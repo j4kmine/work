@@ -37,5 +37,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('configuration', 'CMS\ConfigurationController@index' );
     Route::post('configuration', 'CMS\ConfigurationController@store' )->name('configuration.store');
     Route::patch('configuration/{id}', 'CMS\ConfigurationController@update')->name('configuration.update');
+    Route::resource('image', 'CMS\ImagesController');
+    Route::get('image/hapus/{id}', 'CMS\ImagesController@hapus');
+    Route::post('image/postProcess', 'CMS\ImagesController@postProcess');
 
 });
