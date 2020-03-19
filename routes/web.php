@@ -41,4 +41,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('image/hapus/{id}', 'CMS\ImagesController@hapus');
     Route::post('image/postProcess', 'CMS\ImagesController@postProcess');
     Route::get('imagepopup', 'CMS\ImagesController@imagepopup');
+    Route::get('addimagepopup', 'CMS\ImagesController@addimagepopup')->name('image.addimagepopup');
+    Route::post('image/addimagepopuppost', 'CMS\ImagesController@addimagepopuppost')->name('image.addimagepopuppost');
 });

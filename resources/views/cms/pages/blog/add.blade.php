@@ -75,6 +75,22 @@
                             </div>
                             <div class="card-body">
                                 <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>
+                                <br/>
+                                <div id="list-gambar-berita" class="row">
+                                    @if(old('path') != '')
+                                        <div class="card-body" id="{{ old('id_image') }}">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <img class="img-responsive" src="{{ old('path') }}">
+                                                    <input name="id_image" type="hidden" value="{{ old('id_image') }}">
+                                                    <input name="title_image" type="hidden" value="{{ old('title_image') }}">
+                                                    <input name="path" type="hidden" value="{{ old('path') }}">
+                                                    <h3 class="my-3">{{ old('title_image') }}</h3><button class="my-3 btn btn-danger btn-lg btn-block" onclick="removeimage({{ old('id_image') }})" type="button">Remove</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="card-body">
                                 <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>

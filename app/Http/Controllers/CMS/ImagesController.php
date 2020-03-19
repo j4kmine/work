@@ -36,10 +36,30 @@ class ImagesController extends Controller
 
         return view('cms.pages.images.popup', compact('images'));
     }
+    public function addimagepopup(){
+        return view('cms.pages.images.addpopup');
+    }
+    
     public function create()
     {
         
         return view('cms.pages.images.add');
+    }
+    public function addimagepopuppost(Request $request){
+        $this->validate($request,[
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1048',
+        ]);
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+
+            request()->image->move(public_path('images'), $imageName);
+            ImagesModel::create([
+                'path' => $imageName,
+                'title' => $request->title,
+                'description' => $request->description,
+            ]);
+            return redirect('/imagepopup')->with('success', 'Success Input Data');
+        }
     }
     public function store(Request $request)
     {

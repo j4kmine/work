@@ -71,13 +71,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="form-group m-0">
-                                                <label for="name" class="col-form-label s-12">PATH</label>
-                                                <input id="path" placeholder="Enter Blog Path" name="path" value="{{ $blog->path }}" class="form-control r-0 light s-12 " type="text">
+                                    
+                                </div>
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>
+                                    <br/>
+                                    <div id="list-gambar-berita" class="row">
+                                        @if($blog->path != '')
+                                            <div class="card-body" id="{{ old('id_image') }}">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <img class="img-responsive" src="{{ $blog->path }}">
+                                                        <input name="id_image" type="hidden" value="{{ old('id_image') }}">
+                                                        <input name="title_image" type="hidden" value="{{ old('title_image') }}">
+                                                        <input name="path" type="hidden" value="{{ old('path') }}">
+                                                        <h3 class="my-3">{{ old('title_image') }}</h3><button class="my-3 btn btn-danger btn-lg btn-block" onclick="removeimage({{ old('id_image') }})" type="button">Remove</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-body">

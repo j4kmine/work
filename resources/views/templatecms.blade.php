@@ -61,6 +61,26 @@
 <script src="{{url('assets/js/jquery.fancybox.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
+function selectimage(id,path,title){
+    var htmldata ="";
+    htmldata += "<div class='card-body' id="+id+">"
+    htmldata += "<div class='row'>"
+    htmldata += "<div class='col-md-5'>"
+    htmldata += "<img src='"+path+"'  class='img-responsive'/>";
+    htmldata += "<input type='hidden' name='id_image' value='"+id+"' >";
+    htmldata += "<input type='hidden' name='title_image' value='"+title+"' >";
+    htmldata += "<input type='hidden' name='path' value='"+path+"' >";
+    htmldata += "<h3 class='my-3'>"+title+"</h3>"
+    htmldata += "<button type='button' class='my-3 btn btn-danger btn-lg btn-block' onclick='removeimage("+id+")'>Remove</button>"
+    htmldata += "</div>"
+    htmldata += "</div>"
+    htmldata += "</div>"
+    $('#list-gambar-berita').html(htmldata); 
+}
+function removeimage (id){
+    $('#'+id).remove();
+}
+
 $(document).ready(function(){
     $('.pagination>li').addClass("page-item");
     $('.pagination>li>a').addClass("page-link");
@@ -137,6 +157,7 @@ $(document).ready(function(){
     function getExtension(filename) {
         return filename.split('.').pop().toLowerCase();
     }
+  
     $('.openpopupberita').click(function(){
     
         $.fancybox.open([{
