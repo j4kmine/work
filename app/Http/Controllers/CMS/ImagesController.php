@@ -26,6 +26,16 @@ class ImagesController extends Controller
 
         return view('cms.pages.images.index', compact('images'));
     }
+    public function imagepopup(Request $request)
+    {
+        //
+        $search = $request->input('search');
+       
+        $images = ImagesModel::where('title', 'LIKE', '%' . $search . '%')
+                     ->paginate(10);
+
+        return view('cms.pages.images.popup', compact('images'));
+    }
     public function create()
     {
         

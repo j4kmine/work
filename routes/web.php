@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('image', 'CMS\ImagesController');
     Route::get('image/hapus/{id}', 'CMS\ImagesController@hapus');
     Route::post('image/postProcess', 'CMS\ImagesController@postProcess');
-
+    Route::get('imagepopup', 'CMS\ImagesController@imagepopup');
     ## NEGARA
     Route::get('negara/hapus/{id}', 'CMS\NegaraController@hapus');
     Route::resource('negara', 'CMS\NegaraController');
