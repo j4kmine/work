@@ -74,6 +74,9 @@
                                 </div>
                             </div>
                             <div class="card-body">
+                                <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>
+                            </div>
+                            <div class="card-body">
                                 <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>
                             </div>
                         </div>
