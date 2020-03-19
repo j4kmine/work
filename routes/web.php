@@ -33,12 +33,20 @@ Route::group(['middleware' => ['auth']], function () {
     ## KOTA
     Route::get('kota/hapus/{id}', 'CMS\KotaController@hapus');
     Route::resource('kota', 'CMS\KotaController');
-    Route::post('kota/postProcess', 'CMS\BlogController@postProcess');
+    Route::post('kota/postProcess', 'CMS\KotaController@postProcess');
+
+    ## CONFIGURATION
     Route::get('configuration', 'CMS\ConfigurationController@index' );
     Route::post('configuration', 'CMS\ConfigurationController@store' )->name('configuration.store');
     Route::patch('configuration/{id}', 'CMS\ConfigurationController@update')->name('configuration.update');
+
+    ## IMAGE
     Route::resource('image', 'CMS\ImagesController');
     Route::get('image/hapus/{id}', 'CMS\ImagesController@hapus');
     Route::post('image/postProcess', 'CMS\ImagesController@postProcess');
 
+    ## NEGARA
+    Route::get('negara/hapus/{id}', 'CMS\NegaraController@hapus');
+    Route::resource('negara', 'CMS\NegaraController');
+    Route::post('negara/postProcess', 'CMS\NegaraController@postProcess');
 });

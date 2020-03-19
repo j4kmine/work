@@ -26,23 +26,23 @@
                 </script>
                 <div class="row my-3">
                     <div class="col-md-8 offset-md-2">
-                        <form method="post" action="{{ route('kota.update', $kota->id) }}">
+                        <form method="post" action="{{ route('negara.update', $negara->id) }}">
                             {{ method_field('PATCH') }}
                             <div class="card no-b">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h5 class="card-title">Edit kota</h5>
+                                            <h5 class="card-title">Edit negara</h5>
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <a class="btn btn-primary btn-sm " href="{{url('kota')}}">List kota</a>
+                                            <a class="btn btn-primary btn-sm " href="{{url('negara')}}">List negara</a>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
                                                 <label for="nama" class="col-form-label s-12">Nama</label>
-                                                <input id="nama" placeholder="Enter kota nama" name="nama" value="{{ $kota->nama }}" class="form-control r-0 light s-12 " type="text">
+                                                <input id="nama" placeholder="Enter negara nama" name="nama" value="{{ $negara->nama }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -50,7 +50,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
                                                 <label for="id_negara" class="col-form-label s-12">Negara</label>
-                                                <input id="id_negara" placeholder="Enter kota id_negara" name="id_negara" value="{{ $kota->id_negara }}" class="form-control r-0 light s-12 " type="text">
+                                                <input id="id_negara" placeholder="Enter negara id_negara" name="id_negara" value="{{ $negara->id_negara }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
                                                 <label for="kode_pos" class="col-form-label s-12">Kode Pos</label>
-                                                <input id="kode_pos" placeholder="Enter kota kode_pos" name="kode_pos" value="{{ $kota->kode_pos }}" class="form-control r-0 light s-12 " type="text">
+                                                <input id="kode_pos" placeholder="Enter negara kode_pos" name="kode_pos" value="{{ $negara->kode_pos }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -66,7 +66,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
                                                 <label for="lang" class="col-form-label s-12">Longitude</label>
-                                                <input id="lang" placeholder="Enter kota Longitude" name="lang" value="{{ $kota->lang }}" class="form-control r-0 light s-12 " type="text">
+                                                <input id="lang" placeholder="Enter negara Longitude" name="lang" value="{{ $negara->lang }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -74,7 +74,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
                                                 <label for="lat" class="col-form-label s-12">Latitude</label>
-                                                <input id="lat" placeholder="Enter kota Latitude" name="lat" value="{{ $kota->lat }}" class="form-control r-0 light s-12 " type="text">
+                                                <input id="lat" placeholder="Enter negara Latitude" name="lat" value="{{ $negara->lat }}" class="form-control r-0 light s-12 " type="text">
                                             </div>
                                         </div>
                                     </div>

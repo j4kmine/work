@@ -15,6 +15,6 @@ class KotaModel extends Model
      */
     protected $table ="kota";
     protected $fillable = [
-        'nama', 'provinsi', 'kode_pos','lang','lat'
+        'nama', 'id_negara', 'kode_pos','lang','lat'
     ];
 }

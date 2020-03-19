@@ -5,10 +5,10 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\KotaModel;
+use App\Models\NegaraModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-class KotaController extends Controller
+class NegaraController extends Controller
 {
      /**
      * Display a listing of the resource.
@@ -24,10 +24,10 @@ class KotaController extends Controller
         //
         $search = $request->input('search');
        
-        $kota = KotaModel::where('nama', 'LIKE', '%' . $search . '%')
+        $Negara = NegaraModel::where('nama', 'LIKE', '%' . $search . '%')
                      ->paginate(10);
 
-        return view('cms.pages.kota.index', compact('kota'));
+        return view('cms.pages.Negara.index', compact('Negara'));
     }
 
     /**
@@ -38,7 +38,7 @@ class KotaController extends Controller
     public function create()
     {
         
-        return view('cms.pages.kota.add');
+        return view('cms.pages.Negara.add');
     }
 
     /**
@@ -57,16 +57,16 @@ class KotaController extends Controller
             'lat'=>'required'
         ]);
         
-        $kota = new KotaModel([
+        $Negara = new NegaraModel([
             'nama' => $request->get('nama'),
             'id_negara' => $request->get('id_negara'),
             'kode_pos' => $request->get('kode_pos'),
             'lang' => $request->get('lang'),
             'lat' => $request->get('lat')
         ]);
-        $data = $kota->save();
+        $data = $Negara->save();
        
-        return redirect('/kota/create')->with('success', 'Success Input Data');
+        return redirect('/Negara/create')->with('success', 'Success Input Data');
     }
 
     /**
@@ -91,9 +91,9 @@ class KotaController extends Controller
     {
         //
         $where = array('id' => $id);
-        $data['kota'] = KotaModel::where($where)->first();
+        $data['Negara'] = NegaraModel::where($where)->first();
       
-        return view('cms.pages.kota.edit', $data);
+        return view('cms.pages.Negara.edit', $data);
     }
 
     /**
@@ -114,8 +114,8 @@ class KotaController extends Controller
         ]);
          
         $update = ['nama' => $request->nama, 'id_negara' => $request->id_negara, 'kode_pos' => $request->kode_pos,'lang' => $request->lang,'lat' => $request->lat];
-        KotaModel::where('id',$id)->update($update);
-        return redirect('/kota/'.$id.'/edit')->with('success', 'Success Input Data');      
+        NegaraModel::where('id',$id)->update($update);
+        return redirect('/Negara/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
 
     /**
@@ -127,21 +127,21 @@ class KotaController extends Controller
     public function destroy($id)
     {
        
-        KotaModel::where('id',$id)->delete();
-        return redirect('/kota')->with('success', 'Deleted Successfully');
+        NegaraModel::where('id',$id)->delete();
+        return redirect('/Negara')->with('success', 'Deleted Successfully');
     }
     public function hapus($id)
     {
        
-        KotaModel::where('id',$id)->delete();
-        return redirect('/kota')->with('success', 'Deleted Successfully');
+        NegaraModel::where('id',$id)->delete();
+        return redirect('/Negara')->with('success', 'Deleted Successfully');
     }
     public function postProcess(Request $request){
         $postvalue =  $request->datacek;
  
 		if($postvalue != ''){
 			foreach($postvalue as $data){
-                KotaModel::where('id',$data)->delete();
+                NegaraModel::where('id',$data)->delete();
 			}
             echo "success";
 		}else{

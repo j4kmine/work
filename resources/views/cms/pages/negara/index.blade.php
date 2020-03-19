@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="col-md-9 text-right">
                                             <br/>
-                                            <a  href="{{ route('kota.create') }}" class="btn btn-success btn-sm"><i class="icon-trash mr-2"></i> Add Data</a>
+                                            <a  href="{{ route('negara.create') }}" class="btn btn-success btn-sm"><i class="icon-trash mr-2"></i> Add Data</a>
                                         </div>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                         </tr>
                                         </thead>   
                                         <tbody>
-                                            @foreach($kota as $p)
+                                            @foreach($negara as $p)
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -75,10 +75,10 @@
                                                         <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Users</span></div></td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{ url('kota/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
+                                                        <a href="{{ url('negara/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
                                         
                                                            
-                                                        <a href="{{ route('kota.edit', $p->id)}}"><i class="icon-pencil"></i></a>
+                                                        <a href="{{ route('negara.edit', $p->id)}}"><i class="icon-pencil"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <nav class="my-3" aria-label="Page navigation">
-                     {{ $kota->links() }}
+                     {{ $negara->links() }}
                 </nav>
                 
             </div>
