@@ -63,8 +63,80 @@ $(document).ready(function(){
     $('.pagination>li').addClass("page-item");
     $('.pagination>li>a').addClass("page-link");
     $('.pagination>li>span').addClass("page-link");
+    
 
 });
+$(document).ready(function(){
+    var oFReader = null;
+    var image = null;
+    var globalResizedWidth = '400px';
+    var globalWidth, globalHeight;
+
+    /* INIT */
+    $('.image_block').remove();
+    $("#uploadImage").val("");
+
+    $("#uploadImage").change(function(){
+        $(this).parent().find(".image_block").remove();
+        $.when( previewElement(this) ).done( previewImage(this) );
+    });
+
+    function previewElement(obj) {
+        var html = '<div class="image_block">';
+        html += '<br><img class="image_preview" style="width:'+globalResizedWidth+'px" />';
+        html += '</div>';
+        $(obj).after(html);
+    }
+
+    function previewImage(obj) {
+        if(oFReader !=null){
+            oFReader = null;
+        }
+
+        var max_width = 9024;
+        var objFile = obj.files[0];
+        var max_foto_mb = 2;
+        var max_foto_byte = parseInt(max_foto_mb)*1048576; //convert MB to Byte
+        if(objFile.size > max_foto_byte ) {
+            $(obj).parent().find(".image_block").remove();
+            $(obj).val("");
+        
+            $('.image_block').remove();
+            $("#uploadImage").val("");
+        } else {
+            // prepare HTML5 FileReader
+            oFReader = new FileReader();
+            image  = new Image();
+            oFReader.readAsDataURL(objFile);
+            
+            oFReader.onload = function (_file) {
+                image.src    = _file.target.result;
+                image.onload = function() {
+                        globalWidth = this.width;
+                        globalHeight = this.height;
+                        
+                        $(obj).parent().find(".image_preview").attr("src", this.src);
+
+                        if(globalWidth > max_width) {
+                                $(obj).parent().find(".image_block").remove();
+                                $(obj).val("");
+                                alert("label_error_ukuran");
+                        }
+                };
+
+                image.onerror= function() {
+                    alert('Invalid file type: '+ objFile.type);
+                };     
+                
+            }
+        }
+    }
+
+    function getExtension(filename) {
+        return filename.split('.').pop().toLowerCase();
+    }
+
+})
 </script>
 </body>
 </html>
