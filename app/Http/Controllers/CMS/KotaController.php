@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\KotaModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Excel;
 class KotaController extends Controller
 {
      /**
@@ -148,4 +149,30 @@ class KotaController extends Controller
             echo "failed";
         }
 	}
+
+    public function import()
+    {
+        var_dump('expression');
+        die();
+        return view('cms.pages.kota.import');
+    }
+
+    public function importData(Request $request)
+    {
+        var_dump('expression');
+        $request->validate([
+            'import_file' => 'required'
+        ]);
+        $path = $request->file('import_file')->getRealPath();
+        $data = Excel::load($path)->get();
+        if($data->count()){
+            foreach ($data as $key => $value) {
+                $arr[] = ['title' => $value->title, 'description' => $value->description];
+            }
+            if(!empty($arr)){
+                Data::insert($arr);
+            }
+        }
+        return back()->with('success', 'Insert Record successfully.');
+    }
 }
