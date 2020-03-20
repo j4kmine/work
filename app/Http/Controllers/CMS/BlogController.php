@@ -54,7 +54,8 @@ class BlogController extends Controller
             'title'=>'required',
             'summary'=>'required',
             'body'=>'required',
-            'keyword'=>'required'
+            'keyword'=>'required',
+            'id_image'=>'required'
         ]);
         
         $blog = new BlogModel([
@@ -116,7 +117,8 @@ class BlogController extends Controller
             'title'=>'required',
             'summary'=>'required',
             'body'=>'required',
-            'keyword'=>'required'
+            'keyword'=>'required',
+            'id_image'=>'required'
         ]);
          
         $update = ['title' => $request->title, 'summary' => $request->summary, 'body' => $request->body,'keyword' => $request->keyword,'id_image' => $request->id_image];
