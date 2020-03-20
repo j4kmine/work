@@ -31,11 +31,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('blog/postProcess', 'CMS\BlogController@postProcess');
 
     ## KOTA
+    Route::get('kota/import', 'CMS\KotaController@import')->name('kota.import');
+    Route::post('kota/importData', 'CMS\KotaController@importData')->name('kota.importData');
     Route::resource('kota', 'CMS\KotaController');
     Route::get('kota/hapus/{id}', 'CMS\KotaController@hapus');
     Route::post('kota/postProcess', 'CMS\KotaController@postProcess');
-    Route::get('kota/import', 'CMS\KotaController@import')->name('kota.import');
-    Route::post('kota/importData', 'CMS\KotaController@importData');
 
     ## CONFIGURATION
     Route::get('configuration', 'CMS\ConfigurationController@index' );

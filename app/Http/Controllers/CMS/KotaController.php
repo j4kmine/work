@@ -3,12 +3,13 @@
 
 namespace App\Http\Controllers\CMS;
 
+use Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KotaModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Excel;
+
 class KotaController extends Controller
 {
      /**
@@ -152,25 +153,29 @@ class KotaController extends Controller
 
     public function import()
     {
-        var_dump('expression');
-        die();
         return view('cms.pages.kota.import');
     }
 
     public function importData(Request $request)
     {
-        var_dump('expression');
-        $request->validate([
-            'import_file' => 'required'
+        $this->validate($request,[
+            'import_file' => 'required|mimes:xls'
         ]);
         $path = $request->file('import_file')->getRealPath();
         $data = Excel::load($path)->get();
         if($data->count()){
             foreach ($data as $key => $value) {
-                $arr[] = ['title' => $value->title, 'description' => $value->description];
+                $arr[] = [
+                            'nama' => $value->nama
+                            ,'kode_pos' => $value->kode_pos
+                            ,'lang' => $value->lang
+                            ,'lat' => $value->lat
+                            ,'id_negara' => $value->id_negara
+                            ,'created_at' => date('Y-m-d H:i:s')
+                        ];
             }
             if(!empty($arr)){
-                Data::insert($arr);
+                KotaModel::insert($arr);
             }
         }
         return back()->with('success', 'Insert Record successfully.');
