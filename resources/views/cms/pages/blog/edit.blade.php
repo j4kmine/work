@@ -77,15 +77,15 @@
                                     <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>
                                     <br/>
                                     <div id="list-gambar-berita" class="row">
-                                        @if($blog->path != '')
-                                            <div class="card-body" id="{{ old('id_image') }}">
+                                        @if($image->id != '')
+                                            <div class="card-body" id="{{ $image->id  }}">
                                                 <div class="row">
                                                     <div class="col-md-5">
-                                                        <img class="img-responsive" src="{{ $blog->path }}">
-                                                        <input name="id_image" type="hidden" value="{{ old('id_image') }}">
-                                                        <input name="title_image" type="hidden" value="{{ old('title_image') }}">
-                                                        <input name="path" type="hidden" value="{{ old('path') }}">
-                                                        <h3 class="my-3">{{ old('title_image') }}</h3><button class="my-3 btn btn-danger btn-lg btn-block" onclick="removeimage({{ old('id_image') }})" type="button">Remove</button>
+                                                        <img class="img-responsive" src="{{url('/images/'.$image->path)}}">
+                                                        <input name="id_image" type="hidden" value="{{ $image->id  }}">
+                                                        <input name="title_image" type="hidden" value="{{ $image->title  }}">
+                                                        <input name="path" type="hidden" value="{{url('/images/'.$image->path)}}">
+                                                        <h3 class="my-3">{{ $image->title  }}</h3><button class="my-3 btn btn-danger btn-lg btn-block" onclick="removeimage({{ $image->id  }})" type="button">Remove</button>
                                                     </div>
                                                 </div>
                                             </div>

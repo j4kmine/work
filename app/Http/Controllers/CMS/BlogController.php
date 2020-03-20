@@ -6,6 +6,7 @@ namespace App\Http\Controllers\CMS;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\BlogModel;
+use App\Models\ImagesModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class BlogController extends Controller
@@ -61,7 +62,7 @@ class BlogController extends Controller
             'summary' => $request->get('summary'),
             'body' => $request->get('body'),
             'keyword' => $request->get('keyword'),
-            'path' => "tes.jpg"
+            'id_image' => $request->get('id_image'),
         ]);
         $data = $blog->save();
        
@@ -90,7 +91,14 @@ class BlogController extends Controller
     {
         //
         $where = array('id' => $id);
-        $data['blog'] = BlogModel::where($where)->first();
+        $query = BlogModel::where($where)->first();
+        $data['blog'] = $query;
+        
+        if($query->id_image != 0){
+            $where = array('id' => $query->id_image);
+            $data['image'] = ImagesModel::where($where)->first();
+        }
+      
       
         return view('cms.pages.blog.edit', $data);
     }
@@ -111,7 +119,7 @@ class BlogController extends Controller
             'keyword'=>'required'
         ]);
          
-        $update = ['title' => $request->title, 'summary' => $request->summary, 'body' => $request->body,'keyword' => $request->keyword,'path' => $request->path];
+        $update = ['title' => $request->title, 'summary' => $request->summary, 'body' => $request->body,'keyword' => $request->keyword,'id_image' => $request->id_image];
         BlogModel::where('id',$id)->update($update);
         return redirect('/blog/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
