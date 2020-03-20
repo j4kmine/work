@@ -137,6 +137,26 @@
                                 </div>
                                 <br/>
                                 <div class="form-row">
+                                    <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>
+                                    <br/>
+                                    <div id="list-gambar-berita" class="row">
+                                        @if( $configuration->image->id != '')
+                                            <div class="card-body" id="{{ $configuration->image->id  }}">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <img class="img-responsive" src="{{url('/images/'.$configuration->image->path)}}">
+                                                        <input name="id_image" type="hidden" value="{{ $configuration->image->id  }}">
+                                                        <input name="title_image" type="hidden" value="{{ $configuration->image->title  }}">
+                                                        <input name="path" type="hidden" value="{{url('/images/'.$configuration->image->path)}}">
+                                                        <h3 class="my-3">{{ $configuration->image->title  }}</h3><button class="my-3 btn btn-danger btn-lg btn-block" onclick="removeimage({{ $configuration->image->id  }})" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>
@@ -264,6 +284,26 @@
                                             <label for="name" class="col-form-label s-12">Instagram</label>
                                             <input id="instagram" placeholder="Enter Instagram " name="instagram" value="{{ old('instagram') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
+                                    <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>
+                                    <br/>
+                                    <div id="list-gambar-berita" class="row">
+                                        @if(old('path') != '')
+                                            <div class="card-body" id="{{ old('id_image') }}">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <img class="img-responsive" src="{{ old('path') }}">
+                                                        <input name="id_image" type="hidden" value="{{ old('id_image') }}">
+                                                        <input name="title_image" type="hidden" value="{{ old('title_image') }}">
+                                                        <input name="path" type="hidden" value="{{ old('path') }}">
+                                                        <h3 class="my-3">{{ old('title_image') }}</h3><button class="my-3 btn btn-danger btn-lg btn-block" onclick="removeimage({{ old('id_image') }})" type="button">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <br/>

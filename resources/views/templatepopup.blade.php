@@ -39,6 +39,10 @@
 <script src="{{url('assets/js/jquery.fancybox.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
+function selectimage(id,path,title){
+    parent.selectimage(id,path,title);
+    parent.jQuery.fancybox.close();
+}   
 $(document).ready(function(){
     $('.pagination>li').addClass("page-item");
     $('.pagination>li>a').addClass("page-link");
@@ -115,6 +119,7 @@ $(document).ready(function(){
     function getExtension(filename) {
         return filename.split('.').pop().toLowerCase();
     }
+  
   
 })
 </script>
