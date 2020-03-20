@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ConfigurationModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ImagesModel;
 class ConfigurationController extends Controller{
     public function __construct()
     {
@@ -15,7 +16,11 @@ class ConfigurationController extends Controller{
     {
         //
         $configuration = ConfigurationModel::first();
-
+        if($configuration->id_image != 0){
+            $where = array('id' => $configuration->id_image);
+            $configuration['image'] = ImagesModel::where($where)->first();
+        }
+      
         return view('cms.pages.configuration.index', compact('configuration'));
     }
     public function store(Request $request)
@@ -39,6 +44,7 @@ class ConfigurationController extends Controller{
             ,'nophone' => $request->phone
             ,'twitter' => $request->twitter
             ,'instagram' => $request->instagram
+            ,'id_image' => $request->id_image
         ]);
         $data = $configuration->save();
         return redirect('/configuration')->with('success', 'Success Input Data');
@@ -64,8 +70,12 @@ class ConfigurationController extends Controller{
         ,'nophone' => $request->phone
         ,'twitter' => $request->twitter
         ,'instagram' => $request->instagram
+        ,'id_image' => $request->id_image
         ];
+       
         ConfigurationModel::where('id',$id)->update($update);
+       
+        
         return redirect('/configuration')->with('success', 'Success Update Data');
     }
 }
