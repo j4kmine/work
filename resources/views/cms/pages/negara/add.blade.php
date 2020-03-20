@@ -50,22 +50,6 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="id_negara" class="col-form-label s-12">Negara</label>
-                                            <input id="id_negara" placeholder="Enter negara id_negara" name="id_negara" value="{{ old('id_negara') }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="kode_pos" class="col-form-label s-12">Kode Pos</label>
-                                            <input id="kode_pos" placeholder="Enter negara Kode Pos" name="kode_pos" value="{{ old('kode_pos') }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
                                             <label for="lang" class="col-form-label s-12">Longitude</label>
                                             <input id="lang" placeholder="Enter negara Longitude" name="lang" value="{{ old('lang') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
@@ -76,6 +60,70 @@
                                         <div class="form-group m-0">
                                             <label for="lat" class="col-form-label s-12">Latitude</label>
                                             <input id="lat" placeholder="Enter negara Latitude" name="lat" value="{{ old('lat') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="base_harga_udara_document" class="col-form-label s-12">base_harga_udara_document</label>
+                                            <input id="base_harga_udara_document" placeholder="Enter negara base_harga_udara_document" name="base_harga_udara_document" value="{{ old('base_harga_udara_document') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="harga_fcl20ft" class="col-form-label s-12">harga_fcl20ft</label>
+                                            <input id="harga_fcl20ft" placeholder="Enter negara harga_fcl20ft" name="harga_fcl20ft" value="{{ old('harga_fcl20ft') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="harga_fcL40ft" class="col-form-label s-12">harga_fcL40ft</label>
+                                            <input id="harga_fcL40ft" placeholder="Enter negara harga_fcL40ft" name="harga_fcL40ft" value="{{ old('harga_fcL40ft') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="harga_fcl40fthq" class="col-form-label s-12">harga_fcl40fthq</label>
+                                            <input id="harga_fcl40fthq" placeholder="Enter negara harga_fcl40fthq" name="harga_fcl40fthq" value="{{ old('harga_fcl40fthq') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="harga_bulk5kdwt" class="col-form-label s-12">harga_bulk5kdwt</label>
+                                            <input id="harga_bulk5kdwt" placeholder="Enter negara harga_bulk5kdwt" name="harga_bulk5kdwt" value="{{ old('harga_bulk5kdwt') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="harga_bulk10kdwt" class="col-form-label s-12">harga_bulk10kdwt</label>
+                                            <input id="harga_bulk10kdwt" placeholder="Enter negara harga_bulk10kdwt" name="harga_bulk10kdwt" value="{{ old('harga_bulk10kdwt') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="harga_bulk25kdwt" class="col-form-label s-12">harga_bulk25kdwt</label>
+                                            <input id="harga_bulk25kdwt" placeholder="Enter negara harga_bulk25kdwt" name="harga_bulk25kdwt" value="{{ old('harga_bulk25kdwt') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="harga_bulk50kdwt" class="col-form-label s-12">harga_bulk50kdwt</label>
+                                            <input id="harga_bulk50kdwt" placeholder="Enter negara harga_bulk50kdwt" name="harga_bulk50kdwt" value="{{ old('harga_bulk50kdwt') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>

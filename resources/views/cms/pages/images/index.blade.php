@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="col-md-9 text-right">
                                             <br/>
-                                            <a  href="{{ route('image.create') }}" class="btn btn-success btn-sm"><i class="icon-trash mr-2"></i> Add Data</a>
+                                            <a  href="{{ route('image.create') }}" class="btn btn-success btn-sm"><i class="icon-plus mr-2"></i> Add Data</a>
                                         </div>
                                     </div>
                                 </div>

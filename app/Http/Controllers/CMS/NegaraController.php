@@ -24,10 +24,10 @@ class NegaraController extends Controller
         //
         $search = $request->input('search');
        
-        $Negara = NegaraModel::where('nama', 'LIKE', '%' . $search . '%')
+        $negara = NegaraModel::where('nama', 'LIKE', '%' . $search . '%')
                      ->paginate(10);
 
-        return view('cms.pages.Negara.index', compact('Negara'));
+        return view('cms.pages.negara.index', compact('negara'));
     }
 
     /**
@@ -38,7 +38,7 @@ class NegaraController extends Controller
     public function create()
     {
         
-        return view('cms.pages.Negara.add');
+        return view('cms.pages.negara.add');
     }
 
     /**
@@ -51,22 +51,35 @@ class NegaraController extends Controller
     {
         $this->validate($request,[
             'nama'=>'required',
-            'id_negara'=>'required',
-            'kode_pos'=>'required',
             'lang'=>'required',
-            'lat'=>'required'
+            'lat'=>'required',
+            'base_harga_udara_document'=>'required',
+            'harga_fcl20ft'=>'required',
+            'harga_fcL40ft'=>'required',
+            'harga_fcl40fthq'=>'required',
+            'harga_bulk5kdwt'=>'required',
+            'harga_bulk10kdwt'=>'required',
+            'harga_bulk25kdwt'=>'required',
+            'harga_bulk50kdwt'=>'required'
         ]);
         
-        $Negara = new NegaraModel([
+        $negara = new NegaraModel([
             'nama' => $request->get('nama'),
-            'id_negara' => $request->get('id_negara'),
-            'kode_pos' => $request->get('kode_pos'),
             'lang' => $request->get('lang'),
-            'lat' => $request->get('lat')
+            'lat' => $request->get('lat'),
+            'base_harga_udara_document' => $request->get('base_harga_udara_document'),
+            'harga_fcl20ft' => $request->get('harga_fcl20ft'),
+            'harga_fcL40ft' => $request->get('harga_fcL40ft'),
+            'harga_fcl40fthq' => $request->get('harga_fcl40fthq'),
+            'harga_bulk5kdwt' => $request->get('harga_bulk5kdwt'),
+            'harga_bulk10kdwt' => $request->get('harga_bulk10kdwt'),
+            'harga_bulk25kdwt' => $request->get('harga_bulk25kdwt'),
+            'harga_bulk50kdwt' => $request->get('harga_bulk50kdwt')
+
         ]);
-        $data = $Negara->save();
+        $data = $negara->save();
        
-        return redirect('/Negara/create')->with('success', 'Success Input Data');
+        return redirect('/negara/create')->with('success', 'Success Input Data');
     }
 
     /**
@@ -91,9 +104,9 @@ class NegaraController extends Controller
     {
         //
         $where = array('id' => $id);
-        $data['Negara'] = NegaraModel::where($where)->first();
+        $data['negara'] = NegaraModel::where($where)->first();
       
-        return view('cms.pages.Negara.edit', $data);
+        return view('cms.pages.negara.edit', $data);
     }
 
     /**
@@ -107,15 +120,33 @@ class NegaraController extends Controller
     {
         $this->validate($request,[
             'nama'=>'required',
-            'id_negara'=>'required',
-            'kode_pos'=>'required',
             'lang'=>'required',
-            'lat'=>'required'
+            'lat'=>'required',
+            'base_harga_udara_document'=>'required',
+            'harga_fcl20ft'=>'required',
+            'harga_fcL40ft'=>'required',
+            'harga_fcl40fthq'=>'required',
+            'harga_bulk5kdwt'=>'required',
+            'harga_bulk10kdwt'=>'required',
+            'harga_bulk25kdwt'=>'required',
+            'harga_bulk50kdwt'=>'required'
         ]);
          
-        $update = ['nama' => $request->nama, 'id_negara' => $request->id_negara, 'kode_pos' => $request->kode_pos,'lang' => $request->lang,'lat' => $request->lat];
+        $update = [
+                    'nama' => $request->nama, 
+                    'lang' => $request->lang,
+                    'lat' => $request->lat,
+                    'base_harga_udara_document' => $request->base_harga_udara_document,
+                    'harga_fcl20ft' => $request->harga_fcl20ft,
+                    'harga_fcL40ft' => $request->harga_fcL40ft,
+                    'harga_fcl40fthq' => $request->harga_fcl40fthq,
+                    'harga_bulk5kdwt' => $request->harga_bulk5kdwt,
+                    'harga_bulk10kdwt' => $request->harga_bulk10kdwt,
+                    'harga_bulk25kdwt' => $request->harga_bulk25kdwt,
+                    'harga_bulk50kdwt' => $request->harga_bulk50kdwt
+                ];
         NegaraModel::where('id',$id)->update($update);
-        return redirect('/Negara/'.$id.'/edit')->with('success', 'Success Input Data');      
+        return redirect('/negara/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
 
     /**
@@ -128,13 +159,13 @@ class NegaraController extends Controller
     {
        
         NegaraModel::where('id',$id)->delete();
-        return redirect('/Negara')->with('success', 'Deleted Successfully');
+        return redirect('/negara')->with('success', 'Deleted Successfully');
     }
     public function hapus($id)
     {
        
         NegaraModel::where('id',$id)->delete();
-        return redirect('/Negara')->with('success', 'Deleted Successfully');
+        return redirect('/negara')->with('success', 'Deleted Successfully');
     }
     public function postProcess(Request $request){
         $postvalue =  $request->datacek;

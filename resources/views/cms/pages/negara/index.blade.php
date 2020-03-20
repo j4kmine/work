@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="col-md-9 text-right">
                                             <br/>
-                                            <a  href="{{ route('negara.create') }}" class="btn btn-success btn-sm"><i class="icon-trash mr-2"></i> Add Data</a>
+                                            <a  href="{{ route('negara.create') }}" class="btn btn-success btn-sm"><i class="icon-plus mr-2"></i> Add Data</a>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                                 </div>
                                             </th>
                                             <th>NAMA</th>
-                                            <th> <div class="d-none d-lg-block">KODE POS</div></th>
+                                            <th> <div class="d-none d-lg-block">LAT</div></th>
                                             <th> <div class="d-none d-lg-block">ROLE</div></th>
                                             <th></th>
                                         </tr>
@@ -64,11 +64,11 @@
                                                             <div>
                                                                 <strong>{{ $p->nama }}</strong>
                                                             </div>
-                                                            <small> {{ $p->id_negara }}</small>
+                                                            <small> {{ $p->lang }}</small>
                                                         </div>
                                                     </div>
                                                     </td>
-                                                    <td> <div class="d-none d-lg-block">{{ $p->kode_pos }}</div></td>
+                                                    <td> <div class="d-none d-lg-block">{{ $p->lat }}</div></td>
                                                     @if($p->role =='1')  
                                                         <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Administrator</span></div></td>
                                                     @else

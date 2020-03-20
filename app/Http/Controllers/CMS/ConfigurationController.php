@@ -16,9 +16,12 @@ class ConfigurationController extends Controller{
     {
         //
         $configuration = ConfigurationModel::first();
-        if($configuration->id_image != 0){
-            $where = array('id' => $configuration->id_image);
-            $configuration['image'] = ImagesModel::where($where)->first();
+
+        if(isset($configuration)) {
+            if ($configuration->id_image != 0){
+                $where = array('id' => $configuration->id_image);
+                $configuration['image'] = ImagesModel::where($where)->first();
+            }
         }
       
         return view('cms.pages.configuration.index', compact('configuration'));
