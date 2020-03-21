@@ -36,6 +36,15 @@ class ImagesController extends Controller
 
         return view('cms.pages.images.popup', compact('images'));
     }
+    public function listtinymce(Request $request)
+    {
+        $search = $request->input('search');
+       
+        $images = ImagesModel::where('title', 'LIKE', '%' . $search . '%')
+                     ->paginate(10);
+
+        return view('cms.pages.images.listtinymce', compact('images'));
+    }
     public function addimagepopup(){
         return view('cms.pages.images.addpopup');
     }

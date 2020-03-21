@@ -19,9 +19,74 @@
             <div class="container">
                 <script src="{{ asset('node_modules/tinymce/tinymce.min.js') }}"></script>
                 <script>
+                    tinymce.EditorManager.execCommand('mceRemoveEditor',true, 'body');
+                        
                     tinymce.init({
-                        selector:'textarea',
-                        height: 400
+                        selector: "textarea#body",
+                        // init_instance_callback: "insert_contents",
+                        theme: "modern",
+                        height: 400,
+                        plugins: [
+                             "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                             "save table contextmenu directionality emoticons template paste textcolor gambar insertlinks highlight"
+                       ],
+                       toolbar: "insertfile undo redo pagebreak | styleselect blockquote highlight  | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media gambar gambaranalisis embed_grafik embed_chart  addvideotemp | addbigfoto addimageright addimageleft addimagedouble highlightanalisis quotesanalisis | addsummary addimagemulti1 addimagemulti2 print preview fullpage forecolor backcolor emoticons fullscreen",
+                        setup: function(editor) {
+                            editor.on('blur', function(e) {
+                              var body = tinyMCE.activeEditor.getContent();
+                              console.log(body);
+                               Cookies.set('body',body);
+                            });
+                        },
+                       style_formats: [
+                            {title: 'Bold text', inline: 'b'},
+                            {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+                            {title: 'Heading h5', block: 'h5'},
+                            {title: 'Heading h4', block: 'h4'},
+                            {title: 'Heading h3', block: 'h3'},
+                            {title: 'Heading h2', block: 'h2'},
+                            {title: 'Heading h1 Normal', block: 'h1'},
+                            {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}}
+                        ],
+                        paste_postprocess: function(plugin, args) {
+                            args.node.innerHTML = cleanHTML(args.node.innerHTML);
+                        },
+                        formats: {
+                            alignleft : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'align-left', styles : {float : 'left'}},
+                            alignright : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'align-right', styles : {float : 'right'}}
+                        },
+                        contextmenu: "link image media inserttable | cell row column deletetable | copy paste cut",
+
+                        content_css : "{{url('assets/css/app.css')}}",
+                        rel_list: [
+                            {title: 'None', value: ''},
+                            {title: 'No Follow', value: 'nofollow'},
+                        ],
+                        relative_urls : false,
+                        remove_script_host: false,
+                        
+                        file_browser_callback   : function(field_name, url, type, win) {
+                            if (type == 'image') {
+                                var cmsURL       = "{{url('imagepopup')}}";
+
+                                tinymce.activeEditor.windowManager.open({
+
+                                    file            : cmsURL,
+                                    title           : 'Select an Image',
+                                    width           : 800,  // Your dimensions may differ - toy around with them!
+                                    height          : 400,
+                                    resizable       : "yes",
+                                    inline          : "yes",  // This parameter only has an effect if you use the inlinepopups plugin!
+                                    close_previous  : "yes"
+                                
+                                }, {
+                                    window  : win,
+                                    input   : field_name
+                                });
+                            };
+                            
+                        }
                     });
                 </script>
             <div class="row my-3">

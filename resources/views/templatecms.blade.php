@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{url('assets/css/app.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/jquery.fancybox.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <script type="text/javascript">
+        var base_web_url = "<?php echo url('/'); ?>";
+    </script>
 </head>
 <style>
     .thumb-list{
@@ -76,6 +79,21 @@ function selectimage(id,path,title){
     htmldata += "</div>"
     htmldata += "</div>"
     $('#list-gambar-berita').html(htmldata); 
+}
+function selectimagetinymce(id,path,title){
+    var htmldata ="";
+    htmldata += "<div class='card-body' id="+id+">"
+    htmldata += "<div class='row'>"
+    htmldata += "<div class='col-md-5'>"
+    htmldata += "<img src='"+path+"'  class='img-responsive'/>";
+    htmldata += "<input type='hidden' name='id_image' value='"+id+"' >";
+    htmldata += "<input type='hidden' name='title_image' value='"+title+"' >";
+    htmldata += "<input type='hidden' name='path' value='"+path+"' >";
+    htmldata += "<h3 class='my-3'>"+title+"</h3>"
+    htmldata += "</div>"
+    htmldata += "</div>"
+    htmldata += "</div>"
+    tinymce.activeEditor.setContent(htmldata, {format: 'raw'});
 }
 function removeimage (id){
     $('#'+id).remove();
