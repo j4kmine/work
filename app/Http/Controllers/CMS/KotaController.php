@@ -7,6 +7,7 @@ use Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KotaModel;
+use App\Models\NegaraModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,7 +95,7 @@ class KotaController extends Controller
         //
         $where = array('id' => $id);
         $data['kota'] = KotaModel::where($where)->first();
-      
+
         return view('cms.pages.kota.edit', $data);
     }
 
@@ -153,7 +154,9 @@ class KotaController extends Controller
 
     public function import()
     {
-        return view('cms.pages.kota.import');
+        $data['negara'] = NegaraModel::select()->get();
+
+        return view('cms.pages.kota.import', $data);
     }
 
     public function importData(Request $request)

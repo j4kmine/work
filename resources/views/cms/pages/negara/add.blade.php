@@ -82,8 +82,8 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="harga_fcL40ft" class="col-form-label s-12">harga_fcL40ft</label>
-                                            <input id="harga_fcL40ft" placeholder="Enter negara harga_fcL40ft" name="harga_fcL40ft" value="{{ old('harga_fcL40ft') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="harga_fcl40ft" class="col-form-label s-12">harga_fcl40ft</label>
+                                            <input id="harga_fcl40ft" placeholder="Enter negara harga_fcl40ft" name="harga_fcl40ft" value="{{ old('harga_fcl40ft') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>

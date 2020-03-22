@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     ## NEGARA
     Route::get('negara/hapus/{id}', 'CMS\NegaraController@hapus');
+    Route::get('negara/import', 'CMS\NegaraController@import')->name('negara.import');
+    Route::post('negara/importData', 'CMS\NegaraController@importData')->name('negara.importData');
     Route::resource('negara', 'CMS\NegaraController');
     Route::post('negara/postProcess', 'CMS\NegaraController@postProcess');
 });

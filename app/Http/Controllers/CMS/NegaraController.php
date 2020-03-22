@@ -2,7 +2,7 @@
 
 
 namespace App\Http\Controllers\CMS;
-
+use Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\NegaraModel;
@@ -55,7 +55,7 @@ class NegaraController extends Controller
             'lat'=>'required',
             'base_harga_udara_document'=>'required',
             'harga_fcl20ft'=>'required',
-            'harga_fcL40ft'=>'required',
+            'harga_fcl40ft'=>'required',
             'harga_fcl40fthq'=>'required',
             'harga_bulk5kdwt'=>'required',
             'harga_bulk10kdwt'=>'required',
@@ -69,7 +69,7 @@ class NegaraController extends Controller
             'lat' => $request->get('lat'),
             'base_harga_udara_document' => $request->get('base_harga_udara_document'),
             'harga_fcl20ft' => $request->get('harga_fcl20ft'),
-            'harga_fcL40ft' => $request->get('harga_fcL40ft'),
+            'harga_fcl40ft' => $request->get('harga_fcl40ft'),
             'harga_fcl40fthq' => $request->get('harga_fcl40fthq'),
             'harga_bulk5kdwt' => $request->get('harga_bulk5kdwt'),
             'harga_bulk10kdwt' => $request->get('harga_bulk10kdwt'),
@@ -124,7 +124,7 @@ class NegaraController extends Controller
             'lat'=>'required',
             'base_harga_udara_document'=>'required',
             'harga_fcl20ft'=>'required',
-            'harga_fcL40ft'=>'required',
+            'harga_fcl40ft'=>'required',
             'harga_fcl40fthq'=>'required',
             'harga_bulk5kdwt'=>'required',
             'harga_bulk10kdwt'=>'required',
@@ -138,7 +138,7 @@ class NegaraController extends Controller
                     'lat' => $request->lat,
                     'base_harga_udara_document' => $request->base_harga_udara_document,
                     'harga_fcl20ft' => $request->harga_fcl20ft,
-                    'harga_fcL40ft' => $request->harga_fcL40ft,
+                    'harga_fcl40ft' => $request->harga_fcl40ft,
                     'harga_fcl40fthq' => $request->harga_fcl40fthq,
                     'harga_bulk5kdwt' => $request->harga_bulk5kdwt,
                     'harga_bulk10kdwt' => $request->harga_bulk10kdwt,
@@ -179,4 +179,42 @@ class NegaraController extends Controller
             echo "failed";
         }
 	}
+
+    public function import()
+    {
+        return view('cms.pages.negara.import');
+    }
+
+    public function importData(Request $request)
+    {
+        $this->validate($request,[
+            'import_file' => 'required|mimes:xls'
+        ]);
+        $path = $request->file('import_file')->getRealPath();
+        $data = Excel::load($path)->get();
+
+        if($data->count()){
+            foreach ($data as $key => $value) {
+                $arr[] = [
+                            'nama' => $value->nama, 
+                            'lang' => $value->lang,
+                            'lat' => $value->lat,
+                            'base_harga_udara_document' => $value->base_harga_udara_document,
+                            'harga_fcl20ft' => $value->harga_fcl20ft,
+                            'harga_fcl40ft' => $value->harga_fcl40ft,
+                            'harga_fcl40fthq' => $value->harga_fcl40fthq,
+                            'harga_bulk5kdwt' => $value->harga_bulk5kdwt,
+                            'harga_bulk10kdwt' => $value->harga_bulk10kdwt,
+                            'harga_bulk25kdwt' => $value->harga_bulk25kdwt,
+                            'harga_bulk50kdwt' => $value->harga_bulk50kdwt,
+                            'created_at' => date('Y-m-d H:i:s')
+                        ];
+            }
+
+            if(!empty($arr)){
+                NegaraModel::insert($arr);
+            }
+        }
+        return back()->with('success', 'Insert Record successfully.');
+    }
 }

@@ -26,15 +26,15 @@
                 </script>
             <div class="row my-3">
                 <div class="col-md-8 offset-md-2">
-                    <form action="{{ route('kota.importData') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('negara.importData') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
                         <div class="card no-b">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5 class="card-title">Import Kota</h5>
+                                        <h5 class="card-title">Import negara</h5>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <a class="btn btn-primary btn-sm " href="{{url('kota')}}">List kota</a>
+                                        <a class="btn btn-primary btn-sm " href="{{url('negara')}}">List negara</a>
                                     </div>
                                 </div>
                                 
@@ -51,56 +51,43 @@
                             </div>
                         </div>
                     </form>
+                </div>
                     <div>
                         <p>Contoh Format pada file excel</p>
                         <table class="table">
                           <thead>
                             <tr>
                               <th scope="col">nama</th>
-                              <th scope="col">kode_pos</th>
                               <th scope="col">lang</th>
                               <th scope="col">lat</th>
-                              <th scope="col">id_negara</th>
+                              <th scope="col">base_harga_udara_document</th>
+                              <th scope="col">harga_fcl20ft</th>
+                              <th scope="col">harga_fcl40ft</th>
+                              <th scope="col">harga_fcl40fthq</th>
+                              <th scope="col">harga_bulk5kdwt</th>
+                              <th scope="col">harga_bulk10kdwt</th>
+                              <th scope="col">harga_bulk25kdwt</th>
+                              <th scope="col">harga_bulk50kdwt</th>
+
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <th>Surabaya</th>
+                              <th>Indonesia</th>
                               <td>12345</td>
                               <td>54321</td>
-                              <td>09876</td>
-                              <td>1</td>
-                            </tr>
-                            <tr>
-                              <th>Bandung</th>
-                              <td>12345</td>
-                              <td>54321</td>
-                              <td>09876</td>
-                              <td>1</td>
+                              <td>100000</td>
+                              <td>100000</td>
+                              <td>100000</td>
+                              <td>100000</td>
+                              <td>100000</td>
+                              <td>100000</td>
+                              <td>100000</td>
+                              <td>100000</td>
                             </tr>
                           </tbody>
                         </table>
                     </div>
-                    <div>
-                      <p>List Id Negara</p>
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">id negara</th>
-                              <th scope="col">nama negara</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach($negara as $value)
-                              <tr>
-                                <th>{{$value->id}}</th>
-                                <th>{{$value->nama}}</th>
-                              </tr>
-                            @endforeach
-                          </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
             </div>
             
