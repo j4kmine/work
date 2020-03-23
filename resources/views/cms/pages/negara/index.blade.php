@@ -48,7 +48,6 @@
                                             </th>
                                             <th>NAMA</th>
                                             <th> <div class="d-none d-lg-block">LAT</div></th>
-                                            <th> <div class="d-none d-lg-block">ROLE</div></th>
                                             <th></th>
                                         </tr>
                                         </thead>   
@@ -71,11 +70,6 @@
                                                     </div>
                                                     </td>
                                                     <td> <div class="d-none d-lg-block">{{ $p->lat }}</div></td>
-                                                    @if($p->role =='1')  
-                                                        <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Administrator</span></div></td>
-                                                    @else
-                                                        <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Users</span></div></td>
-                                                    @endif
                                                     <td>
                                                         <a href="{{ url('negara/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
                                         

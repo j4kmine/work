@@ -46,7 +46,6 @@
                                             </th>
                                             <th>TITLE</th>
                                             <th> <div class="d-none d-lg-block">KEYWORD</div></th>
-                                            <th> <div class="d-none d-lg-block">ROLE</div></th>
                                             <th></th>
                                         </tr>
                                         </thead>   
@@ -69,15 +68,8 @@
                                                     </div>
                                                     </td>
                                                     <td> <div class="d-none d-lg-block">{{ $p->keyword }}</div></td>
-                                                    @if($p->role =='1')  
-                                                        <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Administrator</span></div></td>
-                                                    @else
-                                                        <td> <div class="d-none d-lg-block"><span class="r-3 badge badge-success ">Users</span></div></td>
-                                                    @endif
                                                     <td>
-                                                        <a href="{{ url('blog/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
-                                        
-                                                           
+                                                        <a href="{{ url('blog/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>   
                                                         <a href="{{ route('blog.edit', $p->id)}}"><i class="icon-pencil"></i></a>
                                                     </td>
                                                 </tr>
