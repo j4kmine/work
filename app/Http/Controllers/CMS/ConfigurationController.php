@@ -48,6 +48,7 @@ class ConfigurationController extends Controller{
             ,'twitter' => $request->twitter
             ,'instagram' => $request->instagram
             ,'id_image' => $request->id_image
+            ,'service_pricing' => $request->service_pricing
         ]);
         $data = $configuration->save();
         return redirect('/configuration')->with('success', 'Success Input Data');
@@ -74,6 +75,7 @@ class ConfigurationController extends Controller{
         ,'twitter' => $request->twitter
         ,'instagram' => $request->instagram
         ,'id_image' => $request->id_image
+        ,'service_pricing' => $request->service_pricing
         ];
        
         ConfigurationModel::where('id',$id)->update($update);

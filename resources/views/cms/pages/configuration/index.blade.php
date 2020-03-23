@@ -135,6 +135,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="name" class="col-form-label s-12">Service Pricing</label>
+                                            <input id="service_pricing" placeholder="Enter Service Pricing " name="service_pricing" value="{{ $configuration->service_pricing  }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
                                 <br/>
                                 <div class="form-row">
                                     <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>
@@ -286,6 +294,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="name" class="col-form-label s-12">Service Pricing</label>
+                                            <textarea rows="5" class="form-control r-0 light s-12" id="service_pricing" placeholder="Enter Service Pricing " name="service_pricing" >
+                                                {{ old('service_pricing') }} 
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>  
                                 <br/>
                                 <div class="form-row">
                                     <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>

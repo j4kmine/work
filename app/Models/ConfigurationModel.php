@@ -17,6 +17,6 @@ class ConfigurationModel extends Model
     protected $table ="configuration";
     public $timestamps = false;
     protected $fillable = [
-        'meta_title', 'site_title', 'meta_description','meta_keyword','alamat','hp','fax','email','fb','nophone','twitter','instagram','id_image'
+        'meta_title', 'site_title', 'meta_description','meta_keyword','alamat','hp','fax','email','fb','nophone','twitter','instagram','id_image','service_pricing'
     ];
 }
