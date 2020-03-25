@@ -26,11 +26,11 @@ class KotaController extends Controller
     {
         //
         $search = $request->input('search');
-       
+        $negara= NegaraModel::select()->get();
         $kota = KotaModel::where('nama', 'LIKE', '%' . $search . '%')
                      ->paginate(10);
 
-        return view('cms.pages.kota.index', compact('kota'));
+        return view('cms.pages.kota.index', compact(['kota','negara']));
     }
 
     /**
@@ -40,8 +40,8 @@ class KotaController extends Controller
      */
     public function create()
     {
-        
-        return view('cms.pages.kota.add');
+        $data['negara'] = NegaraModel::select()->get();
+        return view('cms.pages.kota.add', $data);
     }
 
     /**
@@ -95,7 +95,8 @@ class KotaController extends Controller
         //
         $where = array('id' => $id);
         $data['kota'] = KotaModel::where($where)->first();
-
+        $data['negara'] = NegaraModel::select()->get();
+        
         return view('cms.pages.kota.edit', $data);
     }
 

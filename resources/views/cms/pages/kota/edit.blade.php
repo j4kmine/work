@@ -17,11 +17,16 @@
               </div>
             @endif
             <div class="container">
-                <script src="{{ asset('node_modules/tinymce/tinymce.min.js') }}"></script>
+                <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
                 <script>
-                    tinymce.init({
-                        selector:'textarea',
-                        height: 400
+                    $(document).ready(function() {
+                        $("#id_negaras").select2({
+                            placeholder: "Pilih Negara",
+                        }).on("change", function(e) {
+                            var id_negara = $('#id_negaras').val();
+                            $('#id_negara').val(id_negara);
+                        });
+                        $("#id_negaras").val({{$kota->id_negara}}).trigger('change');
                     });
                 </script>
                 <div class="row my-3">
@@ -49,8 +54,14 @@
                                     <div class="form-row">
                                         <div class="col-md-12">
                                             <div class="form-group m-0">
-                                                <label for="id_negara" class="col-form-label s-12">Negara</label>
-                                                <input id="id_negara" placeholder="Enter kota id_negara" name="id_negara" value="{{ $kota->id_negara }}" class="form-control r-0 light s-12 " type="text">
+                                                <label for="id_negaras" class="col-form-label s-12">Negara</label>
+                                                <select id="id_negaras">
+                                                    @foreach($negara as $n)
+                                                        <option></option>
+                                                        <option value="{{ $n->id }}">{{ $n->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <input type="hidden" id="id_negara" name="id_negara" value="{{ $kota->id_negara }}" />
                                             </div>
                                         </div>
                                     </div>

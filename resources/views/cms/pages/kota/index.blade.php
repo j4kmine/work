@@ -65,7 +65,11 @@
                                                             <div>
                                                                 <strong>{{ $p->nama }}</strong>
                                                             </div>
-                                                            <small> {{ $p->id_negara }}</small>
+                                                            @foreach($negara as $n)
+                                                                @if($n->id == $p->id_negara)
+                                                                    <small> {{ $n->nama }}</small>
+                                                                @endif
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                     </td>

@@ -57,4 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('negara/importData', 'CMS\NegaraController@importData')->name('negara.importData');
     Route::resource('negara', 'CMS\NegaraController');
     Route::post('negara/postProcess', 'CMS\NegaraController@postProcess');
+
+    ## WEBSERVICE
+    Route::get('webservice/getListNegara', 'CMS\WebserviceController@getListNegara');
 });
