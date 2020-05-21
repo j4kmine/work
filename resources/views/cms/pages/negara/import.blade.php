@@ -58,17 +58,8 @@
                           <thead>
                             <tr>
                               <th scope="col">nama</th>
-                              <th scope="col">lang</th>
-                              <th scope="col">lat</th>
-                              <th scope="col">base_harga_udara_document</th>
-                              <th scope="col">harga_fcl20ft</th>
-                              <th scope="col">harga_fcl40ft</th>
-                              <th scope="col">harga_fcl40fthq</th>
-                              <th scope="col">harga_bulk5kdwt</th>
-                              <th scope="col">harga_bulk10kdwt</th>
-                              <th scope="col">harga_bulk25kdwt</th>
-                              <th scope="col">harga_bulk50kdwt</th>
-
+                              <th scope="col">longitude</th>
+                              <th scope="col">latitude</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -76,14 +67,6 @@
                               <th>Indonesia</th>
                               <td>12345</td>
                               <td>54321</td>
-                              <td>100000</td>
-                              <td>100000</td>
-                              <td>100000</td>
-                              <td>100000</td>
-                              <td>100000</td>
-                              <td>100000</td>
-                              <td>100000</td>
-                              <td>100000</td>
                             </tr>
                           </tbody>
                         </table>

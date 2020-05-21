@@ -21,7 +21,6 @@ class NegaraController extends Controller
     }
     public function index(Request $request)
     {
-        //
         $search = $request->input('search');
        
         $negara = NegaraModel::where('nama', 'LIKE', '%' . $search . '%')
@@ -51,31 +50,16 @@ class NegaraController extends Controller
     {
         $this->validate($request,[
             'nama'=>'required',
-            'lang'=>'required',
-            'lat'=>'required',
-            'base_harga_udara_document'=>'required',
-            'harga_fcl20ft'=>'required',
-            'harga_fcl40ft'=>'required',
-            'harga_fcl40fthq'=>'required',
-            'harga_bulk5kdwt'=>'required',
-            'harga_bulk10kdwt'=>'required',
-            'harga_bulk25kdwt'=>'required',
-            'harga_bulk50kdwt'=>'required'
+            'longitude'=>'required',
+            'latitude'=>'required'
         ]);
         
         $negara = new NegaraModel([
             'nama' => $request->get('nama'),
-            'lang' => $request->get('lang'),
-            'lat' => $request->get('lat'),
-            'base_harga_udara_document' => $request->get('base_harga_udara_document'),
-            'harga_fcl20ft' => $request->get('harga_fcl20ft'),
-            'harga_fcl40ft' => $request->get('harga_fcl40ft'),
-            'harga_fcl40fthq' => $request->get('harga_fcl40fthq'),
-            'harga_bulk5kdwt' => $request->get('harga_bulk5kdwt'),
-            'harga_bulk10kdwt' => $request->get('harga_bulk10kdwt'),
-            'harga_bulk25kdwt' => $request->get('harga_bulk25kdwt'),
-            'harga_bulk50kdwt' => $request->get('harga_bulk50kdwt')
-
+            'longitude' => $request->get('longitude'),
+            'latitude' => $request->get('latitude'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_by' => Auth::user()->name
         ]);
         $data = $negara->save();
        
@@ -120,30 +104,16 @@ class NegaraController extends Controller
     {
         $this->validate($request,[
             'nama'=>'required',
-            'lang'=>'required',
-            'lat'=>'required',
-            'base_harga_udara_document'=>'required',
-            'harga_fcl20ft'=>'required',
-            'harga_fcl40ft'=>'required',
-            'harga_fcl40fthq'=>'required',
-            'harga_bulk5kdwt'=>'required',
-            'harga_bulk10kdwt'=>'required',
-            'harga_bulk25kdwt'=>'required',
-            'harga_bulk50kdwt'=>'required'
+            'longitude'=>'required',
+            'latitude'=>'required'
         ]);
          
         $update = [
                     'nama' => $request->nama, 
-                    'lang' => $request->lang,
-                    'lat' => $request->lat,
-                    'base_harga_udara_document' => $request->base_harga_udara_document,
-                    'harga_fcl20ft' => $request->harga_fcl20ft,
-                    'harga_fcl40ft' => $request->harga_fcl40ft,
-                    'harga_fcl40fthq' => $request->harga_fcl40fthq,
-                    'harga_bulk5kdwt' => $request->harga_bulk5kdwt,
-                    'harga_bulk10kdwt' => $request->harga_bulk10kdwt,
-                    'harga_bulk25kdwt' => $request->harga_bulk25kdwt,
-                    'harga_bulk50kdwt' => $request->harga_bulk50kdwt
+                    'longitude' => $request->longitude,
+                    'latitude' => $request->latitude,
+                    'modified_at' => date('Y-m-d H:i:s'),
+                    'modified_by' => Auth::user()->name
                 ];
         NegaraModel::where('id',$id)->update($update);
         return redirect('/negara/'.$id.'/edit')->with('success', 'Success Input Data');      
@@ -188,7 +158,7 @@ class NegaraController extends Controller
     public function importData(Request $request)
     {
         $this->validate($request,[
-            'import_file' => 'required|mimes:xls'
+            'import_file' => 'required|mimes:xls,xlsx'
         ]);
         $path = $request->file('import_file')->getRealPath();
         $data = Excel::load($path)->get();
@@ -197,17 +167,10 @@ class NegaraController extends Controller
             foreach ($data as $key => $value) {
                 $arr[] = [
                             'nama' => $value->nama, 
-                            'lang' => $value->lang,
-                            'lat' => $value->lat,
-                            'base_harga_udara_document' => $value->base_harga_udara_document,
-                            'harga_fcl20ft' => $value->harga_fcl20ft,
-                            'harga_fcl40ft' => $value->harga_fcl40ft,
-                            'harga_fcl40fthq' => $value->harga_fcl40fthq,
-                            'harga_bulk5kdwt' => $value->harga_bulk5kdwt,
-                            'harga_bulk10kdwt' => $value->harga_bulk10kdwt,
-                            'harga_bulk25kdwt' => $value->harga_bulk25kdwt,
-                            'harga_bulk50kdwt' => $value->harga_bulk50kdwt,
-                            'created_at' => date('Y-m-d H:i:s')
+                            'longitude' => $value->lang,
+                            'latitude' => $value->latitude,
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'created_by' => Auth::user()->name
                         ];
             }
 

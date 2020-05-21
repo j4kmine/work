@@ -47,7 +47,8 @@
                                                 </div>
                                             </th>
                                             <th>NAMA</th>
-                                            <th> <div class="d-none d-lg-block">LAT</div></th>
+                                            <th>LATITUDE</th>
+                                            <th>LONGITUDE</th>
                                             <th></th>
                                         </tr>
                                         </thead>   
@@ -60,16 +61,16 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                    <div class="d-flex">
-                                                        <div>
+                                                        <div class="d-flex">
                                                             <div>
-                                                                <strong>{{ $p->nama }}</strong>
+                                                                <div>
+                                                                    <strong>{{ $p->nama }}</strong>
+                                                                </div>
                                                             </div>
-                                                            <small> {{ $p->lang }}</small>
                                                         </div>
-                                                    </div>
                                                     </td>
-                                                    <td> <div class="d-none d-lg-block">{{ $p->lat }}</div></td>
+                                                    <td> <div class="d-none d-lg-block">{{ $p->latitude }}</div></td>
+                                                    <td> <div class="d-none d-lg-block">{{ $p->longitude }}</div></td>
                                                     <td>
                                                         <a href="{{ url('negara/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
                                         
