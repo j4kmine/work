@@ -47,7 +47,8 @@
                                                 </div>
                                             </th>
                                             <th>NAMA</th>
-                                            <th> <div class="d-none d-lg-block">KODE POS</div></th>
+                                            <th>NEGARA</th>
+                                            <th>KODE POS</th>
                                             <th></th>
                                         </tr>
                                         </thead>   
@@ -65,13 +66,15 @@
                                                             <div>
                                                                 <strong>{{ $p->nama }}</strong>
                                                             </div>
-                                                            @foreach($negara as $n)
-                                                                @if($n->id == $p->id_negara)
-                                                                    <small> {{ $n->nama }}</small>
-                                                                @endif
-                                                            @endforeach
                                                         </div>
                                                     </div>
+                                                    </td>
+                                                    <td>
+                                                        @foreach($negara as $n)
+                                                            @if($n->id == $p->id_negara)
+                                                                <strong> {{ $n->nama }}</strong>
+                                                            @endif
+                                                        @endforeach
                                                     </td>
                                                     <td> <div class="d-none d-lg-block">{{ $p->kode_pos }}</div></td>
                                                     <td>

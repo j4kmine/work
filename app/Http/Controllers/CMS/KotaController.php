@@ -54,18 +54,18 @@ class KotaController extends Controller
     {
         $this->validate($request,[
             'nama'=>'required',
-            'id_negara'=>'required',
-            'kode_pos'=>'required',
-            'lang'=>'required',
-            'lat'=>'required'
+            'id_negara'=>'required'
         ]);
         
         $kota = new KotaModel([
             'nama' => $request->get('nama'),
-            'id_negara' => $request->get('id_negara'),
+            'longitude' => $request->get('longitude'),
+            'latitude' => $request->get('latitude'),
             'kode_pos' => $request->get('kode_pos'),
-            'lang' => $request->get('lang'),
-            'lat' => $request->get('lat')
+            'id_negara' => $request->get('id_negara'),
+            'origin' => $request->get('origin'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_by' => Auth::user()->name
         ]);
         $data = $kota->save();
        
@@ -111,13 +111,19 @@ class KotaController extends Controller
     {
         $this->validate($request,[
             'nama'=>'required',
-            'id_negara'=>'required',
-            'kode_pos'=>'required',
-            'lang'=>'required',
-            'lat'=>'required'
+            'id_negara'=>'required'
         ]);
          
-        $update = ['nama' => $request->nama, 'id_negara' => $request->id_negara, 'kode_pos' => $request->kode_pos,'lang' => $request->lang,'lat' => $request->lat];
+        $update = [
+            'nama' => $request->nama, 
+            'longitude' => $request->longitude,
+            'latitude' => $request->latitude,
+            'kode_pos' => $request->kode_pos,
+            'id_negara' => $request->id_negara, 
+            'origin' => $request->origin,
+            'modified_at' => date('Y-m-d H:i:s'),
+            'modified_by' => Auth::user()->name
+        ];
         KotaModel::where('id',$id)->update($update);
         return redirect('/kota/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
@@ -163,19 +169,48 @@ class KotaController extends Controller
     public function importData(Request $request)
     {
         $this->validate($request,[
-            'import_file' => 'required|mimes:xls'
+            'import_file' => 'required|file|mimes:xls,xlsx|max:215'
         ]);
         $path = $request->file('import_file')->getRealPath();
         $data = Excel::load($path)->get();
+
         if($data->count()){
             foreach ($data as $key => $value) {
                 $arr[] = [
                             'nama' => $value->nama
+                            ,'longitude' => $value->longitude
+                            ,'latitude' => $value->latitude
                             ,'kode_pos' => $value->kode_pos
-                            ,'lang' => $value->lang
-                            ,'lat' => $value->lat
                             ,'id_negara' => $value->id_negara
+                            ,'origin' => $value->origin
+                            ,'U_DTD_GC_50' => $value->u_dtd_gc_50
+                            ,'U_DTD_GC_100' => $value->u_dtd_gc_100
+                            ,'U_DTD_GC_350' => $value->u_dtd_gc_350
+                            ,'U_DTD_GC_500' => $value->u_dtd_gc_500
+                            ,'U_DTD_GC_1000' => $value->u_dtd_gc_1000
+                            ,'L_DTD_GC_LCL_2' => $value->l_dtd_gc_lcl_2
+                            ,'L_DTD_GC_LCL_6' => $value->l_dtd_gc_lcl_6
+                            ,'L_DTD_GC_LCL_10' => $value->l_dtd_gc_lcl_10
+                            ,'L_DTD_GC_FCL_20ft' => $value->l_dtd_gc_fcl_20ft
+                            ,'L_DTD_GC_FCL_40ft' => $value->l_dtd_gc_fcl_40ft
+                            ,'U_DTP_GC_50' => $value->u_dtp_gc_50
+                            ,'U_DTP_GC_100' => $value->u_dtp_gc_100
+                            ,'U_DTP_GC_350' => $value->u_dtp_gc_350
+                            ,'U_DTP_GC_500' => $value->u_dtp_gc_500
+                            ,'U_DTP_GC_1000' => $value->u_dtp_gc_1000
+                            ,'L_DTP_GC_LCL_2' => $value->l_dtp_gc_lcl_2
+                            ,'L_DTP_GC_LCL_3' => $value->l_dtp_gc_lcl_3
+                            ,'L_DTP_GC_LCL_4' => $value->l_dtp_gc_lcl_4
+                            ,'L_DTP_GC_LCL_5' => $value->l_dtp_gc_lcl_5
+                            ,'L_DTP_GC_LCL_6' => $value->l_dtp_gc_lcl_6
+                            ,'L_DTP_GC_LCL_7' => $value->l_dtp_gc_lcl_7
+                            ,'L_DTP_GC_LCL_8' => $value->l_dtp_gc_lcl_8
+                            ,'L_DTP_GC_LCL_9' => $value->l_dtp_gc_lcl_9
+                            ,'L_DTP_GC_LCL_10' => $value->l_dtp_gc_lcl_10
+                            ,'L_DTP_GC_FCL_20ft' => $value->l_dtp_gc_fcl_20ft
+                            ,'L_DTP_GC_FCL_40ft' => $value->l_dtp_gc_fcl_40ft
                             ,'created_at' => date('Y-m-d H:i:s')
+                            ,'created_by' => Auth::user()->name
                         ];
             }
             if(!empty($arr)){
