@@ -168,55 +168,113 @@ class KotaController extends Controller
 
     public function importData(Request $request)
     {
+        // $this->validate($request,[
+        //     'import_file' => 'required|file|mimes:xls,xlsx|max:215'
+        // ]);
         $this->validate($request,[
-            'import_file' => 'required|file|mimes:xls,xlsx|max:215'
+            'import_file' => 'required|file|mimes:xls,xlsx'
         ]);
         $path = $request->file('import_file')->getRealPath();
-        $data = Excel::load($path)->get();
-
-        if($data->count()){
-            foreach ($data as $key => $value) {
-                $arr[] = [
-                            'nama' => $value->nama
-                            ,'longitude' => $value->longitude
-                            ,'latitude' => $value->latitude
-                            ,'kode_pos' => $value->kode_pos
-                            ,'id_negara' => $value->id_negara
-                            ,'origin' => $value->origin
-                            ,'U_DTD_GC_50' => $value->u_dtd_gc_50
-                            ,'U_DTD_GC_100' => $value->u_dtd_gc_100
-                            ,'U_DTD_GC_350' => $value->u_dtd_gc_350
-                            ,'U_DTD_GC_500' => $value->u_dtd_gc_500
-                            ,'U_DTD_GC_1000' => $value->u_dtd_gc_1000
-                            ,'L_DTD_GC_LCL_2' => $value->l_dtd_gc_lcl_2
-                            ,'L_DTD_GC_LCL_6' => $value->l_dtd_gc_lcl_6
-                            ,'L_DTD_GC_LCL_10' => $value->l_dtd_gc_lcl_10
-                            ,'L_DTD_GC_FCL_20ft' => $value->l_dtd_gc_fcl_20ft
-                            ,'L_DTD_GC_FCL_40ft' => $value->l_dtd_gc_fcl_40ft
-                            ,'U_DTP_GC_50' => $value->u_dtp_gc_50
-                            ,'U_DTP_GC_100' => $value->u_dtp_gc_100
-                            ,'U_DTP_GC_350' => $value->u_dtp_gc_350
-                            ,'U_DTP_GC_500' => $value->u_dtp_gc_500
-                            ,'U_DTP_GC_1000' => $value->u_dtp_gc_1000
-                            ,'L_DTP_GC_LCL_2' => $value->l_dtp_gc_lcl_2
-                            ,'L_DTP_GC_LCL_3' => $value->l_dtp_gc_lcl_3
-                            ,'L_DTP_GC_LCL_4' => $value->l_dtp_gc_lcl_4
-                            ,'L_DTP_GC_LCL_5' => $value->l_dtp_gc_lcl_5
-                            ,'L_DTP_GC_LCL_6' => $value->l_dtp_gc_lcl_6
-                            ,'L_DTP_GC_LCL_7' => $value->l_dtp_gc_lcl_7
-                            ,'L_DTP_GC_LCL_8' => $value->l_dtp_gc_lcl_8
-                            ,'L_DTP_GC_LCL_9' => $value->l_dtp_gc_lcl_9
-                            ,'L_DTP_GC_LCL_10' => $value->l_dtp_gc_lcl_10
-                            ,'L_DTP_GC_FCL_20ft' => $value->l_dtp_gc_fcl_20ft
-                            ,'L_DTP_GC_FCL_40ft' => $value->l_dtp_gc_fcl_40ft
-                            ,'created_at' => date('Y-m-d H:i:s')
-                            ,'created_by' => Auth::user()->name
-                        ];
+        // $data = Excel::load($path)->get();
+        //     echo "<pre>";
+        //     var_dump($data);
+        //     exit();
+        Excel::filter('chunk')->load($path)->chunk(1000, function($results)
+        {
+            // echo "<pre>";
+            // var_dump($results->count());
+            // exit();
+            if($results->count()){
+                foreach($results as $value)
+                {
+            // echo "<pre>";
+            // var_dump($value->nama);
+            // exit();
+                    $arr[] = [
+                                'nama' => $value->nama
+                                ,'longitude' => $value->longitude
+                                ,'latitude' => $value->latitude
+                                ,'kode_pos' => $value->kode_pos
+                                ,'id_negara' => $value->id_negara
+                                ,'origin' => $value->origin
+                                ,'U_DTD_GC_50' => $value->u_dtd_gc_50
+                                ,'U_DTD_GC_100' => $value->u_dtd_gc_100
+                                ,'U_DTD_GC_350' => $value->u_dtd_gc_350
+                                ,'U_DTD_GC_500' => $value->u_dtd_gc_500
+                                ,'U_DTD_GC_1000' => $value->u_dtd_gc_1000
+                                ,'L_DTD_GC_LCL_2' => $value->l_dtd_gc_lcl_2
+                                ,'L_DTD_GC_LCL_6' => $value->l_dtd_gc_lcl_6
+                                ,'L_DTD_GC_LCL_10' => $value->l_dtd_gc_lcl_10
+                                ,'L_DTD_GC_FCL_20ft' => $value->l_dtd_gc_fcl_20ft
+                                ,'L_DTD_GC_FCL_40ft' => $value->l_dtd_gc_fcl_40ft
+                                ,'U_DTP_GC_50' => $value->u_dtp_gc_50
+                                ,'U_DTP_GC_100' => $value->u_dtp_gc_100
+                                ,'U_DTP_GC_350' => $value->u_dtp_gc_350
+                                ,'U_DTP_GC_500' => $value->u_dtp_gc_500
+                                ,'U_DTP_GC_1000' => $value->u_dtp_gc_1000
+                                ,'L_DTP_GC_LCL_2' => $value->l_dtp_gc_lcl_2
+                                ,'L_DTP_GC_LCL_3' => $value->l_dtp_gc_lcl_3
+                                ,'L_DTP_GC_LCL_4' => $value->l_dtp_gc_lcl_4
+                                ,'L_DTP_GC_LCL_5' => $value->l_dtp_gc_lcl_5
+                                ,'L_DTP_GC_LCL_6' => $value->l_dtp_gc_lcl_6
+                                ,'L_DTP_GC_LCL_7' => $value->l_dtp_gc_lcl_7
+                                ,'L_DTP_GC_LCL_8' => $value->l_dtp_gc_lcl_8
+                                ,'L_DTP_GC_LCL_9' => $value->l_dtp_gc_lcl_9
+                                ,'L_DTP_GC_LCL_10' => $value->l_dtp_gc_lcl_10
+                                ,'L_DTP_GC_FCL_20ft' => $value->l_dtp_gc_fcl_20ft
+                                ,'L_DTP_GC_FCL_40ft' => $value->l_dtp_gc_fcl_40ft
+                                ,'created_at' => date('Y-m-d H:i:s')
+                                ,'created_by' => Auth::user()->name
+                            ];
+                }
+                if(!empty($arr)){
+                    KotaModel::insert($arr);
+                }
             }
-            if(!empty($arr)){
-                KotaModel::insert($arr);
-            }
-        }
+        });
+        // if($data->count()){
+        //     foreach ($data as $key => $value) {
+        //         $arr[] = [
+        //                     'nama' => $value->nama
+        //                     ,'longitude' => $value->longitude
+        //                     ,'latitude' => $value->latitude
+        //                     ,'kode_pos' => $value->kode_pos
+        //                     ,'id_negara' => $value->id_negara
+        //                     ,'origin' => $value->origin
+        //                     ,'U_DTD_GC_50' => $value->u_dtd_gc_50
+        //                     ,'U_DTD_GC_100' => $value->u_dtd_gc_100
+        //                     ,'U_DTD_GC_350' => $value->u_dtd_gc_350
+        //                     ,'U_DTD_GC_500' => $value->u_dtd_gc_500
+        //                     ,'U_DTD_GC_1000' => $value->u_dtd_gc_1000
+        //                     ,'L_DTD_GC_LCL_2' => $value->l_dtd_gc_lcl_2
+        //                     ,'L_DTD_GC_LCL_6' => $value->l_dtd_gc_lcl_6
+        //                     ,'L_DTD_GC_LCL_10' => $value->l_dtd_gc_lcl_10
+        //                     ,'L_DTD_GC_FCL_20ft' => $value->l_dtd_gc_fcl_20ft
+        //                     ,'L_DTD_GC_FCL_40ft' => $value->l_dtd_gc_fcl_40ft
+        //                     ,'U_DTP_GC_50' => $value->u_dtp_gc_50
+        //                     ,'U_DTP_GC_100' => $value->u_dtp_gc_100
+        //                     ,'U_DTP_GC_350' => $value->u_dtp_gc_350
+        //                     ,'U_DTP_GC_500' => $value->u_dtp_gc_500
+        //                     ,'U_DTP_GC_1000' => $value->u_dtp_gc_1000
+        //                     ,'L_DTP_GC_LCL_2' => $value->l_dtp_gc_lcl_2
+        //                     ,'L_DTP_GC_LCL_3' => $value->l_dtp_gc_lcl_3
+        //                     ,'L_DTP_GC_LCL_4' => $value->l_dtp_gc_lcl_4
+        //                     ,'L_DTP_GC_LCL_5' => $value->l_dtp_gc_lcl_5
+        //                     ,'L_DTP_GC_LCL_6' => $value->l_dtp_gc_lcl_6
+        //                     ,'L_DTP_GC_LCL_7' => $value->l_dtp_gc_lcl_7
+        //                     ,'L_DTP_GC_LCL_8' => $value->l_dtp_gc_lcl_8
+        //                     ,'L_DTP_GC_LCL_9' => $value->l_dtp_gc_lcl_9
+        //                     ,'L_DTP_GC_LCL_10' => $value->l_dtp_gc_lcl_10
+        //                     ,'L_DTP_GC_FCL_20ft' => $value->l_dtp_gc_fcl_20ft
+        //                     ,'L_DTP_GC_FCL_40ft' => $value->l_dtp_gc_fcl_40ft
+        //                     ,'created_at' => date('Y-m-d H:i:s')
+        //                     ,'created_by' => Auth::user()->name
+        //                 ];
+        //     }
+        //     if(!empty($arr)){
+        //         KotaModel::insert($arr);
+        //     }
+        // }
         return back()->with('success', 'Insert Record successfully.');
     }
 }
