@@ -36,6 +36,7 @@
         $field = "";
         $harga = 0;
         $total = 0;   
+        $fob = 0;
         if($tipe_pengiriman == 1){
             $dimensi_compare = ($panjang * $lebar * $tinggi) / 5000;
             if($dimensi_compare >= $dimensi){
@@ -83,6 +84,7 @@
               
                     
             }else{
+                $fob = 3000000;
                 if($dimensi <= 2){
                     $field = "L_DTP_GC_LCL_2";
                 }else if($dimensi  == 3){
@@ -100,7 +102,7 @@
                 }else if($dimensi == 9){
                     $field = "L_DTP_GC_LCL_9";
                 }else if($dimensi >= 10){
-                    $field = "L_DTP_GC_LCL_6";
+                    $field = "L_DTP_GC_LCL_10";
                 }
                    
             }
@@ -110,7 +112,7 @@
        
         $harga = KotaModel::select('*')->where('id', $destination)->first();
         if($harga->$field){
-            $total =  $dimensi* $harga->$field;
+            $total =  $dimensi* $harga->$field + $fob;
             return response()->json(['harga' => $total], 200);
         }
       
