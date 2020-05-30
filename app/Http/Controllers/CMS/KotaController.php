@@ -237,7 +237,8 @@ class KotaController extends Controller
                 foreach($results as $value)
                 {
                     $arr[] = [
-                                'nama' => $value->nama
+                                'id' => $value->id    
+                                ,'nama' => $value->nama
                                 ,'longitude' => $value->longitude
                                 ,'latitude' => $value->latitude
                                 ,'kode_pos' => $value->kode_pos

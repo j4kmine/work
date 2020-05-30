@@ -46,9 +46,11 @@
                                                         class="custom-control-label" for="checkedAll"></label>
                                                 </div>
                                             </th>
+                                            <th>ID</th>
                                             <th>NAMA</th>
                                             <th>NEGARA</th>
                                             <th>KODE POS</th>
+                                            <th>ORIGIN</th>
                                             <th></th>
                                         </tr>
                                         </thead>   
@@ -60,14 +62,15 @@
                                                              <input type="checkbox" name="datacek[]" class="custom-control-input checkSingle" value="{{$p->id}}" id="{{$p->id}}" required=""><label class="custom-control-label" for="{{$p->id}}"></label>
                                                         </div>
                                                     </td>
+                                                    <td> <div class="d-none d-lg-block">{{ $p->id }}</div></td>
                                                     <td>
-                                                    <div class="d-flex">
-                                                        <div>
+                                                        <div class="d-flex">
                                                             <div>
-                                                                <strong>{{ $p->nama }}</strong>
+                                                                <div>
+                                                                    <strong>{{ $p->nama }}</strong>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
                                                     </td>
                                                     <td>
                                                         @foreach($negara as $n)
@@ -77,6 +80,7 @@
                                                         @endforeach
                                                     </td>
                                                     <td> <div class="d-none d-lg-block">{{ $p->kode_pos }}</div></td>
+                                                    <td> <div class="d-none d-lg-block">{{ $p->origin }}</div></td>
                                                     <td>
                                                         <a href="{{ url('kota/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
                                         
