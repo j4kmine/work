@@ -35,16 +35,12 @@
         $dimensi = $request->dimensi;
         $field = "";
         $harga = 0;
-        $total = 0;
-       
-        $dimensi_compare = ($panjang * $lebar * $tinggi) / 5000;
-      
-     
-        
-        if($dimensi_compare >= $dimensi){
-            $dimensi =  $dimensi_compare;
-        }
+        $total = 0;   
         if($tipe_pengiriman == 1){
+            $dimensi_compare = ($panjang * $lebar * $tinggi) / 5000;
+            if($dimensi_compare >= $dimensi){
+                $dimensi =  $dimensi_compare;
+            }
             if($jenis == 1){
                 if($dimensi <= 50){
                     $field = "U_DTD_GC_50";
@@ -74,6 +70,8 @@
             }
            
         }else if($tipe_pengiriman == 2){
+            $dimensi_compare = ($panjang * $lebar * $tinggi) / 1000000;
+            $dimensi =  $dimensi_compare;
             if ($jenis == 1) {
                 if($dimensi < 6){
                     $field = "L_DTD_GC_LCL_2";
@@ -82,6 +80,7 @@
                 }else if($dimensi >= 10){
                     $field = "L_DTD_GC_LCL_10";
                 }
+              
                     
             }else{
                 if($dimensi <= 2){
