@@ -57,16 +57,16 @@
                
             }else{
                
-                if($dimensi <= 50){
+                if($dimensi >= 50 && $dimensi < 100){
                     $field = "U_DTP_GC_50";
-                }else if($dimensi <= 100){
+                }else if($dimensi >= 100 && $dimensi < 350){
                     $field = "U_DTP_GC_100";
-                }else if($dimensi <= 350){
+                }else if($dimensi >= 350 &&  $dimensi < 500){
                     $field = "U_DTP_GC_350";
-                }else if($dimensi <= 500){
+                }else if($dimensi >= 500 && $dimensi < 1000){
                     $field = "U_DTP_GC_500";
-                }else if($dimensi <= 1000){
-                    $field = "U_DTD_GC_1000";
+                }else if($dimensi >= 1000){
+                    $field = "U_DTP_GC_1000";
                 }
                 $fob = $dimensi* 3000;
                 $fob = $fob + 4000000;
