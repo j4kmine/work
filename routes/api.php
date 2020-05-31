@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 Route::post('cekharga', 'API\PriceController@index');
+Route::post('listblog', 'API\BlogController@index');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
 
