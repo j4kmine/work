@@ -22,7 +22,7 @@
         // ]);
 
         $title = $request->title;
-        $blog = BlogModel::where('title', 'LIKE', '%' . $title . '%')->get();
+        $blog = BlogModel::where('title', 'LIKE', '%' . $search . '%')->paginate(10);
         return response()->json(['list' => $blog], 200);
     }
 }
