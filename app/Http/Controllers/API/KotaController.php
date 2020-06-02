@@ -22,26 +22,12 @@
            
         // ]);
         $conditional = "";
-        $id_kota = $request->id_kota;
-        $nama_kota = $request->nama_kota;
-        $id_negara = $request->id_negara;
-        $nama_negara = $request->nama_negara;
-        if ($id_kota != null) {
-            $conditional .= "AND kota.id = '".$id_kota."' ";
-        }
-        if ($nama_kota != null) {
-            $conditional .= "AND kota.nama LIKE '%".$nama_kota."%' ";
-        }
-        if ($id_negara != null) {
-            $conditional .= "AND kota.id_negara = '".$id_negara."' ";
-        }
-        if ($nama_negara != null) {
-            $conditional .= "AND negara.nama LIKE '%".$nama_negara."%' ";
-        }
+        $nama = $request->nama;
         
         $kotaQuery = KotaModel::join('negara', 'kota.id_negara', '=', 'negara.id')
                         ->select('kota.*', 'negara.nama as nama_negara')  
-                        ->whereRaw("1=1  ".$conditional." ")
+                        ->where('kota.nama', 'like', '%' . $nama . '%')
+                        ->orWhere('negara.nama', 'like', '%' . $nama . '%')
                         ->paginate(10);
         return response()->json(['list' => $kotaQuery], 200);
     }
