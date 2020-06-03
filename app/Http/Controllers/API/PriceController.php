@@ -69,7 +69,7 @@
                 }
                 if($dimensi != 0 && $dimensi2 != 0){
                     
-                    $total = array('door_to_port'=>$dimensi2,'door_to_door'=>$dimensi,'weight'=>$request->dimensi);
+                    $total = array('door_to_port'=>$dimensi2,'door_to_door'=>$dimensi,'weight'=>$request->dimensi,'volume'=> $dimensi_compare);
                     return response()->json(['paket' => $total], 200);
                 }
                      
@@ -120,7 +120,7 @@
                 $dimensi2 =  $dimensi2* $harga->$field2;
             }
             if($dimensi != 0 && $dimensi2 != 0){
-                $total = array('door_to_port'=>$dimensi2,'door_to_door'=>$dimensi,'weight'=>$request->dimensi);
+                $total = array('door_to_port'=>$dimensi2,'door_to_door'=>$dimensi,'weight'=>$request->dimensi,'volume'=> $dimensi_compare);
                 return response()->json(['paket' => $total], 200);
             }     
             
