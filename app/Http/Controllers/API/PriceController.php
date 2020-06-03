@@ -65,7 +65,7 @@
                     $dimensi =  $dimensi* $harga->$field;
                 }
                 if ($harga->$field2) {
-                    $dimensi2 =  $dimensi2* $harga->$field2;
+                    $dimensi2 =  $dimensi2* $harga->$field2 + $fob;
                 }
                 if($dimensi != 0 && $dimensi2 != 0){
                     
@@ -117,7 +117,7 @@
                 $dimensi =  $dimensi* $harga->$field;
             }
             if ($harga->$field2) {
-                $dimensi2 =  $dimensi2* $harga->$field2;
+                $dimensi2 =  $dimensi2* $harga->$field2 + $fob;
             }
             if($dimensi != 0 && $dimensi2 != 0){
                 $total = array('door_to_port'=>$dimensi2,'door_to_door'=>$dimensi,'weight'=>$request->dimensi,'volume'=> $dimensi_compare);
