@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 Route::post('cekongkir', 'API\PriceController@cekongkir');
 Route::post('cekharga', 'API\PriceController@index');
 Route::post('listblog', 'API\BlogController@index');
-Route::post('listkotanegara', 'API\KotaController@index');
+Route::get('listkotanegara', 'API\KotaController@index');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
 

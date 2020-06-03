@@ -22,8 +22,8 @@
            
         // ]);
         $conditional = "";
-        $nama = $request->nama;
-        
+        $nama = $request->input('q');
+     
         $kotaQuery = KotaModel::join('negara', 'kota.id_negara', '=', 'negara.id')
                         ->select('kota.*', 'negara.nama as nama_negara')  
                         ->where('kota.nama', 'like', '%' . $nama . '%')
@@ -31,4 +31,5 @@
                         ->paginate(10);
         return response()->json(['list' => $kotaQuery], 200);
     }
+    
 }
