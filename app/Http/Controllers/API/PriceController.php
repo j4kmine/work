@@ -77,12 +77,8 @@
            
         }else if($tipe_pengiriman == 2){
             $dimensi_compare = ($panjang * $lebar * $tinggi) / 1000000;
-            if($dimensi_compare >= $dimensi){
-                $dimensi =  $dimensi_compare;
-                $dimensi2 =  $dimensi_compare;
-            }else{
-                $dimensi2 = $dimensi;
-            }
+            $dimensi =  $dimensi_compare;
+            $dimensi2 =  $dimensi_compare;
         
        
             if($dimensi < 6){
@@ -92,6 +88,8 @@
             }else if($dimensi >= 10){
                 $field = "L_DTD_GC_LCL_10";
             }
+
+            
             $fob = 3000000;
             if($dimensi <= 2){
                 $field2 = "L_DTP_GC_LCL_2";
