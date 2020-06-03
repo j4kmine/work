@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('cekongkir', 'API\PriceController@cekongkir');
 Route::post('cekharga', 'API\PriceController@index');
 Route::post('listblog', 'API\BlogController@index');
 Route::post('listkotanegara', 'API\KotaController@index');
