@@ -25,7 +25,7 @@
         $nama = $request->input('q');
      
         $kotaQuery = KotaModel::join('negara', 'kota.id_negara', '=', 'negara.id')
-                        ->select('kota.id', 'kota.nama as text')  
+                        ->select('kota.*', 'kota.nama as text')  
                         ->where('kota.nama', 'like', '%' . $nama . '%')
                         ->orWhere('negara.nama', 'like', '%' . $nama . '%')
                         ->paginate(10);

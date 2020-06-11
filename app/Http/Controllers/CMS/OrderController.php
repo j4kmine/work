@@ -6,12 +6,14 @@ namespace App\Http\Controllers\CMS;
 use Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\KotaModel;
+use App\Models\OrderModel;
 use App\Models\NegaraModel;
+use App\Models\KotaModel;
+use App\Models\UserModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class KotaController extends Controller
+class OrderController extends Controller
 {
      /**
      * Display a listing of the resource.
@@ -26,11 +28,11 @@ class KotaController extends Controller
     {
         //
         $search = $request->input('search');
-        $negara= NegaraModel::select()->get();
-        $kota = KotaModel::where('nama', 'LIKE', '%' . $search . '%')
+        $negara = NegaraModel::select()->get();
+        $order = OrderModel::where('pengirim_nama', 'LIKE', '%' . $search . '%')
                      ->paginate(10);
 
-        return view('cms.pages.kota.index', compact(['kota','negara']));
+        return view('cms.pages.order.index', compact(['order','negara']));
     }
 
     /**
@@ -41,7 +43,39 @@ class KotaController extends Controller
     public function create()
     {
         $data['negara'] = NegaraModel::select()->get();
-        return view('cms.pages.kota.add', $data);
+        $data['user'] = UserModel::select()->get();
+        $data['tipe_pengiriman'] = array(
+            array('id'=>'U_DTD_GC_50','nama'=>'tes'),
+            array('id'=>'U_DTD_GC_100','nama'=>'tes'),
+            array('id'=>'U_DTD_GC_350','nama'=>'tes'),
+            array('id'=>'U_DTD_GC_500','nama'=>'tes'),
+            array('id'=>'U_DTD_GC_1000','nama'=>'tes'),
+            array('id'=>'L_DTD_GC_LCL_2','nama'=>'tes'),
+            array('id'=>'L_DTD_GC_LCL_6','nama'=>'tes'),
+            array('id'=>'L_DTD_GC_LCL_10','nama'=>'tes'),
+            array('id'=>'L_DTD_GC_FCL_20ft','nama'=>'tes'),
+            array('id'=>'L_DTD_GC_FCL_40ft','nama'=>'tes'),
+            array('id'=>'U_DTP_GC_50','nama'=>'tes'),
+            array('id'=>'U_DTP_GC_100','nama'=>'tes'),
+            array('id'=>'U_DTP_GC_350','nama'=>'tes'),
+            array('id'=>'U_DTP_GC_500','nama'=>'tes'),
+            array('id'=>'U_DTP_GC_1000','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_2','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_3','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_4','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_5','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_6','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_7','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_8','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_9','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_LCL_10','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_FCL_20ft','nama'=>'tes'),
+            array('id'=>'L_DTP_GC_FCL_40ft','nama'=>'tes'),
+        );
+        echo "<pre>";
+        var_dump($data['tipe_pengiriman']);
+        exit();
+        return view('cms.pages.order.add', $data);
     }
 
     /**
@@ -57,7 +91,7 @@ class KotaController extends Controller
             'id_negara'=>'required'
         ]);
         
-        $kota = new KotaModel([
+        $Order = new OrderModel([
             'nama' => $request->get('nama')
             ,'longitude' => $request->get('longitude')
             ,'latitude' => $request->get('latitude')
@@ -90,14 +124,12 @@ class KotaController extends Controller
             ,'L_DTP_GC_LCL_10' => $request->get('L_DTP_GC_LCL_10')
             ,'L_DTP_GC_FCL_20ft' => $request->get('L_DTP_GC_FCL_20ft')
             ,'L_DTP_GC_FCL_40ft' => $request->get('L_DTP_GC_FCL_40ft')
-            ,'u_layanan' => $request->get('u_layanan')
-            ,'l_layanan' => $request->get('l_layanan')
             ,'created_at' => date('Y-m-d H:i:s')
             ,'created_by' => Auth::user()->name
         ]);
-        $data = $kota->save();
+        $data = $Order->save();
        
-        return redirect('/kota/create')->with('success', 'Success Input Data');
+        return redirect('/Order/create')->with('success', 'Success Input Data');
     }
 
     /**
@@ -122,10 +154,10 @@ class KotaController extends Controller
     {
         //
         $where = array('id' => $id);
-        $data['kota'] = KotaModel::where($where)->first();
+        $data['Order'] = OrderModel::where($where)->first();
         $data['negara'] = NegaraModel::select()->get();
         
-        return view('cms.pages.kota.edit', $data);
+        return view('cms.pages.order.edit', $data);
     }
 
     /**
@@ -175,13 +207,11 @@ class KotaController extends Controller
             ,'L_DTP_GC_LCL_10' => $request->L_DTP_GC_LCL_10
             ,'L_DTP_GC_FCL_20ft' => $request->L_DTP_GC_FCL_20ft
             ,'L_DTP_GC_FCL_40ft' => $request->L_DTP_GC_FCL_40ft
-            ,'u_layanan' => $request->u_layanan
-            ,'l_layanan' => $request->l_layanan
             ,'updated_at' => date('Y-m-d H:i:s')
             ,'modified_by' => Auth::user()->name
         ];
-        KotaModel::where('id',$id)->update($update);
-        return redirect('/kota/'.$id.'/edit')->with('success', 'Success Update Data');      
+        OrderModel::where('id',$id)->update($update);
+        return redirect('/Order/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
 
     /**
@@ -193,21 +223,21 @@ class KotaController extends Controller
     public function destroy($id)
     {
        
-        KotaModel::where('id',$id)->delete();
-        return redirect('/kota')->with('success', 'Deleted Successfully');
+        OrderModel::where('id',$id)->delete();
+        return redirect('/Order')->with('success', 'Deleted Successfully');
     }
     public function hapus($id)
     {
        
-        KotaModel::where('id',$id)->delete();
-        return redirect('/kota')->with('success', 'Deleted Successfully');
+        OrderModel::where('id',$id)->delete();
+        return redirect('/Order')->with('success', 'Deleted Successfully');
     }
     public function postProcess(Request $request){
         $postvalue =  $request->datacek;
  
 		if($postvalue != ''){
 			foreach($postvalue as $data){
-                KotaModel::where('id',$data)->delete();
+                OrderModel::where('id',$data)->delete();
 			}
             echo "success";
 		}else{
@@ -219,7 +249,7 @@ class KotaController extends Controller
     {
         $data['negara'] = NegaraModel::select()->get();
 
-        return view('cms.pages.kota.import', $data);
+        return view('cms.pages.order.import', $data);
     }
 
     public function importData(Request $request)
@@ -279,7 +309,7 @@ class KotaController extends Controller
                     }
                 }
                 if(!empty($arr)){
-                    KotaModel::insert($arr);
+                    OrderModel::insert($arr);
                 }
             }
         });
@@ -330,7 +360,7 @@ class KotaController extends Controller
         //                     ];
         //         }
         //         if(!empty($arr)){
-        //             KotaModel::insert($arr);
+        //             OrderModel::insert($arr);
         //         }
         //     }
         // });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\UserModel;
 class UsersController extends Controller
 {
     /**
@@ -55,5 +56,21 @@ class UsersController extends Controller
         }
     }
  
-  
+
+    public function userSelect2(Request $request)
+    {
+   
+        // $this->validate($request, [
+        //     'title' => 'required'
+           
+        // ]);
+
+        $conditional = "";
+        $name = $request->input('q');
+
+        $userQuery = UserModel::where('name', 'LIKE', '%' . $name . '%')
+                    ->select('*', 'name as text')
+                    ->paginate(10);
+        return response()->json([$userQuery], 200);
+    }
 }

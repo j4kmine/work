@@ -24,6 +24,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'CMS\UserController');
     Route::post('users/postProcess', 'CMS\UserController@postProcess');
 
+    ## ORDER
+    Route::get('order/import', 'CMS\OrderController@import')->name('order.import');
+    Route::post('order/importData', 'CMS\OrderController@importData')->name('order.importData');
+    Route::resource('order', 'CMS\OrderController');
+    Route::get('order/hapus/{id}', 'CMS\OrderController@hapus');
+    Route::post('order/postProcess', 'CMS\OrderController@postProcess');
+
+    ## ADDRESS
+    Route::get('address/hapus/{id}', 'CMS\AddressController@hapus');
+    Route::resource('address', 'CMS\AddressController');
+    Route::post('address/postProcess', 'CMS\AddressController@postProcess');
 
     ## BLOG
     Route::get('blog/hapus/{id}', 'CMS\BlogController@hapus');
