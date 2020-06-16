@@ -19,7 +19,40 @@
             <div class="container">
                 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
                 <script>
+
                     $(document).ready(function() {
+                        var count = 1;
+                        dynamic_field(count);
+
+                        function dynamic_field(number){
+                            var html = '<tr>';
+                            html += '<td><input type="text" name="kategori[]" class="form-control"></td>';
+                            html += '<td><input type="text" name="deskripsi[]" class="form-control"></td>';
+                            html += '<td><input type="text" name="harga[]" class="form-control"></td>';
+                            html += '<td><input type="text" name="panjang[]" class="form-control"></td>';
+                            html += '<td><input type="text" name="lebar[]" class="form-control"></td>';
+                            html += '<td><input type="text" name="tinggi[]" class="form-control"></td>';
+                            html += '<td><input type="text" name="berat[]" class="form-control"></td>';
+                            if (number > 1) {
+                                html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
+                                $('tbody').append(html);
+                            } else {
+                                html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td></tr>';
+                                $('tbody').html(html);
+                            }
+                        }
+
+                        // $('#add').click(function(){
+                        $(document).on('click', '#add', function(){
+                            count++;
+                            dynamic_field(count);
+                        });
+
+                        $(document).on('click', '#remove', function(){
+                            count--;
+                            $(this).closest("tr").remove();
+                        });
+
                         $("#id_users").select2({
                             placeholder: "Pilih User"
                         }).on("change", function(e) {
@@ -104,6 +137,7 @@
                                 })
                             },
                         });
+
                     });
                 </script>
             <div class="row my-3">
@@ -152,57 +186,12 @@
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="tipe_pengiriman" class="col-form-label s-12">Tipe Pengiriman</label>
-                                            <select class="form-control" id="tipe_pengiriman">
+                                            <select class="form-control" id="tipe_pengiriman" name="tipe_pengiriman">
                                                 @foreach($tipe_pengiriman as $value)
-                                                    <option value="{{ $value }}">{{ $value }}</option>
+                                                    <option value="{{ $value['id'] }}">{{ $value['nama'] }}</option>
                                                 @endforeach
                                             </select>
                                             <!-- <input id="tipe_pengiriman" placeholder="Enter Tipe Pengiriman" name="tipe_pengiriman" value="{{ old('tipe_pengiriman') }}" class="form-control r-0 light s-12 " type="text"> -->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <h1><b>DATA BARANG</b></h1>
-                                <div class="form-row">
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_kategori" class="col-form-label s-12">Barang Kategori</label>
-                                            <input id="barang_kategori" placeholder="Enter Barang Kategori" name="barang_kategori" value="{{ old('barang_kategori') }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_deskripsi" class="col-form-label s-12">Barang Deskripsi</label>
-                                            <input id="barang_deskripsi" placeholder="Enter Barang Deskripsi" name="barang_deskripsi" value="{{ old('barang_deskripsi') }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_nilai" class="col-form-label s-12">Barang Nilai</label>
-                                            <input id="barang_nilai" placeholder="Enter Barang Nilai" name="barang_nilai" value="{{ old('barang_nilai') }}" class="form-control r-0 light s-12 " type="number"  min="0">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_jumlah" class="col-form-label s-12">Barang Jumlah</label>
-                                            <input id="barang_jumlah" placeholder="Enter Barang Jumlah" name="barang_jumlah" value="{{ old('barang_jumlah') }}" class="form-control r-0 light s-12 " type="number"  min="0">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_dimensi" class="col-form-label s-12">Barang Dimensi</label>
-                                            <input id="barang_dimensi" placeholder="Enter Barang Dimensi" name="barang_dimensi" value="{{ old('barang_dimensi') }}" class="form-control r-0 light s-12 " type="number"  min="0">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_berat" class="col-form-label s-12">Barang Berat</label>
-                                            <input id="barang_berat" placeholder="Enter Barang Berat" name="barang_berat" value="{{ old('barang_berat') }}" class="form-control r-0 light s-12 " type="number"  min="0">
                                         </div>
                                     </div>
                                 </div>
@@ -381,6 +370,67 @@
                                             <input id="referensi_customer" placeholder="Enter Referensi Customer" name="referensi_customer" value="{{ old('referensi_customer') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
+                                </div>
+
+                                <h1><b>DATA BARANG</b></h1>
+                                <div class="form-row">
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_kategori" class="col-form-label s-12">Barang Kategori</label>
+                                            <input id="barang_kategori" placeholder="Enter Barang Kategori" name="barang_kategori" value="{{ old('barang_kategori') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_deskripsi" class="col-form-label s-12">Barang Deskripsi</label>
+                                            <input id="barang_deskripsi" placeholder="Enter Barang Deskripsi" name="barang_deskripsi" value="{{ old('barang_deskripsi') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_nilai" class="col-form-label s-12">Barang Nilai</label>
+                                            <input id="barang_nilai" placeholder="Enter Barang Nilai" name="barang_nilai" value="{{ old('barang_nilai') }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_jumlah" class="col-form-label s-12">Barang Jumlah</label>
+                                            <input id="barang_jumlah" placeholder="Enter Barang Jumlah" name="barang_jumlah" value="{{ old('barang_jumlah') }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_dimensi" class="col-form-label s-12">Barang Dimensi</label>
+                                            <input id="barang_dimensi" placeholder="Enter Barang Dimensi" name="barang_dimensi" value="{{ old('barang_dimensi') }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_berat" class="col-form-label s-12">Barang Berat</label>
+                                            <input id="barang_berat" placeholder="Enter Barang Berat" name="barang_berat" value="{{ old('barang_berat') }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div> -->
+
+                                    <table class="table table-bordered table-striped" id="barang-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Kategori</th>
+                                                <th>Deskripsi</th>
+                                                <th>Harga</th>
+                                                <th>Panjang</th>
+                                                <th>Lebar</th>
+                                                <th>Tinggi</th>
+                                                <th>Berat</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
                                 </div>
 
                                 <div class="form-row">

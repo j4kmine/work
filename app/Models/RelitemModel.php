@@ -15,6 +15,6 @@ class RelitemModel extends Model
      */
     protected $table ="rel_item";
     protected $fillable = [
-        'id', 'id_order', 'harga', 'deskripsi', 'panjang', 'lebar', 'tinggi', 'berat', 'created_at', 'updated_at', 'created_by', 'modified_by'
+        'id', 'id_order', 'harga', 'deskripsi', 'panjang', 'lebar', 'tinggi', 'berat', 'created_at', 'updated_at', 'created_by', 'modified_by', 'kategori'
     ];
 }
