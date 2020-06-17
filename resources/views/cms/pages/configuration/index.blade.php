@@ -304,6 +304,26 @@
                                         </div>
                                     </div>
                                 </div>  
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="name" class="col-form-label s-12">FOB</label>
+                                            <textarea rows="5" class="form-control r-0 light s-12" id="fob" placeholder="Enter FOB " name="fob" >
+                                                {{ old('fob') }} 
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="name" class="col-form-label s-12">Local Charge</label>
+                                            <textarea rows="5" class="form-control r-0 light s-12" id="local_charge" placeholder="Enter Local Charge " name="local_charge" >
+                                                {{ old('local_charge') }} 
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div> 
                                 <br/>
                                 <div class="form-row">
                                     <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>

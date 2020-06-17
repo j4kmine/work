@@ -136,6 +136,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="url_youtube" class="col-form-label s-12">URL YOUTUBE</label>
+                                            <input id="url_youtube" placeholder="Enter Blog Url Youtube" name="url_youtube" value="{{ old('url_youtube') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-body">
                                 <button type="button" class="btn btn-primary btn-lg openpopupberita"><i class="icon-image mr-2"></i>Pick Image</button>

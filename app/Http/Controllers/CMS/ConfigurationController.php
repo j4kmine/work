@@ -49,6 +49,8 @@ class ConfigurationController extends Controller{
             ,'instagram' => $request->instagram
             ,'id_image' => $request->id_image
             ,'service_pricing' => $request->service_pricing
+            ,'fob' => $request->fob
+            ,'local_charge' => $request->local_charge
         ]);
         $data = $configuration->save();
         return redirect('/configuration')->with('success', 'Success Input Data');
@@ -76,6 +78,8 @@ class ConfigurationController extends Controller{
         ,'instagram' => $request->instagram
         ,'id_image' => $request->id_image
         ,'service_pricing' => $request->service_pricing
+        ,'fob' => $request->fob
+        ,'local_charge' => $request->local_charge
         ];
        
         ConfigurationModel::where('id',$id)->update($update);

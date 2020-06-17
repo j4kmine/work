@@ -63,6 +63,7 @@ class BlogController extends Controller
             'summary' => $request->get('summary'),
             'body' => $request->get('body'),
             'keyword' => $request->get('keyword'),
+            'url_youtube' => $request->get('url_youtube'),
             'id_image' => $request->get('id_image'),
         ]);
         $data = $blog->save();
@@ -121,7 +122,7 @@ class BlogController extends Controller
             'id_image'=>'required'
         ]);
          
-        $update = ['title' => $request->title, 'summary' => $request->summary, 'body' => $request->body,'keyword' => $request->keyword,'id_image' => $request->id_image];
+        $update = ['title' => $request->title, 'summary' => $request->summary,'url_youtube' => $request->url_youtube,  'body' => $request->body,'keyword' => $request->keyword,'id_image' => $request->id_image];
         BlogModel::where('id',$id)->update($update);
         return redirect('/blog/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
