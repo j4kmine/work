@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'Frontend\HomeController@index')->name('home');
+Route::get('cekongkir', 'Frontend\OngkirController@index')->name('cekongkir');
+Route::get('cekresi', 'Frontend\ResiController@index')->name('cekresi');
+Route::get('news', 'Frontend\BlogController@index')->name('news');
+Route::post('morenews', 'Frontend\BlogController@loadmore')->name('morenews');
 Route::get('login', 'Auth\LoginController@login')->name('login');
 // Route::get('login',array('as'=>'login',function(){
 //     return view('cms/pages/users/login');
@@ -17,9 +22,7 @@ Route::get('login', 'Auth\LoginController@login')->name('login');
 Route::post('login', 'Auth\LoginController@doLoginCms');
 Route::get('logout', 'Auth\LoginController@doLogout')->name('logout');
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return view('templatecms');
-    });
+    
     Route::get('users/hapus/{id}', 'CMS\UserController@hapus');
     Route::resource('users', 'CMS\UserController');
     Route::post('users/postProcess', 'CMS\UserController@postProcess');
