@@ -12,4 +12,7 @@
             </div>
         </div>
     </div>
+    @if ($key == count($blogs ) - 1)
+        <input type="hidden" id="current_pagination" value="{{ $blog['id'] }}">
+   @endif
 @endforeach

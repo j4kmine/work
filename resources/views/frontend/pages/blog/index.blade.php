@@ -133,15 +133,16 @@
         });
         $("button.btn.btn-cek.btn-more").click(function(e){
           e.preventDefault();
-        //   var current_value  = $(".current_pagination:last").val();
-        //   $('.current_pagination').remove();
-          $.post("<?php echo url('/morenews')?>", {current_value : 0}, 
+          var current_value  = $("#current_pagination").val();
+          $('#current_pagination').remove();
+          $.post("<?php echo url('/morenews')?>", {current_value : current_value}, 
               function(data){
                 var cekdata = data.includes("<div");
+                console.log(cekdata)
                 if (cekdata) {
                     $( "#article-parent" ).append( data );
                 } else {
-                  var x = document.getElementById("tombol-lainnya");
+                  var x = document.getElementById("btnMore");
                   x.style.display = "none";
                 }
             
@@ -260,26 +261,30 @@
             @endforeach
         </div>
     </div>
-    @foreach($blogs as $key=>$blog)
-        @if($key > 3) 
-            <div id="article-parent">
-                <div class="article-section">
-                    <div class="row">
-                        <div class='col-md-4'>
-                            <img src="{{url('/images/'.$blog['imagesdetail']['path'])}}" class="img-responsive" />
-                        </div>
-                        <div class='col-md-8'>
-                            <h1 class="title">{{ $blog['title'] }}</h1>
-                            <b class="date">05 Maret 2019</b>
+    <div id="article-parent">
+        @foreach($blogs as $key=>$blog)
+            @if($key > 3) 
+                    <div class="article-section">
+                        <div class="row">
+                            <div class='col-md-4'>
+                                <img src="{{url('/images/'.$blog['imagesdetail']['path'])}}" class="img-responsive" />
+                            </div>
+                            <div class='col-md-8'>
+                                <h1 class="title">{{ $blog['title'] }}</h1>
+                                <b class="date">05 Maret 2019</b>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-         @endif
-    @endforeach
+                    
+                    @if ($key == 8)
+                         <input type="hidden" id="current_pagination" value="{{ $blog['id'] }}">
+                    @endif
+            @endif
+        @endforeach
+    </div>
     <div class="row">
         <div class="col-md-12 text-center">
-            <button class="btn btn-cek btn-more"><b>Muat Lebih Banyak</b></button>
+            <button class="btn btn-cek btn-more" id="btnMore"><b>Muat Lebih Banyak</b></button>
         </div>
     </div>
 </div>

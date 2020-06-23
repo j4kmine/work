@@ -15,7 +15,11 @@ Route::get('cekongkir', 'Frontend\OngkirController@index')->name('cekongkir');
 Route::get('cekresi', 'Frontend\ResiController@index')->name('cekresi');
 Route::get('news', 'Frontend\BlogController@index')->name('news');
 Route::post('morenews', 'Frontend\BlogController@loadmore')->name('morenews');
-Route::get('login', 'Auth\LoginController@login')->name('login');
+Route::get('userlogin', 'Frontend\UserController@login')->name('userlogin');
+Route::get('userregister', 'Frontend\UserController@register')->name('userregister');
+Route::get('userreset', 'Frontend\UserController@resetpassword')->name('userreset');
+Route::get('userforgot', 'Frontend\UserController@forgotpassword')->name('userforgot');
+
 // Route::get('login',array('as'=>'login',function(){
 //     return view('cms/pages/users/login');
 // }));

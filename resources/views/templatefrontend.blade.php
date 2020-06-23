@@ -21,7 +21,12 @@
     <link rel="stylesheet" href="{{url('frontend/assets/css/style.css')}}">
 </head>
 <body>
-    @include('frontend.layouts.navbar')
+    <?php if(isset($page)){ ?>
+        @include('frontend.layouts.navbaruser')
+    <?php }else{ ?>
+        @include('frontend.layouts.navbar')
+    <?php } ?>
+   
     @yield('content')
     @include('frontend.layouts.footer')
 </body>

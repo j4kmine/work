@@ -18,7 +18,7 @@
                     <li><a href="#">Panduan Expor</a></li>
                     <li><a href="#">ExportKu</a></li>
                     <li><a href="<?php echo url('/cekresi')?>">Lacak Kiriman</a></li>
-                    <li class="btn-login"><a href="#">Masuk</a></li>
+                    <li class="btn-login"><a href="<?php echo url('/userlogin')?>">Masuk</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
