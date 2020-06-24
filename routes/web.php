@@ -19,10 +19,7 @@ Route::get('userlogin', 'Frontend\UserController@login')->name('userlogin');
 Route::get('userregister', 'Frontend\UserController@register')->name('userregister');
 Route::get('userreset', 'Frontend\UserController@resetpassword')->name('userreset');
 Route::get('userforgot', 'Frontend\UserController@forgotpassword')->name('userforgot');
-
-// Route::get('login',array('as'=>'login',function(){
-//     return view('cms/pages/users/login');
-// }));
+Route::get('read/{slug}/{id}', 'Frontend\BlogController@read')->name('read');
 Route::get('login', 'Auth\LoginController@login')->name('login');
 Route::post('login', 'Auth\LoginController@doLoginCms');
 Route::get('logout', 'Auth\LoginController@doLogout')->name('logout');

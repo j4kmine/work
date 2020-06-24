@@ -34,4 +34,25 @@ class BlogController extends Controller
       
         return view('frontend.pages.blog.loadmore', compact('blogs'));
     }
+    public  function read($slug="-",$id="-"){
+        $blogs['blogs'] = BlogModel::orderBy('id', 'DESC')->where([
+            ['slug', '=', $slug],
+            ['id', '=', $id]
+        ])->first();
+        if( $blogs['blogs']->id_image != 0){
+            $where = array('id' =>  $blogs['blogs']->id_image);
+             $blogs['blogs']->imagesdetail = ImagesModel::where($where)->first();
+        }
+        $blogs['lainnya'] = BlogModel::orderBy('id', 'DESC')->paginate(2);
+        if(isset( $blogs['lainnya']) && count( $blogs['lainnya'])>0){
+            foreach($blogs['lainnya'] as $key=>$value){
+                if($value->id_image != 0){
+                    $where = array('id' => $value->id_image);
+                    $blogs['lainnya'][$key]->imagesdetail = ImagesModel::where($where)->first();
+                }
+            }
+        }
+      
+        return view('frontend.pages.blog.read', compact('blogs'));
+    }
 }
