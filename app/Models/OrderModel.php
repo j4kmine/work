@@ -20,6 +20,7 @@ class OrderModel extends Model
 		'kota_asal',
 		'kota_tujuan',
 		'tipe_pengiriman',
+		'barang_kategori',
 		'pengirim_nama',
 		'pengirim_negara',
 		'pengirim_kodepos',

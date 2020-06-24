@@ -45,37 +45,35 @@ class OrderController extends Controller
     {
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
-        $data['tipe_pengiriman'] = array(
-            array('id'=>'U_DTD_GC_50','nama'=>'Udara DTD General Cargo 50'),
-            array('id'=>'U_DTD_GC_100','nama'=>'Udara DTD General Cargo 100'),
-            array('id'=>'U_DTD_GC_350','nama'=>'Udara DTD General Cargo 350'),
-            array('id'=>'U_DTD_GC_500','nama'=>'Udara DTD General Cargo 500'),
-            array('id'=>'U_DTD_GC_1000','nama'=>'Udara DTD General Cargo 1000'),
-            array('id'=>'L_DTD_GC_LCL_2','nama'=>'Laut DTD General Cargo LCL 2'),
-            array('id'=>'L_DTD_GC_LCL_6','nama'=>'Laut DTD General Cargo LCL 6'),
-            array('id'=>'L_DTD_GC_LCL_10','nama'=>'Laut DTD General Cargo LCL 10'),
-            array('id'=>'L_DTD_GC_FCL_20ft','nama'=>'Laut DTD General Cargo FCL 20ft'),
-            array('id'=>'L_DTD_GC_FCL_40ft','nama'=>'Laut DTD General Cargo FCL 40ft'),
-            array('id'=>'U_DTP_GC_50','nama'=>'Udara DTP General Cargo 50'),
-            array('id'=>'U_DTP_GC_100','nama'=>'Udara DTP General Cargo 100'),
-            array('id'=>'U_DTP_GC_350','nama'=>'Udara DTP General Cargo 350'),
-            array('id'=>'U_DTP_GC_500','nama'=>'Udara DTP General Cargo 500'),
-            array('id'=>'U_DTP_GC_1000','nama'=>'Udara DTP General Cargo 1000'),
-            array('id'=>'L_DTP_GC_LCL_2','nama'=>'Laut DTP General Cargo LCL 2'),
-            array('id'=>'L_DTP_GC_LCL_3','nama'=>'Laut DTP General Cargo LCL 3'),
-            array('id'=>'L_DTP_GC_LCL_4','nama'=>'Laut DTP General Cargo LCL 4'),
-            array('id'=>'L_DTP_GC_LCL_5','nama'=>'Laut DTP General Cargo LCL 5'),
-            array('id'=>'L_DTP_GC_LCL_6','nama'=>'Laut DTP General Cargo LCL 6'),
-            array('id'=>'L_DTP_GC_LCL_7','nama'=>'Laut DTP General Cargo LCL 7'),
-            array('id'=>'L_DTP_GC_LCL_8','nama'=>'Laut DTP General Cargo LCL 8'),
-            array('id'=>'L_DTP_GC_LCL_9','nama'=>'Laut DTP General Cargo LCL 9'),
-            array('id'=>'L_DTP_GC_LCL_10','nama'=>'Laut DTP General Cargo LCL 10'),
-            array('id'=>'L_DTP_GC_FCL_20ft','nama'=>'Laut DTP General Cargo FCL 20ft'),
-            array('id'=>'L_DTP_GC_FCL_40ft','nama'=>'Laut DTP General Cargo FCL 40ft')
-        );
-        // echo "<pre>";
-        // var_dump($data['tipe_pengiriman']);
-        // exit();
+        // $data['tipe_pengiriman'] = array(
+        //     array('id'=>'U_DTD_GC_50','nama'=>'Udara DTD General Cargo 50'),
+        //     array('id'=>'U_DTD_GC_100','nama'=>'Udara DTD General Cargo 100'),
+        //     array('id'=>'U_DTD_GC_350','nama'=>'Udara DTD General Cargo 350'),
+        //     array('id'=>'U_DTD_GC_500','nama'=>'Udara DTD General Cargo 500'),
+        //     array('id'=>'U_DTD_GC_1000','nama'=>'Udara DTD General Cargo 1000'),
+        //     array('id'=>'L_DTD_GC_LCL_2','nama'=>'Laut DTD General Cargo LCL 2'),
+        //     array('id'=>'L_DTD_GC_LCL_6','nama'=>'Laut DTD General Cargo LCL 6'),
+        //     array('id'=>'L_DTD_GC_LCL_10','nama'=>'Laut DTD General Cargo LCL 10'),
+        //     array('id'=>'L_DTD_GC_FCL_20ft','nama'=>'Laut DTD General Cargo FCL 20ft'),
+        //     array('id'=>'L_DTD_GC_FCL_40ft','nama'=>'Laut DTD General Cargo FCL 40ft'),
+        //     array('id'=>'U_DTP_GC_50','nama'=>'Udara DTP General Cargo 50'),
+        //     array('id'=>'U_DTP_GC_100','nama'=>'Udara DTP General Cargo 100'),
+        //     array('id'=>'U_DTP_GC_350','nama'=>'Udara DTP General Cargo 350'),
+        //     array('id'=>'U_DTP_GC_500','nama'=>'Udara DTP General Cargo 500'),
+        //     array('id'=>'U_DTP_GC_1000','nama'=>'Udara DTP General Cargo 1000'),
+        //     array('id'=>'L_DTP_GC_LCL_2','nama'=>'Laut DTP General Cargo LCL 2'),
+        //     array('id'=>'L_DTP_GC_LCL_3','nama'=>'Laut DTP General Cargo LCL 3'),
+        //     array('id'=>'L_DTP_GC_LCL_4','nama'=>'Laut DTP General Cargo LCL 4'),
+        //     array('id'=>'L_DTP_GC_LCL_5','nama'=>'Laut DTP General Cargo LCL 5'),
+        //     array('id'=>'L_DTP_GC_LCL_6','nama'=>'Laut DTP General Cargo LCL 6'),
+        //     array('id'=>'L_DTP_GC_LCL_7','nama'=>'Laut DTP General Cargo LCL 7'),
+        //     array('id'=>'L_DTP_GC_LCL_8','nama'=>'Laut DTP General Cargo LCL 8'),
+        //     array('id'=>'L_DTP_GC_LCL_9','nama'=>'Laut DTP General Cargo LCL 9'),
+        //     array('id'=>'L_DTP_GC_LCL_10','nama'=>'Laut DTP General Cargo LCL 10'),
+        //     array('id'=>'L_DTP_GC_FCL_20ft','nama'=>'Laut DTP General Cargo FCL 20ft'),
+        //     array('id'=>'L_DTP_GC_FCL_40ft','nama'=>'Laut DTP General Cargo FCL 40ft')
+        // );
+
         return view('cms.pages.order.add', $data);
     }
 
@@ -101,9 +99,8 @@ class OrderController extends Controller
         $berat = $request->get('berat');
         $data_rel_item = array();
 
-        if (count($kategori) > 0) {
-            for ($i=0; $i < count($kategori); $i++) { 
-                $data_rel_item[$i]['kategori'] = $kategori[$i];
+        if (count($harga) > 0) {
+            for ($i=0; $i < count($harga); $i++) { 
                 $data_rel_item[$i]['deskripsi'] = $deskripsi[$i];
                 $data_rel_item[$i]['harga'] = $harga[$i];
                 $data_rel_item[$i]['panjang'] = $panjang[$i];
@@ -120,6 +117,8 @@ class OrderController extends Controller
             ,'kota_asal' => '16417'
             ,'kota_tujuan' => $request->get('kota_tujuan')
             ,'tipe_pengiriman' => $request->get('tipe_pengiriman')
+
+            ,'barang_kategori' => $request->get('barang_kategori')
 
             ,'pengirim_nama' => $request->get('pengirim_nama')
             ,'pengirim_negara' => $request->get('pengirim_negara')
@@ -164,7 +163,6 @@ class OrderController extends Controller
                         ,'lebar' => $value['lebar']
                         ,'tinggi' => $value['tinggi']
                         ,'berat' => $value['berat']
-                        ,'kategori' => $value['kategori']
                         ,'created_at' => date('Y-m-d H:i:s')
                         ,'created_by' => Auth::user()->name
                     ]);

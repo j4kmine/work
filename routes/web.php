@@ -23,6 +23,7 @@ Route::get('userforgot', 'Frontend\UserController@forgotpassword')->name('userfo
 // Route::get('login',array('as'=>'login',function(){
 //     return view('cms/pages/users/login');
 // }));
+
 Route::post('login', 'Auth\LoginController@doLoginCms');
 Route::get('logout', 'Auth\LoginController@doLogout')->name('logout');
 Route::group(['middleware' => ['auth']], function () {
