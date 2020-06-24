@@ -61,6 +61,7 @@ class BlogController extends Controller
         $blog = new BlogModel([
             'title' => $request->get('title'),
             'summary' => $request->get('summary'),
+            'slug'=>strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->get('title')))),
             'body' => $request->get('body'),
             'keyword' => $request->get('keyword'),
             'url_youtube' => $request->get('url_youtube'),
@@ -116,6 +117,7 @@ class BlogController extends Controller
     {
         $this->validate($request,[
             'title'=>'required',
+            'slug'=>strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->get('title')))),
             'summary'=>'required',
             'body'=>'required',
             'keyword'=>'required',
