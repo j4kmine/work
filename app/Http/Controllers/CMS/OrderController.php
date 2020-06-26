@@ -196,6 +196,7 @@ class OrderController extends Controller
         //
         $where = array('id' => $id);
         $data['order'] = OrderModel::where($where)->first();
+ 
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
         
