@@ -180,6 +180,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         App\Providers\TextServiceProvider::class,
+        Spatie\Newsletter\NewsletterServiceProvider::class,
         
     ],
 
@@ -232,6 +233,7 @@ return [
         'TextHelp' => App\Helpers\Text::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Mailchimp' => NZTim\Mailchimp\MailchimpFacade::class,
+        'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
     ],
 
 ];

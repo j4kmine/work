@@ -8,7 +8,7 @@ use App\Models\UserModel;
 use App\Http\Controllers\Controller;
 use PHPMailer\PHPMailer;
 use Illuminate\Support\Facades\Auth;
-use NZTim\Mailchimp\Mailchimp as Mailchimp;
+use Spatie\Newsletter\NewsletterFacade as Newsletter;
 class UserController extends Controller
 {
     public function login()
@@ -21,7 +21,15 @@ class UserController extends Controller
     }
     public function subscibe(Request $request){
         
-        $subscribe = Mailchimp::subscribe('f92679b36e', $request->email);
+       
+        if(! Newsletter::isSubscribed($request->email)){
+
+            Newsletter::subscribeOrUpdate($request->email, ['FNAME'=>'Rince','LNAME'=>'Wind']);
+            return redirect()->back()->with('success', 'Success Subscribed');
+        }else{
+            return redirect()->back()->withErrors(['errors', 'Failed Subscribe']);
+        }
+       
     }
     public function loginuser(Request $request){
        
