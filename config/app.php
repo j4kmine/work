@@ -179,6 +179,7 @@ return [
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        App\Providers\TextServiceProvider::class,
         
     ],
 
@@ -228,7 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        
+        'TextHelp' => App\Helpers\Text::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 

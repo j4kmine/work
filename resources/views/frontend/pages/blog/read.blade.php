@@ -237,15 +237,17 @@
             </div>
             @foreach($blogs['lainnya'] as $key=>$blog)
                 <div class="item-below">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="{{url('/images/'.$blog['imagesdetail']['path'])}} " class="img-responsive ">
+                    <a href="<?php echo TextHelp::generateLink($blog);?>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="{{url('/images/'.$blog['imagesdetail']['path'])}} " class="img-responsive ">
+                            </div>
+                            <div class="col-md-6">
+                                <h4>{{ $blog['title'] }}</h4>
+                                <P>05 Maret 2019</P>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h4>{{ $blog['title'] }}</h4>
-                            <P>05 Maret 2019</P>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             @endforeach
           

@@ -514,10 +514,11 @@
                 </div>
                     @foreach($blogs as $blog)
                             <div class="col-md-4 ">
-                                <img src="{{url('/images/'.$blog['imagesdetail']['path'])}} " class="img-responsive img-thumb" />
-                                <h3> {{ $blog['title'] }}</h3>
-                                <p> {{ $blog['summary'] }}</p>
-                               
+                                <a href="<?php echo TextHelp::generateLink($blog);?>">
+                                    <img src="{{url('/images/'.$blog['imagesdetail']['path'])}} " class="img-responsive img-thumb" />
+                                    <h3> {{ $blog['title'] }}</h3>
+                                    <p> {{ $blog['summary'] }}</p>
+                                </a>
                             </div>
                     @endforeach
                

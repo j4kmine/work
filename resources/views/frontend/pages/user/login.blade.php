@@ -21,6 +21,21 @@
     }
 </style>
 <section class="wrapper">
+    @section('content')
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div><br />
+    @endif
+    @if(session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session()->get('success') }}
+    </div>
+    @endif
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -29,16 +44,16 @@
                 </div>
                 <div class="col-md-6 col-md-offset-3">
                     <div class="login-box">
-                        <form action="/action_page.php">
+                        <form data-toggle="validator" method="post" action="{{ route('loginuser') }}">
                             <div class="form-group">
-                                <input type="email" placeholder="Alamat Email" class="form-control" id="email">
+                                <input type="email" placeholder="Alamat Email" name="email" class="form-control" id="email" required="true">
                             </div>
                             <div class="form-group">
-                                <input type="password" placeholder="Password" class="form-control" id="pwd">
+                                <input type="password" placeholder="Password" name="password" class="form-control" id="pwd" required="true">
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <button type="button" class="btn btn-cek">Masuk</button>
+                                    <button type="submit" class="btn btn-cek">Masuk</button>
                                 </div>
                                 <div class="col-md-9">
                                     <span class="forgot">
@@ -59,5 +74,5 @@
                 </div>
             </div>
         </div>
-    </section>
-    @endsection
+</section>
+@endsection

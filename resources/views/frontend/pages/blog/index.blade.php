@@ -156,72 +156,41 @@
 
 <div class="container-full big-slide">
     <div class="row">
-        <div class="col-md-7 nopadding right">
-            <div class="o-video">
-                <iframe src="https://www.youtube.com/embed/Kch8n4tcOZQ" allowfullscreen></iframe>
+        @foreach($youtube as $key=>$blog)
+            @if($key == 0) 
+            <div class="col-md-7 nopadding right">
+                <div class="o-video">
+                    <iframe src="{{ $blog['url_youtube'] }}" allowfullscreen></iframe>
+                </div>
+                <h1 class="title-video">
+                    {{ $blog['title'] }}
+                </h1>
             </div>
-            <h1 class="title-video">
-                Jasa Ekspor Kacang Mede
-            </h1>
-        </div>
+            @endif
+        @endforeach
         <div class="col-md-5">
             <div class="slider-wrapper">
                 <i class="fa fa-chevron-up prev" aria-hidden="true"></i>
-
+                @foreach($youtube as $key=>$blog)
+                @if($key == 0) 
                 <div class="slider">
-                    <div class="thumbnail-side" data-video="https://www.youtube.com/embed/CcK5E4lJoTg" data-title="Jasa Ekspor Kacang Mede">
+                    <div class="thumbnail-side" data-video="  {{ $blog['url_youtube'] }}" data-title="  {{ $blog['title'] }}">
                         <div class="row">
                             <div class="col-md-5">
-                                <img src="{{url('frontend/assets')}}/images/pic.png" class="img-responsive" />
+                                <img src="{{url('/images/'.$blog['imagesdetail']['path'])}}" class="img-responsive" />
                             </div>
                             <div class="col-md-7">
                                 <div class="title-main-big">
-                                    <h5>Jasa Ekspor Kacang Mede</h5>
+                                    <h5>  {{ $blog['title'] }}</h5>
                                     <b class="date">05 Maret 2019</b>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="thumbnail-side" data-video="https://www.youtube.com/embed/CcK5E4lJoTg" data-title="Jasa Ekspor Kacang Mede">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <img src="{{url('frontend/assets')}}/images/pic.png" class="img-responsive" />
-                            </div>
-                            <div class="col-md-7">
-                                <div class="title-main-big">
-                                    <h5>Jasa Ekspor Kacang Mede</h5>
-                                    <b class="date">05 Maret 2019</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="thumbnail-side" data-video="https://www.youtube.com/embed/CcK5E4lJoTg" data-title="Jasa Ekspor Kacang Mede">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <img src="{{url('frontend/assets')}}/images/pic.png" class="img-responsive" />
-                            </div>
-                            <div class="col-md-7">
-                                <div class="title-main-big">
-                                    <h5>Jasa Ekspor Kacang Mede</h5>
-                                    <b class="date">05 Maret 2019</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="thumbnail-side big" data-video="https://www.youtube.com/embed/CcK5E4lJoTg" data-title="Jasa Ekspor Kacang Mede">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <img src="{{url('frontend/assets')}}/images/pic.png" class="img-responsive" />
-                            </div>
-                            <div class="col-md-7">
-                                <div class="title-main-big">
-                                    <h5>Jasa Ekspor Kacang Mede</h5>
-                                    <b class="date">05 Maret 2019</b>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
+                @endif
+                @endforeach
                 <i class="fa fa-chevron-down next" aria-hidden="true"></i>
             </div>
 
@@ -233,11 +202,13 @@
         <div class="col-md-5">
             @foreach($blogs as $key=>$blog)
                  @if($key == 0) 
+                 <a href="<?php echo TextHelp::generateLink($blog);?>">
                     <img src="{{url('/images/'.$blog['imagesdetail']['path'])}}" class="img-responsive" />
                     <div class="title-main">
                         <h1 class="title">{{ $blog['title'] }}</h1>
                         <b class="date">05 Maret 2019</b>
                     </div>
+                </a>
                 @endif
             @endforeach
         </div>
@@ -245,17 +216,19 @@
             @foreach($blogs as $key=>$blog)
             @if($key > 0 && $key < 4) 
                 <div class="thumbnail-side">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <img src="{{url('/images/'.$blog['imagesdetail']['path'])}}" class="img-responsive" />
-                        </div>
-                        <div class="col-md-7">
-                            <div class="title-main-small">
-                                <h5>{{ $blog['title'] }}</h5>
-                                <b class="date">05 Maret 2019</b>
+                    <a href="<?php echo TextHelp::generateLink($blog);?>">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="{{url('/images/'.$blog['imagesdetail']['path'])}}" class="img-responsive" />
+                            </div>
+                            <div class="col-md-7">
+                                <div class="title-main-small">
+                                    <h5>{{ $blog['title'] }}</h5>
+                                    <b class="date">05 Maret 2019</b>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             @endif
             @endforeach
@@ -265,6 +238,7 @@
         @foreach($blogs as $key=>$blog)
             @if($key > 3) 
                     <div class="article-section">
+                        <a href="<?php echo TextHelp::generateLink($blog);?>">
                         <div class="row">
                             <div class='col-md-4'>
                                 <img src="{{url('/images/'.$blog['imagesdetail']['path'])}}" class="img-responsive" />
@@ -274,6 +248,7 @@
                                 <b class="date">05 Maret 2019</b>
                             </div>
                         </div>
+                    </a>
                     </div>
                     
                     @if ($key == 8)
@@ -282,11 +257,13 @@
             @endif
         @endforeach
     </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <button class="btn btn-cek btn-more" id="btnMore"><b>Muat Lebih Banyak</b></button>
+    <?php if(isset($blogs) && count($blogs)>7){ ?>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-cek btn-more" id="btnMore"><b>Muat Lebih Banyak</b></button>
+            </div>
         </div>
-    </div>
+    <?php } ?>
 </div>
 
 <br/>

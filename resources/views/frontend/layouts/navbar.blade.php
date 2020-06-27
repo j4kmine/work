@@ -18,7 +18,11 @@
                     <li><a href="#">Panduan Expor</a></li>
                     <li><a href="#">ExportKu</a></li>
                     <li><a href="<?php echo url('/cekresi')?>">Lacak Kiriman</a></li>
-                    <li class="btn-login"><a href="<?php echo url('/userlogin')?>">Masuk</a></li>
+                    @if(Session::has('isloggedin'))
+                        <li class="btn-login"><a href="<?php echo url('/dashboard')?>">Dashboard</a></li>
+                    @else
+                        <li class="btn-login"><a href="<?php echo url('/userlogin')?>">Masuk</a></li>
+                    @endif
                 </ul>
             </div>
             <!--/.nav-collapse -->

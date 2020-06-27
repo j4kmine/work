@@ -12,15 +12,23 @@ class BlogController extends Controller
 {
     public function index()
     {
-        $blogs = BlogModel::orderBy('id', 'DESC')->paginate(9);
+        $blogs = BlogModel::orderBy('id', 'DESC')->where('url_youtube','=',"")->paginate(9);
+        $youtube = BlogModel::orderBy('id', 'DESC')->where('url_youtube','!=',"")->paginate(9);
         foreach($blogs as $key=>$value){
             if($value->id_image != 0){
                 $where = array('id' => $value->id_image);
                 $blogs[$key]->imagesdetail = ImagesModel::where($where)->first();
             }
         }
+        foreach($youtube as $key=>$value){
+            if($value->id_image != 0){
+                $where = array('id' => $value->id_image);
+                $youtube[$key]->imagesdetail = ImagesModel::where($where)->first();
+            }
+        }
+     
       
-        return view('frontend.pages.blog.index', compact('blogs'));
+        return view('frontend.pages.blog.index', compact('blogs','youtube'));
     }
     public function loadmore(Request $request){
         

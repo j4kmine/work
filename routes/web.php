@@ -10,16 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', 'Frontend\HomeController@index')->name('home');
+Route::get("/notfound", function(){
+    return View::make("frontend.pages.notfound.index");
+ });
 Route::get('cekongkir', 'Frontend\OngkirController@index')->name('cekongkir');
+Route::get('activate', 'Frontend\UserController@activate')->name('activate');
 Route::get('cekresi', 'Frontend\ResiController@index')->name('cekresi');
 Route::get('news', 'Frontend\BlogController@index')->name('news');
 Route::post('morenews', 'Frontend\BlogController@loadmore')->name('morenews');
 Route::get('userlogin', 'Frontend\UserController@login')->name('userlogin');
 Route::get('userregister', 'Frontend\UserController@register')->name('userregister');
+Route::post('registeruser', 'Frontend\UserController@registeruser')->name('registeruser');
 Route::get('userreset', 'Frontend\UserController@resetpassword')->name('userreset');
 Route::get('userforgot', 'Frontend\UserController@forgotpassword')->name('userforgot');
 Route::get('read/{slug}/{id}', 'Frontend\BlogController@read')->name('read');
+Route::post('loginuser', 'Frontend\UserController@loginuser')->name('loginuser');
 Route::get('login', 'Auth\LoginController@login')->name('login');
 Route::post('login', 'Auth\LoginController@doLoginCms');
 Route::get('logout', 'Auth\LoginController@doLogout')->name('logout');
