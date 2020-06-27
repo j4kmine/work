@@ -19,122 +19,241 @@
             <div class="container">
                 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
                 <script>
+
                     $(document).ready(function() {
-                        $("#id_negaras").select2({
-                            placeholder: "Pilih Negara",
-                        }).on("change", function(e) {
-                            var id_negara = $('#id_negaras').val();
-                            $('#id_negara').val(id_negara);
+                        var count = 1;
+                        dynamic_field(count);
+
+                        function dynamic_field(number){
+                            var html = '<tr>';
+                            
+                            html += '<td><input type="text" id="deskripsi" name="deskripsi[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="panjang" name="panjang[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="lebar" name="lebar[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="tinggi" name="tinggi[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="berat" name="berat[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="harga" name="harga[]" class="form-control harga"></td>';
+                            if (number > 1) {
+                                html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
+                                $('tbody').append(html);
+                            } else {
+                                html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td></tr>';
+                                $('tbody').html(html);
+                            }
+                        }
+
+                        // $('#add').click(function(){
+                        $(document).on('click', '#add', function(){
+                            count++;
+                            dynamic_field(count);
                         });
-                        $("#id_negaras").val({{$kota->id_negara}}).trigger('change');
+
+                        $(document).on('click', '#remove', function(){
+                            count--;
+                            $(this).closest("tr").remove();
+                        });
+
+                        $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
+                            var panjang = +$(this).closest("tr").find('input[name^="panjang"]').val();
+                            var lebar = +$(this).closest("tr").find('input[name^="lebar"]').val();
+                            var tinggi = +$(this).closest("tr").find('input[name^="tinggi"]').val();
+                            var berat = +$(this).closest("tr").find('input[name^="berat"]').val();
+                            var destination = $('#kota_tujuan').val();
+                            var tipe_pengiriman = $('#tipe_pengiriman').val();
+                            var jenis = $('#barang_kategori').val();
+                            
+                            $.ajax({
+                                type: "POST",
+                                url: "http://18.141.205.174/api/cekongkir",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "panjang": panjang,
+                                    "lebar": lebar,
+                                    "tinggi": tinggi,
+                                    "dimensi": berat,
+                                    "destination": destination,
+                                    "tipe_pengiriman": tipe_pengiriman,
+                                    "jenis": jenis
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    // console.log(this);
+                                    // $('#harga').val(data.paket.door_to_door);
+                                    $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
+                                        console.log(data,this);
+                                        $(this).closest("tr").find('input[name^="harga"]').val(data.paket.door_to_door);
+                                        calculateSum();
+                                    });
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                }
+                            });
+                            
+                        });
+
+                        function cekHarga(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis) {
+                            console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis);
+                            $.ajax({
+                                type: "POST",
+                                url: "http://18.141.205.174/api/cekongkir",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "panjang": panjang,
+                                    "lebar": lebar,
+                                    "tinggi": tinggi,
+                                    "dimensi": berat,
+                                    "destination": destination,
+                                    "tipe_pengiriman": tipe_pengiriman,
+                                    "jenis": jenis
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    console.log(data);
+                                    return data;
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                    return errMsg;
+                                }
+                            });
+                        }
+                        function calculateSum() {
+                            var sum = 0;
+                            $(".harga").each(function () {
+                                if (!isNaN(this.value) && this.value.length != 0) {
+                                    sum += parseFloat(this.value);
+                                }
+                            });
+                            $("#total_harga").val(sum.toFixed(0));
+                        }
+                        $(document).on("change", ".harga", calculateSum);
+
+                        $("#id_users").select2({
+                            placeholder: "Pilih User"
+                        }).on("change", function(e) {
+                            var id_user = $('#id_users').val();
+                            $('#id_user').val(id_user);
+                        });
+
+                        $("#pengirim_negaras").select2({
+                            placeholder: "Pilih Negara"
+                        }).on("change", function(e) {
+                            var pengirim_negara = $('#pengirim_negaras').val();
+                            $('#pengirim_negara').val(pengirim_negara);
+                        });
+
+                        $("#penerima_negaras").select2({
+                            placeholder: "Pilih Negara"
+                        }).on("change", function(e) {
+                            var penerima_negara = $('#penerima_negaras').val();
+                            $('#penerima_negara').val(penerima_negara);
+                        });
+
+                        $(".kota_tujuan").select2({
+                          ajax: {
+                            url: "http://18.141.205.174/api/listkotanegara",
+                            dataType: 'json',
+                            data: function (params) {
+                              return {
+                                q: params.term
+                              };
+                            },
+                            processResults: function (data, params) {
+                              // parse the results into the format expected by Select2
+                              // since we are using custom formatting functions we do not need to
+                              // alter the remote JSON data, except to indicate that infinite
+                              // scrolling can be used
+                             return {
+                                results: data[0].data
+                                };
+                            },
+                            cache: false
+                          },
+                          placeholder: 'Kota Tujuan',
+                          minimumInputLength: 2
+                        }).on("change", function(e) {
+                            var kota_tujuan = $('.kota_tujuan').val();
+                            $('#kota_tujuan').val(kota_tujuan);
+                            $('#kota_tujuan_text').val($('.select2-chosen').text());
+                        });
+
+                        $('#tanggal_order').datetimepicker({
+                            lang: 'id',
+                            i18n:{
+                                id:{
+                                    months:['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+                                    dayOfWeek:["Ming.", "Sen", "Sel", "Rab","Kam", "Jum", "Sab",]
+                                }
+                            },
+                            timepicker: true,
+                            mask: false,
+                            closeOnDateSelect:false,
+                            format:'d-m-Y H:i',
+                            scrollInput:false,
+                        });
+
+                        $('#tanggal_kirim').datetimepicker({
+                            lang: 'id',
+                            i18n:{
+                                id:{
+                                    months:['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'],
+                                    dayOfWeek:["Ming.", "Sen", "Sel", "Rab","Kam", "Jum", "Sab",]
+                                }
+                            },
+                            timepicker: true,
+                            mask: false,
+                            closeOnDateSelect:false,
+                            scrollInput:false,
+                            format:'d-m-Y H:i',
+                            onShow:function( ct ){
+                                this.setOptions({
+                                    minDate:$('#tanggal_order').val()?$('#tanggal_order').val():'0',
+                                    formatDate:'d-m-Y H:i'
+                                })
+                            },
+                        });
+
                     });
                 </script>
-                <div class="row my-3">
-                    <div class="col-md-8 offset-md-2">
-                        <form method="post" action="{{ route('kota.update', $kota->id) }}">
-                            {{ method_field('PATCH') }}
-                            <div class="card no-b">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h5 class="card-title">Edit kota</h5>
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            <a class="btn btn-primary btn-sm " href="{{url('kota')}}">List kota</a>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="form-group m-0">
-                                                <label for="nama" class="col-form-label s-12">Nama</label>
-                                                <input id="nama" placeholder="Enter kota nama" name="nama" value="{{ $kota->nama }}" class="form-control r-0 light s-12 " type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="form-group m-0">
-                                                <label for="id_negaras" class="col-form-label s-12">Negara</label>
-                                                <select id="id_negaras">
-                                                    @foreach($negara as $n)
-                                                        <option></option>
-                                                        <option value="{{ $n->id }}">{{ $n->nama }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="hidden" id="id_negara" name="id_negara" value="{{ $kota->id_negara }}" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="form-group m-0">
-                                                <label for="kode_pos" class="col-form-label s-12">Kode Pos</label>
-                                                <input id="kode_pos" placeholder="Enter kota kode_pos" name="kode_pos" value="{{ $kota->kode_pos }}" class="form-control r-0 light s-12 " type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="form-group m-0">
-                                                <label for="longitude" class="col-form-label s-12">Longitude</label>
-                                                <input id="longitude" placeholder="Enter kota Longitude" name="longitude" value="{{ $kota->longitude }}" class="form-control r-0 light s-12 " type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="form-group m-0">
-                                                <label for="latitude" class="col-form-label s-12">Latitude</label>
-                                                <input id="latitude" placeholder="Enter kota Latitude" name="latitude" value="{{ $kota->latitude }}" class="form-control r-0 light s-12 " type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-12">
-                                            <div class="form-group m-0">
-                                                <label for="origin" class="col-form-label s-12">origin</label>
-                                                <input id="origin" placeholder="Enter kota origin" name="origin" value="{{ $kota->origin }}" class="form-control r-0 light s-12 " type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="U_DTD_GC_50" class="col-form-label s-12">U_DTD_GC_50</label>
-                                            <input id="U_DTD_GC_50" placeholder="Enter kota U_DTD_GC_50" name="U_DTD_GC_50" value="{{ $kota->U_DTD_GC_50 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="row my-3">
+                <div class="col-md-8 offset-md-2">
+                    <form method="post" action="{{ route('order.update', $order->id) }}">
+                        <div class="card no-b">
+                            <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="U_DTD_GC_100" class="col-form-label s-12">U_DTD_GC_100</label>
-                                            <input id="U_DTD_GC_100" placeholder="Enter kota U_DTD_GC_100" name="U_DTD_GC_100" value="{{ $kota->U_DTD_GC_100 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="id_users" class="col-form-label s-12">User</label>
+                                            <select id="id_users">
+                                                @foreach($user as $n)
+                                                    <option></option>
+                                                    <option value="{{ $n->id }}">{{ $n->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" id="id_user" name="id_user" value="{{ $order->id_user }}" />
                                         </div>
                                     </div>
                                 </div>
+                               
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="U_DTD_GC_350" class="col-form-label s-12">U_DTD_GC_350</label>
-                                            <input id="U_DTD_GC_350" placeholder="Enter kota U_DTD_GC_350" name="U_DTD_GC_350" value="{{ $kota->U_DTD_GC_350 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="kota_asal" class="col-form-label s-12">Kota asal</label>
+                                            <input id="kota_asal" placeholder="Jakarta" name="kota_asal" class="form-control r-0 light s-12 " type="text" readonly="readonly">
                                         </div>
                                     </div>
                                 </div>
+                               
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="U_DTD_GC_500" class="col-form-label s-12">U_DTD_GC_500</label>
-                                            <input id="U_DTD_GC_500" placeholder="Enter kota U_DTD_GC_500" name="U_DTD_GC_500" value="{{ $kota->U_DTD_GC_500 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="U_DTD_GC_1000" class="col-form-label s-12">U_DTD_GC_1000</label>
-                                            <input id="U_DTD_GC_1000" placeholder="Enter kota U_DTD_GC_1000" name="U_DTD_GC_1000" value="{{ $kota->U_DTD_GC_1000 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="kota_tujuan" class="col-form-label s-12">Kota tujuan</label>
+                                            <select class="kota_tujuan"></select>
+                                            <input type="hidden" id="kota_tujuan" name="kota_tujuan" class="input-top">
+                                            <input type="hidden" id="kota_tujuan_text" name="kota_asal_text">
                                         </div>
                                     </div>
                                 </div>
@@ -142,40 +261,21 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTD_GC_LCL_2" class="col-form-label s-12">L_DTD_GC_LCL_2</label>
-                                            <input id="L_DTD_GC_LCL_2" placeholder="Enter kota L_DTD_GC_LCL_2" name="L_DTD_GC_LCL_2" value="{{ $kota->L_DTD_GC_LCL_2 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="tipe_pengiriman" class="col-form-label s-12">Tipe Pengiriman</label>
+                                            <select class="form-control" id="tipe_pengiriman" name="tipe_pengiriman">
+                                                <option value="1">Udara</option>
+                                                <option value="2">Laut</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
+
+                                <h1><b>DATA PEGIRIM</b></h1>
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTD_GC_LCL_6" class="col-form-label s-12">L_DTD_GC_LCL_6</label>
-                                            <input id="L_DTD_GC_LCL_6" placeholder="Enter kota L_DTD_GC_LCL_6" name="L_DTD_GC_LCL_6" value="{{ $kota->L_DTD_GC_LCL_6 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="L_DTD_GC_LCL_10" class="col-form-label s-12">L_DTD_GC_LCL_10</label>
-                                            <input id="L_DTD_GC_LCL_10" placeholder="Enter kota L_DTD_GC_LCL_10" name="L_DTD_GC_LCL_10" value="{{ $kota->L_DTD_GC_LCL_10 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="L_DTD_GC_FCL_20ft" class="col-form-label s-12">L_DTD_GC_FCL_20ft</label>
-                                            <input id="L_DTD_GC_FCL_20ft" placeholder="Enter kota L_DTD_GC_FCL_20ft" name="L_DTD_GC_FCL_20ft" value="{{ $kota->L_DTD_GC_FCL_20ft }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="L_DTD_GC_FCL_40ft" class="col-form-label s-12">L_DTD_GC_FCL_40ft</label>
-                                            <input id="L_DTD_GC_FCL_40ft" placeholder="Enter kota L_DTD_GC_FCL_40ft" name="L_DTD_GC_FCL_40ft" value="{{ $kota->L_DTD_GC_FCL_40ft }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_nama" class="col-form-label s-12">Pengirim Nama</label>
+                                            <input id="pengirim_nama" placeholder="Enter Pengirim Nama" name="pengirim_nama" value="{{ $order->pengirim_nama }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -183,141 +283,306 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="U_DTP_GC_50" class="col-form-label s-12">U_DTP_GC_50</label>
-                                            <input id="U_DTP_GC_50" placeholder="Enter kota U_DTP_GC_50" name="U_DTP_GC_50" value="{{ $kota->U_DTP_GC_50 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="U_DTP_GC_100" class="col-form-label s-12">U_DTP_GC_100</label>
-                                            <input id="U_DTP_GC_100" placeholder="Enter kota U_DTP_GC_100" name="U_DTP_GC_100" value="{{ $kota->U_DTP_GC_100 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="U_DTP_GC_350" class="col-form-label s-12">U_DTP_GC_350</label>
-                                            <input id="U_DTP_GC_350" placeholder="Enter kota U_DTP_GC_350" name="U_DTP_GC_350" value="{{ $kota->U_DTP_GC_350 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="U_DTP_GC_500" class="col-form-label s-12">U_DTP_GC_500</label>
-                                            <input id="U_DTP_GC_500" placeholder="Enter kota U_DTP_GC_500" name="U_DTP_GC_500" value="{{ $kota->U_DTP_GC_500 }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="U_DTP_GC_1000" class="col-form-label s-12">U_DTP_GC_1000</label>
-                                            <input id="U_DTP_GC_1000" placeholder="Enter kota U_DTP_GC_1000" name="U_DTP_GC_1000" value="{{ $kota->U_DTP_GC_1000 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_negaras" class="col-form-label s-12">Pengirim Negara</label>
+                                            <select id="pengirim_negaras">
+                                                @foreach($negara as $n)
+                                                    <option></option>
+                                                    <option value="{{ $n->id }}">{{ $n->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" id="pengirim_negara" name="pengirim_negara" value="{{ $order->pengirim_negara }}" />
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="pengirim_kodepos" class="col-form-label s-12">Pengirim Kode Pos</label>
+                                            <input id="pengirim_kodepos" placeholder="Enter Pengirim Kode Pos" name="pengirim_kodepos" value="{{ $order->pengirim_kodepos }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_2" class="col-form-label s-12">L_DTP_GC_LCL_2</label>
-                                            <input id="L_DTP_GC_LCL_2" placeholder="Enter kota L_DTP_GC_LCL_2" name="L_DTP_GC_LCL_2" value="{{ $kota->L_DTP_GC_LCL_2 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_kota" class="col-form-label s-12">Pengirim Kota</label>
+                                            <input id="pengirim_kota" placeholder="Enter Pengirim Kota" name="pengirim_kota" value="{{ $order->pengirim_kota }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_3" class="col-form-label s-12">L_DTP_GC_LCL_3</label>
-                                            <input id="L_DTP_GC_LCL_3" placeholder="Enter kota L_DTP_GC_LCL_3" name="L_DTP_GC_LCL_3" value="{{ $kota->L_DTP_GC_LCL_3 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_alamat" class="col-form-label s-12">Pengirim Alamat</label>
+                                            <input id="pengirim_alamat" placeholder="Enter Pengirim Alamat" name="pengirim_alamat" value="{{ $order->pengirim_alamat }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_4" class="col-form-label s-12">L_DTP_GC_LCL_4</label>
-                                            <input id="L_DTP_GC_LCL_4" placeholder="Enter kota L_DTP_GC_LCL_4" name="L_DTP_GC_LCL_4" value="{{ $kota->L_DTP_GC_LCL_4 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_perusahaan" class="col-form-label s-12">Pengirim Perusahaan</label>
+                                            <input id="pengirim_perusahaan" placeholder="Enter Pengirim Perusahaan" name="pengirim_perusahaan" value="{{ $order->pengirim_perusahaan }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_5" class="col-form-label s-12">L_DTP_GC_LCL_5</label>
-                                            <input id="L_DTP_GC_LCL_5" placeholder="Enter kota L_DTP_GC_LCL_5" name="L_DTP_GC_LCL_5" value="{{ $kota->L_DTP_GC_LCL_5 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_telepon" class="col-form-label s-12">Pengirim Telepon</label>
+                                            <input id="pengirim_telepon" placeholder="Enter Pengirim Telepon" name="pengirim_telepon" value="{{ $order->pengirim_telepon }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_6" class="col-form-label s-12">L_DTP_GC_LCL_6</label>
-                                            <input id="L_DTP_GC_LCL_6" placeholder="Enter kota L_DTP_GC_LCL_6" name="L_DTP_GC_LCL_6" value="{{ $kota->L_DTP_GC_LCL_6 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_email" class="col-form-label s-12">Pengirim Email</label>
+                                            <input id="pengirim_email" placeholder="Enter Pengirim Email" name="pengirim_email" value="{{ $order->pengirim_email }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_7" class="col-form-label s-12">L_DTP_GC_LCL_7</label>
-                                            <input id="L_DTP_GC_LCL_7" placeholder="Enter kota L_DTP_GC_LCL_7" name="L_DTP_GC_LCL_7" value="{{ $kota->L_DTP_GC_LCL_7 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="pengirim_koleksi_intruksi" class="col-form-label s-12">Pengirim Koleksi Intruksi</label>
+                                            <input id="pengirim_koleksi_intruksi" placeholder="Enter Pengirim Koleksi Intruksi" name="pengirim_koleksi_intruksi" value="{{ $order->pengirim_koleksi_intruksi }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
+                                <h1><b>DATA PENERIMA</b></h1>
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_8" class="col-form-label s-12">L_DTP_GC_LCL_8</label>
-                                            <input id="L_DTP_GC_LCL_8" placeholder="Enter kota L_DTP_GC_LCL_8" name="L_DTP_GC_LCL_8" value="{{ $kota->L_DTP_GC_LCL_8 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="penerima_nama" class="col-form-label s-12">penerima Nama</label>
+                                            <input id="penerima_nama" placeholder="Enter penerima Nama" name="penerima_nama" value="{{ $order->penerima_nama }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_9" class="col-form-label s-12">L_DTP_GC_LCL_9</label>
-                                            <input id="L_DTP_GC_LCL_9" placeholder="Enter kota L_DTP_GC_LCL_9" name="L_DTP_GC_LCL_9" value="{{ $kota->L_DTP_GC_LCL_9 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="penerima_negaras" class="col-form-label s-12">penerima Negara</label>
+                                            <select id="penerima_negaras">
+                                                @foreach($negara as $n)
+                                                    <option></option>
+                                                    <option value="{{ $n->id }}">{{ $n->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" id="penerima_negara" name="penerima_negara" value="{{ $order->penerima_negara }}" />
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_LCL_10" class="col-form-label s-12">L_DTP_GC_LCL_10</label>
-                                            <input id="L_DTP_GC_LCL_10" placeholder="Enter kota L_DTP_GC_LCL_10" name="L_DTP_GC_LCL_10" value="{{ $kota->L_DTP_GC_LCL_10 }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="penerima_kodepos" class="col-form-label s-12">penerima Kode Pos</label>
+                                            <input id="penerima_kodepos" placeholder="Enter penerima Kode Pos" name="penerima_kodepos" value="{{ $order->penerima_kodepos }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_FCL_20ft" class="col-form-label s-12">L_DTP_GC_FCL_20ft</label>
-                                            <input id="L_DTP_GC_FCL_20ft" placeholder="Enter kota L_DTP_GC_FCL_20ft" name="L_DTP_GC_FCL_20ft" value="{{ $kota->L_DTP_GC_FCL_20ft }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="penerima_kota" class="col-form-label s-12">penerima Kota</label>
+                                            <input id="penerima_kota" placeholder="Enter penerima Kota" name="penerima_kota" value="{{ $order->penerima_kota }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="L_DTP_GC_FCL_40ft" class="col-form-label s-12">L_DTP_GC_FCL_40ft</label>
-                                            <input id="L_DTP_GC_FCL_40ft" placeholder="Enter kota L_DTP_GC_FCL_40ft" name="L_DTP_GC_FCL_40ft" value="{{ $kota->L_DTP_GC_FCL_40ft }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="penerima_alamat" class="col-form-label s-12">penerima Alamat</label>
+                                            <input id="penerima_alamat" placeholder="Enter penerima Alamat" name="penerima_alamat" value="{{ $order->penerima_alamat }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="penerima_perusahaan" class="col-form-label s-12">penerima Perusahaan</label>
+                                            <input id="penerima_perusahaan" placeholder="Enter penerima Perusahaan" name="penerima_perusahaan" value="{{ $order->penerima_perusahaan }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="penerima_telepon" class="col-form-label s-12">penerima Telepon</label>
+                                            <input id="penerima_telepon" placeholder="Enter penerima Telepon" name="penerima_telepon" value="{{ $order->penerima_telepon }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="penerima_email" class="col-form-label s-12">penerima Email</label>
+                                            <input id="penerima_email" placeholder="Enter penerima Email" name="penerima_email" value="{{ $order->penerima_email }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="referensi_customer" class="col-form-label s-12">Referensi Customer</label>
+                                            <input id="referensi_customer" placeholder="Enter Referensi Customer" name="referensi_customer" value="{{ $order->referensi_customer }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h1><b>DATA BARANG</b></h1>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_kategori" class="col-form-label s-12">Barang Kategori</label>
+                                            <select class="form-control" id="barang_kategori" name="barang_kategori">
+                                                <option value="1">DTD</option>
+                                                <option value="2">DTP</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- 
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_deskripsi" class="col-form-label s-12">Barang Deskripsi</label>
+                                            <input id="barang_deskripsi" placeholder="Enter Barang Deskripsi" name="barang_deskripsi" value="{{ $order->barang_deskripsi }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_nilai" class="col-form-label s-12">Barang Nilai</label>
+                                            <input id="barang_nilai" placeholder="Enter Barang Nilai" name="barang_nilai" value="{{ $order->barang_nilai }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_jumlah" class="col-form-label s-12">Barang Jumlah</label>
+                                            <input id="barang_jumlah" placeholder="Enter Barang Jumlah" name="barang_jumlah" value="{{ $order->barang_jumlah }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_dimensi" class="col-form-label s-12">Barang Dimensi</label>
+                                            <input id="barang_dimensi" placeholder="Enter Barang Dimensi" name="barang_dimensi" value="{{ $order->barang_dimensi }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group m-0">
+                                            <label for="barang_berat" class="col-form-label s-12">Barang Berat</label>
+                                            <input id="barang_berat" placeholder="Enter Barang Berat" name="barang_berat" value="{{ $order->barang_berat }}" class="form-control r-0 light s-12 " type="number"  min="0">
+                                        </div>
+                                    </div> -->
+
+                                    <table class="table table-bordered table-striped mt-5" id="barang-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Deskripsi</th>
+                                                <th>Panjang</th>
+                                                <th>Lebar</th>
+                                                <th>Tinggi</th>
+                                                <th>Berat</th>
+                                                <th>Harga</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="layanan_tambahan" class="col-form-label s-12">Catatan</label>
+                                            <input id="layanan_tambahan" placeholder="Enter Catatan" name="layanan_tambahan" value="{{ $order->layanan_tambahan }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="total_harga" class="col-form-label s-12">Total Harga</label>
+                                            <input id="total_harga" placeholder="Enter Total Harga" name="total_harga" value="{{ $order->total_harga }}" class="form-control r-0 light s-12 " type="number" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="total_approved" class="col-form-label s-12">Total Approved</label>
+                                            <div class="radio">
+                                              <label><input type="radio" name="total_approved" value="1">Ya</label>
+                                            </div>
+                                            <div class="radio">
+                                              <label><input type="radio" name="total_approved" value="0" checked>Tidak</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="status" class="col-form-label s-12">Status</label>
+                                            <select class="form-control" id="status" name="status">
+                                              <option value="1">Status 1</option>
+                                              <option value="2">Status 2</option>
+                                              <option value="3">Status 3</option>
+                                              <option value="4">Status 4</option>
+                                              <option value="5">Status 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="tanggal_order" class="col-form-label s-12">tanggal order</label>
+                                            <input id="tanggal_order" placeholder="Enter tanggal order" name="tanggal_order" value="{{ $order->tanggal_order }}" class="form-control r-0 light s-12 " type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="tanggal_kirim" class="col-form-label s-12">tanggal kirim</label>
+                                            <input id="tanggal_kirim" placeholder="Enter tanggal kirim" name="tanggal_kirim" value="{{ $order->tanggal_kirim }}" class="form-control r-0 light s-12 " type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </form>
-                    </div>
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
+            </div>
+            
+        
 @endsection

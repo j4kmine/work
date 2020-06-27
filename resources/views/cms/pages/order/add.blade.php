@@ -26,13 +26,13 @@
 
                         function dynamic_field(number){
                             var html = '<tr>';
-                            html += '<td><input type="text" name="kategori[]" class="form-control"></td>';
-                            html += '<td><input type="text" name="deskripsi[]" class="form-control"></td>';
-                            html += '<td><input type="text" name="harga[]" class="form-control"></td>';
-                            html += '<td><input type="text" name="panjang[]" class="form-control"></td>';
-                            html += '<td><input type="text" name="lebar[]" class="form-control"></td>';
-                            html += '<td><input type="text" name="tinggi[]" class="form-control"></td>';
-                            html += '<td><input type="text" name="berat[]" class="form-control"></td>';
+                            
+                            html += '<td><input type="text" id="deskripsi" name="deskripsi[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="panjang" name="panjang[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="lebar" name="lebar[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="tinggi" name="tinggi[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="berat" name="berat[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="harga" name="harga[]" class="form-control harga"></td>';
                             if (number > 1) {
                                 html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
                                 $('tbody').append(html);
@@ -52,6 +52,84 @@
                             count--;
                             $(this).closest("tr").remove();
                         });
+
+                        $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
+                            var panjang = +$(this).closest("tr").find('input[name^="panjang"]').val();
+                            var lebar = +$(this).closest("tr").find('input[name^="lebar"]').val();
+                            var tinggi = +$(this).closest("tr").find('input[name^="tinggi"]').val();
+                            var berat = +$(this).closest("tr").find('input[name^="berat"]').val();
+                            var destination = $('#kota_tujuan').val();
+                            var tipe_pengiriman = $('#tipe_pengiriman').val();
+                            var jenis = $('#barang_kategori').val();
+                            
+                            $.ajax({
+                                type: "POST",
+                                url: "http://18.141.205.174/api/cekongkir",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "panjang": panjang,
+                                    "lebar": lebar,
+                                    "tinggi": tinggi,
+                                    "dimensi": berat,
+                                    "destination": destination,
+                                    "tipe_pengiriman": tipe_pengiriman,
+                                    "jenis": jenis
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    // console.log(this);
+                                    // $('#harga').val(data.paket.door_to_door);
+                                    $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
+                                        console.log(data,this);
+                                        $(this).closest("tr").find('input[name^="harga"]').val(data.paket.door_to_door);
+                                        calculateSum();
+                                    });
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                }
+                            });
+                            
+                        });
+
+                        function cekHarga(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis) {
+                            console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis);
+                            $.ajax({
+                                type: "POST",
+                                url: "http://18.141.205.174/api/cekongkir",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "panjang": panjang,
+                                    "lebar": lebar,
+                                    "tinggi": tinggi,
+                                    "dimensi": berat,
+                                    "destination": destination,
+                                    "tipe_pengiriman": tipe_pengiriman,
+                                    "jenis": jenis
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    console.log(data);
+                                    return data;
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                    return errMsg;
+                                }
+                            });
+                        }
+                        function calculateSum() {
+                            var sum = 0;
+                            $(".harga").each(function () {
+                                if (!isNaN(this.value) && this.value.length != 0) {
+                                    sum += parseFloat(this.value);
+                                }
+                            });
+                            $("#total_harga").val(sum.toFixed(0));
+                        }
+                        $(document).on("change", ".harga", calculateSum);
 
                         $("#id_users").select2({
                             placeholder: "Pilih User"
@@ -180,18 +258,14 @@
                                     </div>
                                 </div>
 
-
-
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="tipe_pengiriman" class="col-form-label s-12">Tipe Pengiriman</label>
                                             <select class="form-control" id="tipe_pengiriman" name="tipe_pengiriman">
-                                                @foreach($tipe_pengiriman as $value)
-                                                    <option value="{{ $value['id'] }}">{{ $value['nama'] }}</option>
-                                                @endforeach
+                                                <option value="1">Udara</option>
+                                                <option value="2">Laut</option>
                                             </select>
-                                            <!-- <input id="tipe_pengiriman" placeholder="Enter Tipe Pengiriman" name="tipe_pengiriman" value="{{ old('tipe_pengiriman') }}" class="form-control r-0 light s-12 " type="text"> -->
                                         </div>
                                     </div>
                                 </div>
@@ -374,13 +448,16 @@
 
                                 <h1><b>DATA BARANG</b></h1>
                                 <div class="form-row">
-                                    <!-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group m-0">
                                             <label for="barang_kategori" class="col-form-label s-12">Barang Kategori</label>
-                                            <input id="barang_kategori" placeholder="Enter Barang Kategori" name="barang_kategori" value="{{ old('barang_kategori') }}" class="form-control r-0 light s-12 " type="text">
+                                            <select class="form-control" id="barang_kategori" name="barang_kategori">
+                                                <option value="1">DTD</option>
+                                                <option value="2">DTP</option>
+                                            </select>
                                         </div>
                                     </div>
-
+                                    <!-- 
                                     <div class="col-md-6">
                                         <div class="form-group m-0">
                                             <label for="barang_deskripsi" class="col-form-label s-12">Barang Deskripsi</label>
@@ -416,16 +493,15 @@
                                         </div>
                                     </div> -->
 
-                                    <table class="table table-bordered table-striped" id="barang-table">
+                                    <table class="table table-bordered table-striped mt-5" id="barang-table">
                                         <thead>
                                             <tr>
-                                                <th>Kategori</th>
                                                 <th>Deskripsi</th>
-                                                <th>Harga</th>
                                                 <th>Panjang</th>
                                                 <th>Lebar</th>
                                                 <th>Tinggi</th>
                                                 <th>Berat</th>
+                                                <th>Harga</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -436,8 +512,8 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="layanan_tambahan" class="col-form-label s-12">Layanan Tambahan</label>
-                                            <input id="layanan_tambahan" placeholder="Enter Layanan Tambahan" name="layanan_tambahan" value="{{ old('layanan_tambahan') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="layanan_tambahan" class="col-form-label s-12">Catatan</label>
+                                            <input id="layanan_tambahan" placeholder="Enter Catatan" name="layanan_tambahan" value="{{ old('layanan_tambahan') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>

@@ -45,37 +45,35 @@ class OrderController extends Controller
     {
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
-        $data['tipe_pengiriman'] = array(
-            array('id'=>'U_DTD_GC_50','nama'=>'Udara DTD General Cargo 50'),
-            array('id'=>'U_DTD_GC_100','nama'=>'Udara DTD General Cargo 100'),
-            array('id'=>'U_DTD_GC_350','nama'=>'Udara DTD General Cargo 350'),
-            array('id'=>'U_DTD_GC_500','nama'=>'Udara DTD General Cargo 500'),
-            array('id'=>'U_DTD_GC_1000','nama'=>'Udara DTD General Cargo 1000'),
-            array('id'=>'L_DTD_GC_LCL_2','nama'=>'Laut DTD General Cargo LCL 2'),
-            array('id'=>'L_DTD_GC_LCL_6','nama'=>'Laut DTD General Cargo LCL 6'),
-            array('id'=>'L_DTD_GC_LCL_10','nama'=>'Laut DTD General Cargo LCL 10'),
-            array('id'=>'L_DTD_GC_FCL_20ft','nama'=>'Laut DTD General Cargo FCL 20ft'),
-            array('id'=>'L_DTD_GC_FCL_40ft','nama'=>'Laut DTD General Cargo FCL 40ft'),
-            array('id'=>'U_DTP_GC_50','nama'=>'Udara DTP General Cargo 50'),
-            array('id'=>'U_DTP_GC_100','nama'=>'Udara DTP General Cargo 100'),
-            array('id'=>'U_DTP_GC_350','nama'=>'Udara DTP General Cargo 350'),
-            array('id'=>'U_DTP_GC_500','nama'=>'Udara DTP General Cargo 500'),
-            array('id'=>'U_DTP_GC_1000','nama'=>'Udara DTP General Cargo 1000'),
-            array('id'=>'L_DTP_GC_LCL_2','nama'=>'Laut DTP General Cargo LCL 2'),
-            array('id'=>'L_DTP_GC_LCL_3','nama'=>'Laut DTP General Cargo LCL 3'),
-            array('id'=>'L_DTP_GC_LCL_4','nama'=>'Laut DTP General Cargo LCL 4'),
-            array('id'=>'L_DTP_GC_LCL_5','nama'=>'Laut DTP General Cargo LCL 5'),
-            array('id'=>'L_DTP_GC_LCL_6','nama'=>'Laut DTP General Cargo LCL 6'),
-            array('id'=>'L_DTP_GC_LCL_7','nama'=>'Laut DTP General Cargo LCL 7'),
-            array('id'=>'L_DTP_GC_LCL_8','nama'=>'Laut DTP General Cargo LCL 8'),
-            array('id'=>'L_DTP_GC_LCL_9','nama'=>'Laut DTP General Cargo LCL 9'),
-            array('id'=>'L_DTP_GC_LCL_10','nama'=>'Laut DTP General Cargo LCL 10'),
-            array('id'=>'L_DTP_GC_FCL_20ft','nama'=>'Laut DTP General Cargo FCL 20ft'),
-            array('id'=>'L_DTP_GC_FCL_40ft','nama'=>'Laut DTP General Cargo FCL 40ft')
-        );
-        // echo "<pre>";
-        // var_dump($data['tipe_pengiriman']);
-        // exit();
+        // $data['tipe_pengiriman'] = array(
+        //     array('id'=>'U_DTD_GC_50','nama'=>'Udara DTD General Cargo 50'),
+        //     array('id'=>'U_DTD_GC_100','nama'=>'Udara DTD General Cargo 100'),
+        //     array('id'=>'U_DTD_GC_350','nama'=>'Udara DTD General Cargo 350'),
+        //     array('id'=>'U_DTD_GC_500','nama'=>'Udara DTD General Cargo 500'),
+        //     array('id'=>'U_DTD_GC_1000','nama'=>'Udara DTD General Cargo 1000'),
+        //     array('id'=>'L_DTD_GC_LCL_2','nama'=>'Laut DTD General Cargo LCL 2'),
+        //     array('id'=>'L_DTD_GC_LCL_6','nama'=>'Laut DTD General Cargo LCL 6'),
+        //     array('id'=>'L_DTD_GC_LCL_10','nama'=>'Laut DTD General Cargo LCL 10'),
+        //     array('id'=>'L_DTD_GC_FCL_20ft','nama'=>'Laut DTD General Cargo FCL 20ft'),
+        //     array('id'=>'L_DTD_GC_FCL_40ft','nama'=>'Laut DTD General Cargo FCL 40ft'),
+        //     array('id'=>'U_DTP_GC_50','nama'=>'Udara DTP General Cargo 50'),
+        //     array('id'=>'U_DTP_GC_100','nama'=>'Udara DTP General Cargo 100'),
+        //     array('id'=>'U_DTP_GC_350','nama'=>'Udara DTP General Cargo 350'),
+        //     array('id'=>'U_DTP_GC_500','nama'=>'Udara DTP General Cargo 500'),
+        //     array('id'=>'U_DTP_GC_1000','nama'=>'Udara DTP General Cargo 1000'),
+        //     array('id'=>'L_DTP_GC_LCL_2','nama'=>'Laut DTP General Cargo LCL 2'),
+        //     array('id'=>'L_DTP_GC_LCL_3','nama'=>'Laut DTP General Cargo LCL 3'),
+        //     array('id'=>'L_DTP_GC_LCL_4','nama'=>'Laut DTP General Cargo LCL 4'),
+        //     array('id'=>'L_DTP_GC_LCL_5','nama'=>'Laut DTP General Cargo LCL 5'),
+        //     array('id'=>'L_DTP_GC_LCL_6','nama'=>'Laut DTP General Cargo LCL 6'),
+        //     array('id'=>'L_DTP_GC_LCL_7','nama'=>'Laut DTP General Cargo LCL 7'),
+        //     array('id'=>'L_DTP_GC_LCL_8','nama'=>'Laut DTP General Cargo LCL 8'),
+        //     array('id'=>'L_DTP_GC_LCL_9','nama'=>'Laut DTP General Cargo LCL 9'),
+        //     array('id'=>'L_DTP_GC_LCL_10','nama'=>'Laut DTP General Cargo LCL 10'),
+        //     array('id'=>'L_DTP_GC_FCL_20ft','nama'=>'Laut DTP General Cargo FCL 20ft'),
+        //     array('id'=>'L_DTP_GC_FCL_40ft','nama'=>'Laut DTP General Cargo FCL 40ft')
+        // );
+
         return view('cms.pages.order.add', $data);
     }
 
@@ -101,9 +99,8 @@ class OrderController extends Controller
         $berat = $request->get('berat');
         $data_rel_item = array();
 
-        if (count($kategori) > 0) {
-            for ($i=0; $i < count($kategori); $i++) { 
-                $data_rel_item[$i]['kategori'] = $kategori[$i];
+        if (count($harga) > 0) {
+            for ($i=0; $i < count($harga); $i++) { 
                 $data_rel_item[$i]['deskripsi'] = $deskripsi[$i];
                 $data_rel_item[$i]['harga'] = $harga[$i];
                 $data_rel_item[$i]['panjang'] = $panjang[$i];
@@ -120,6 +117,8 @@ class OrderController extends Controller
             ,'kota_asal' => '16417'
             ,'kota_tujuan' => $request->get('kota_tujuan')
             ,'tipe_pengiriman' => $request->get('tipe_pengiriman')
+
+            ,'barang_kategori' => $request->get('barang_kategori')
 
             ,'pengirim_nama' => $request->get('pengirim_nama')
             ,'pengirim_negara' => $request->get('pengirim_negara')
@@ -164,7 +163,6 @@ class OrderController extends Controller
                         ,'lebar' => $value['lebar']
                         ,'tinggi' => $value['tinggi']
                         ,'berat' => $value['berat']
-                        ,'kategori' => $value['kategori']
                         ,'created_at' => date('Y-m-d H:i:s')
                         ,'created_by' => Auth::user()->name
                     ]);
@@ -198,7 +196,9 @@ class OrderController extends Controller
         //
         $where = array('id' => $id);
         $data['order'] = OrderModel::where($where)->first();
+ 
         $data['negara'] = NegaraModel::select()->get();
+        $data['user'] = UserModel::select()->get();
         
         return view('cms.pages.order.edit', $data);
     }
@@ -212,47 +212,50 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'nama'=>'required',
-            'id_negara'=>'required'
-        ]);
+        // $this->validate($request,[
+        //     'nama'=>'required',
+        //     'id_negara'=>'required'
+        // ]);
          
         $update = [
-            'nama' => $request->nama
-            ,'longitude' => $request->longitude
-            ,'latitude' => $request->latitude
-            ,'kode_pos' => $request->kode_pos
-            ,'id_negara' => $request->id_negara
-            ,'origin' => $request->origin
-            ,'U_DTD_GC_50' => $request->U_DTD_GC_50
-            ,'U_DTD_GC_100' => $request->U_DTD_GC_100
-            ,'U_DTD_GC_350' => $request->U_DTD_GC_350
-            ,'U_DTD_GC_500' => $request->U_DTD_GC_500
-            ,'U_DTD_GC_1000' => $request->U_DTD_GC_1000
-            ,'L_DTD_GC_LCL_2' => $request->L_DTD_GC_LCL_2
-            ,'L_DTD_GC_LCL_6' => $request->L_DTD_GC_LCL_6
-            ,'L_DTD_GC_LCL_10' => $request->L_DTD_GC_LCL_10
-            ,'L_DTD_GC_FCL_20ft' => $request->L_DTD_GC_FCL_20ft
-            ,'L_DTD_GC_FCL_40ft' => $request->L_DTD_GC_FCL_40ft
-            ,'U_DTP_GC_50' => $request->U_DTP_GC_50
-            ,'U_DTP_GC_100' => $request->U_DTP_GC_100
-            ,'U_DTP_GC_350' => $request->U_DTP_GC_350
-            ,'U_DTP_GC_500' => $request->U_DTP_GC_500
-            ,'U_DTP_GC_1000' => $request->U_DTP_GC_1000
-            ,'L_DTP_GC_LCL_2' => $request->L_DTP_GC_LCL_2
-            ,'L_DTP_GC_LCL_3' => $request->L_DTP_GC_LCL_3
-            ,'L_DTP_GC_LCL_4' => $request->L_DTP_GC_LCL_4
-            ,'L_DTP_GC_LCL_5' => $request->L_DTP_GC_LCL_5
-            ,'L_DTP_GC_LCL_6' => $request->L_DTP_GC_LCL_6
-            ,'L_DTP_GC_LCL_7' => $request->L_DTP_GC_LCL_7
-            ,'L_DTP_GC_LCL_8' => $request->L_DTP_GC_LCL_8
-            ,'L_DTP_GC_LCL_9' => $request->L_DTP_GC_LCL_9
-            ,'L_DTP_GC_LCL_10' => $request->L_DTP_GC_LCL_10
-            ,'L_DTP_GC_FCL_20ft' => $request->L_DTP_GC_FCL_20ft
-            ,'L_DTP_GC_FCL_40ft' => $request->L_DTP_GC_FCL_40ft
+            'id_user' => $request->id_user
+            ,'kota_asal' => '16417'
+            ,'kota_tujuan' => $request->kota_tujuan
+            ,'tipe_pengiriman' => $request->tipe_pengiriman
+
+            ,'barang_kategori' => $request->barang_kategori
+
+            ,'pengirim_nama' => $request->pengirim_nama
+            ,'pengirim_negara' => $request->pengirim_negara
+            ,'pengirim_kodepos' => $request->pengirim_kodepos
+            ,'pengirim_kota' => $request->pengirim_kota
+            ,'pengirim_alamat' => $request->pengirim_alamat
+            ,'pengirim_perusahaan' => $request->pengirim_perusahaan
+            ,'pengirim_telepon' => $request->pengirim_telepon
+            ,'pengirim_email' => $request->pengirim_email
+            ,'pengirim_koleksi_intruksi' => $request->pengirim_koleksi_intruksi
+
+            ,'penerima_nama' => $request->penerima_nama
+            ,'penerima_negara' => $request->penerima_negara
+            ,'penerima_kodepos' => $request->penerima_kodepos
+            ,'penerima_kota' => $request->penerima_kota
+            ,'penerima_alamat' => $request->penerima_alamat
+            ,'penerima_perusahaan' => $request->penerima_perusahaan
+            ,'penerima_telepon' => $request->penerima_telepon
+            ,'penerima_email' => $request->penerima_email
+            ,'referensi_customer' => $request->referensi_customer
+
+            ,'layanan_tambahan' => $request->layanan_tambahan
+            ,'total_harga' => $request->total_harga
+            ,'total_approved' => $request->total_approved
+            ,'status' => $request->status
+            ,'tanggal_order' => date('Y-m-d H:i:s',strtotime($request->tanggal_order))
+            ,'tanggal_kirim' => date('Y-m-d H:i:s',strtotime($request->tanggal_kirim))
             ,'updated_at' => date('Y-m-d H:i:s')
             ,'modified_by' => Auth::user()->name
         ];
+
+
         OrderModel::where('id',$id)->update($update);
         return redirect('/order/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
