@@ -162,7 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        NZTim\Mailchimp\MailchimpServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -231,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'TextHelp' => App\Helpers\Text::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Mailchimp' => NZTim\Mailchimp\MailchimpFacade::class,
     ],
 
 ];

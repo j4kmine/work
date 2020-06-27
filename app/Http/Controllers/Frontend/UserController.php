@@ -8,6 +8,7 @@ use App\Models\UserModel;
 use App\Http\Controllers\Controller;
 use PHPMailer\PHPMailer;
 use Illuminate\Support\Facades\Auth;
+use NZTim\Mailchimp\Mailchimp as Mailchimp;
 class UserController extends Controller
 {
     public function login()
@@ -17,6 +18,10 @@ class UserController extends Controller
         }else{
             return view('frontend.pages.user.login', ['page' => 'user']);
         }
+    }
+    public function subscibe(Request $request){
+        
+        $subscribe = Mailchimp::subscribe('f92679b36e', $request->email);
     }
     public function loginuser(Request $request){
        

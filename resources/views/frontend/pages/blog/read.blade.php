@@ -162,6 +162,7 @@
     });
 </script>
 <div class="container-full">
+    
     <div class="row">
         <div class="col-md-6 nopadding item">
             <img src="{{url('/images/'. $blogs['blogs']['imagesdetail']['path'])}}" class="img-responsive" />
@@ -230,11 +231,27 @@
 
             </div>
             <div class="widget-newsletter">
-                <div class="input-group">
-                    <input id="dimensi" type="text" class="form-control" name="noresi" placeholder="Masukan Email Anda...">
-                    <span class="input-group-addon group-addon-resi">  <button  class="btn btn-cek"><b>Berlangganan</b></button></span>
-                </div>
+                <form data-toggle="validator" method="post" action="{{ route('subscibe') }}">
+                    <div class="input-group">
+                        <input id="dimensi" type="text" class="form-control" name="email" placeholder="Masukan Email Anda..." required="true">
+                        <span class="input-group-addon group-addon-resi">  <button type="submit" class="btn btn-cek"><b>Berlangganan</b></button></span>
+                    </div>
+                </form>
             </div>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div><br />
+            @endif
+            @if(session()->has('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session()->get('success') }}
+            </div>
+            @endif
             @foreach($blogs['lainnya'] as $key=>$blog)
                 <div class="item-below">
                     <a href="<?php echo TextHelp::generateLink($blog);?>">

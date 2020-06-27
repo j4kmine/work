@@ -28,8 +28,8 @@ Route::get('userforgot', 'Frontend\UserController@forgotpassword')->name('userfo
 Route::get('read/{slug}/{id}', 'Frontend\BlogController@read')->name('read');
 Route::post('loginuser', 'Frontend\UserController@loginuser')->name('loginuser');
 Route::get('login', 'Auth\LoginController@login')->name('login');
-
 Route::post('login', 'Auth\LoginController@doLoginCms');
+Route::post('subscibe', 'Frontend\UserController@subscibe')->name('subscibe');
 Route::get('logout', 'Auth\LoginController@doLogout')->name('logout');
 Route::group(['middleware' => ['auth']], function () {
     
