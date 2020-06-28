@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $blogs = BlogModel::paginate(3);
+        $blogs = BlogModel::where('url_youtube','=',"")->paginate(3);
         foreach($blogs as $key=>$value){
             if($value->id_image != 0){
                 $where = array('id' => $value->id_image);

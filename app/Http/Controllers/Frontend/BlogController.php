@@ -51,7 +51,7 @@ class BlogController extends Controller
             $where = array('id' =>  $blogs['blogs']->id_image);
              $blogs['blogs']->imagesdetail = ImagesModel::where($where)->first();
         }
-        $blogs['lainnya'] = BlogModel::orderBy('id', 'DESC')->paginate(2);
+        $blogs['lainnya'] = BlogModel::orderBy('id', 'DESC')->where('url_youtube','=',"")->paginate(2);
         if(isset( $blogs['lainnya']) && count( $blogs['lainnya'])>0){
             foreach($blogs['lainnya'] as $key=>$value){
                 if($value->id_image != 0){

@@ -103,9 +103,51 @@ class UserController extends Controller
         return redirect('/userregister')->with('success', 'Success Register Please Check Your Email Or Spam Folder To Validate');
  
     }
+    public function forgotpasswordUser(Request $request)
+    {
+        $blogs = UserModel::where('email','=',$request->email)->first();
+        if(isset($blogs->code) && $blogs->code != "" ){
+            $text             = 'Hello Mail';
+            $mail             = new PHPMailer\PHPMailer();
+            $mail->IsSMTP();
+            $mail->AuthType = 'LOGIN';
+            $mail->SMTPAuth   = true;
+            $mail->Host       = env('MAIL_HOST');
+            $mail->Port       = env('MAIL_PORT');
+            $mail->IsHTML(true);
+            $mail->Username = env('MAIL_USERNAME');
+            $mail->Password = env('MAIL_PASSWORD');
+            $mail->SetFrom(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $mail->Subject = "Reset Password";
+            $mail->Body    =   view('frontend.pages.email.reset',['code' => $blogs->code]);
+            $mail->AddAddress(trim($request->email));
+            $send= $mail->Send();
+            return redirect()->back()->with('success', 'Please Check Your Email');
+        
+        }else{
+            return redirect()->back()->withErrors(['errors', 'user does not exist']);
+        }
+    }
     public function forgotpassword()
     {
         return view('frontend.pages.user.forgotpassword',['page' => 'user']);
+    }
+    public function resetpassworduser(Request $request){
+        $this->validate($request, [
+            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6',
+            'code'=>'required'
+        ]);
+        $update = ['password' => bcrypt($request->password)];
+        $updateData = UserModel::where('code',$request->code)->update($update);
+
+        if($updateData == true){
+            return redirect()->back()->with('success', 'Success Reseting Password Please Login');
+        }else{
+            return redirect()->back()->withErrors(['errors', 'user does not exist']);
+        }
+       
+
     }
     public function resetpassword()
     {

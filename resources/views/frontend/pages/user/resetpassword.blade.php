@@ -21,6 +21,20 @@
     }
 </style>
 <section class="wrapper">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div><br />
+    @endif
+    @if(session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session()->get('success') }}
+    </div>
+    @endif
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -29,20 +43,21 @@
                 </div>
                 <div class="col-md-6 col-md-offset-3">
                     <div class="login-box">
-                        <form action="/action_page.php">
+                        <form method="post" action="{{ route('resetpassworduser') }}">
                             <div class="form-group">
-                                <input type="password" placeholder="Password Baru" class="form-control" id="password">
+                                <input type="password" name="password" placeholder="Password Baru" class="form-control" id="password" required="true">
                             </div>
                             <div class="form-group">
-                                <input type="password" placeholder="Ulangi Password Baru" class="form-control" id="password">
+                                <input type="password" name="password_confirmation" placeholder="Ulangi Password Baru" class="form-control" id="password" required="true">
                             </div>
+                            <input type="hidden" name="code" value="{{ app('request')->input('code') }}"/>
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <button type="button" class="btn btn-cek">Simpan</button>
+                                    <button type="submit" class="btn btn-cek">Simpan</button>
                                 </div>
 
                             </div>
-
+                         
 
                         </form>
                     </div>

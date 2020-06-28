@@ -21,6 +21,20 @@
     }
 </style>
 <section class="wrapper">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div><br />
+    @endif
+    @if(session()->has('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session()->get('success') }}
+    </div>
+    @endif
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -29,14 +43,14 @@
                 </div>
                 <div class="col-md-6 col-md-offset-3">
                     <div class="login-box">
-                        <form action="/action_page.php">
+                        <form method="post" action="{{ route('forgotpasswordUser') }}">
                             <div class="form-group">
-                                <input type="email" placeholder="Alamat Email" class="form-control" id="email">
+                                <input type="email" name="email" placeholder="Alamat Email" class="form-control" id="email" required="true">
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <button type="button" class="btn btn-cek">Reset</button>
+                                    <button type="submit" class="btn btn-cek">Reset</button>
                                 </div>
 
                             </div>
