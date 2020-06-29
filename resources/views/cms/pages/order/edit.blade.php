@@ -21,7 +21,7 @@
                 <script>
 
                     $(document).ready(function() {
-                        var count = 1;
+                        var count = {{ count($rel_item) }};
                         dynamic_field(count);
 
                         function dynamic_field(number){
@@ -132,7 +132,8 @@
                         $(document).on("change", ".harga", calculateSum);
 
                         $("#id_users").select2({
-                            placeholder: "Pilih User"
+                            placeholder: "Pilih User",
+                            disabled: true
                         }).on("change", function(e) {
                             var id_user = $('#id_users').val();
                             $('#id_user').val(id_user);
@@ -216,6 +217,13 @@
                             },
                         });
 
+                        $("#id_users").val({{$order->id_user}}).trigger('change');
+                        $("#pengirim_negaras").val({{$order->pengirim_negara}}).trigger('change');
+                        $("#penerima_negaras").val({{$order->penerima_negara}}).trigger('change');
+                        $(".kota_tujuan").val({{$order->kota_tujuan}}).trigger('change');
+                        $("#tipe_pengiriman").val({{$order->tipe_pengiriman}});
+                        $("#barang_kategori").val({{$order->barang_kategori}});
+                        $("#status").val({{$order->status}});
                     });
                 </script>
             <div class="row my-3">
@@ -252,7 +260,7 @@
                                         <div class="form-group m-0">
                                             <label for="kota_tujuan" class="col-form-label s-12">Kota tujuan</label>
                                             <select class="kota_tujuan"></select>
-                                            <input type="hidden" id="kota_tujuan" name="kota_tujuan" class="input-top">
+                                            <input type="hidden" id="kota_tujuan" name="kota_tujuan" class="input-top" value="{{ $order->kota_tujuan }}">
                                             <input type="hidden" id="kota_tujuan_text" name="kota_asal_text">
                                         </div>
                                     </div>
@@ -505,7 +513,23 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            @foreach ($rel_item as $key => $value)
+                                                <tr>
+                                                    <td><input type="text" id="deskripsi" name="deskripsi[]" value="{{ $value->deskripsi }}" class="form-control"></td>
+                                                    <td><input type="text" id="panjang" name="panjang[]" value="{{ $value->panjang }}" class="form-control"></td>
+                                                    <td><input type="text" id="lebar" name="lebar[]" value="{{ $value->lebar }}" class="form-control"></td>
+                                                    <td><input type="text" id="tinggi" name="tinggi[]" value="{{ $value->tinggi }}" class="form-control"></td>
+                                                    <td><input type="text" id="berat" name="berat[]" value="{{ $value->berat }}" class="form-control"></td>
+                                                    <td><input type="text" id="harga" name="harga[]" value="{{ $value->harga }}" class="form-control harga"></td>
+                                                    @if ($key == '0') 
+                                                        <td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
+                                                    @else 
+                                                        <td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td>
+                                                    @endif
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -560,7 +584,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="tanggal_order" class="col-form-label s-12">tanggal order</label>
-                                            <input id="tanggal_order" placeholder="Enter tanggal order" name="tanggal_order" value="{{ $order->tanggal_order }}" class="form-control r-0 light s-12 " type="text" readonly>
+                                            <input id="tanggal_order" placeholder="Enter tanggal order" name="tanggal_order" value="{{ date('d-m-Y H:i',strtotime($order->tanggal_order)) }}" class="form-control r-0 light s-12 " type="text" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -569,7 +593,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="tanggal_kirim" class="col-form-label s-12">tanggal kirim</label>
-                                            <input id="tanggal_kirim" placeholder="Enter tanggal kirim" name="tanggal_kirim" value="{{ $order->tanggal_kirim }}" class="form-control r-0 light s-12 " type="text" readonly>
+                                            <input id="tanggal_kirim" placeholder="Enter tanggal kirim" name="tanggal_kirim" value="{{ date('d-m-Y H:i',strtotime($order->tanggal_kirim)) }}" class="form-control r-0 light s-12 " type="text" readonly>
                                         </div>
                                     </div>
                                 </div>

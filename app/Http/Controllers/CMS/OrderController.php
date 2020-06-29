@@ -196,7 +196,9 @@ class OrderController extends Controller
         //
         $where = array('id' => $id);
         $data['order'] = OrderModel::where($where)->first();
- 
+        $where2 = array('id_order' => $id);
+        $data['rel_item'] = RelitemModel::where($where2)->get();
+        // echo "<pre>";var_dump($data['rel_item']);exit();
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
         
@@ -276,6 +278,7 @@ class OrderController extends Controller
     {
        
         OrderModel::where('id',$id)->delete();
+        RelitemModel::where('id_order',$id)->delete();
         return redirect('/order')->with('success', 'Deleted Successfully');
     }
     public function postProcess(Request $request){
