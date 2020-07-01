@@ -90,7 +90,6 @@ class OrderController extends Controller
         //     'id_negara'=>'required'
         // ]);
 
-        $kategori = $request->get('kategori');
         $deskripsi = $request->get('deskripsi');
         $harga = $request->get('harga');
         $panjang = $request->get('panjang');
@@ -218,7 +217,38 @@ class OrderController extends Controller
         //     'nama'=>'required',
         //     'id_negara'=>'required'
         // ]);
-        echo "<pre>";var_dump($request);exit();
+        
+        $deskripsi = $request->deskripsi;
+        $harga = $request->harga;
+        $panjang = $request->panjang;
+        $lebar = $request->lebar;
+        $tinggi = $request->tinggi;
+        $berat = $request->berat;
+        $id_rel_item = $request->id_rel_item;
+        $data_rel_item = array();
+
+        if (count($harga) > 0) {
+            for ($i=0; $i < count($harga); $i++) { 
+                $data_rel_item[$i]['id'] = $id_rel_item[$i];
+                $data_rel_item[$i]['deskripsi'] = $deskripsi[$i];
+                $data_rel_item[$i]['harga'] = $harga[$i];
+                $data_rel_item[$i]['panjang'] = $panjang[$i];
+                $data_rel_item[$i]['lebar'] = $lebar[$i];
+                $data_rel_item[$i]['tinggi'] = $tinggi[$i];
+                $data_rel_item[$i]['berat'] = $berat[$i];
+            }
+        }
+
+        ## cari id rel item yang dihapus
+        $id_rel_item1 = $id_rel_item;
+        $where2 = array('id_order' => $id);
+        $id_rel_item2 = RelitemModel::where($where2)->pluck('id')->toArray();
+
+        $list_id_relitem_diff = array_diff($id_rel_item1, $id_rel_item2);
+        if (empty($list_id_relitem_diff)) {
+            $list_id_relitem_diff = array_diff($id_rel_item2, $id_rel_item1);
+        }
+
         $update = [
             'id_user' => $request->id_user
             ,'kota_asal' => '16417'
@@ -254,9 +284,67 @@ class OrderController extends Controller
             ,'tanggal_order' => date('Y-m-d H:i:s',strtotime($request->tanggal_order))
             ,'tanggal_kirim' => date('Y-m-d H:i:s',strtotime($request->tanggal_kirim))
             ,'updated_at' => date('Y-m-d H:i:s')
-            ,'modified_by' => Auth::user()->name
+            ,'updated_by' => Auth::user()->name
         ];
         OrderModel::where('id',$id)->update($update);
+
+        # hapus rel item dari id yang didapat
+        if (!empty($list_id_relitem_diff)) {
+            foreach ($list_id_relitem_diff as $key => $value) {
+                if ($value != NULL) {
+                    RelitemModel::where('id',$value)->delete();
+                }
+            }
+        }
+
+        ## pisahkan list_artikel untuk diinsert dan diupdate
+        $list_relitem_insert = array();
+        $list_relitem_update = array();
+        // echo "<pre>";var_dump($data_rel_item);exit();
+        foreach ($data_rel_item as $key => $value) {
+            if ($value['id'] == NULL) {
+                $list_relitem_insert[] = $value;
+            } else {
+                $list_relitem_update[] = $value;
+            }
+        }
+        
+        ## insert rel item jika new item
+        if (!empty($list_relitem_insert)) {
+            foreach ($list_relitem_insert as $key => $value) {
+                $relitem = new RelitemModel([
+                    'id' => $value['id']
+                    ,'id_order' => $id
+                    ,'harga' => $value['harga']
+                    ,'deskripsi' => $value['deskripsi']
+                    ,'panjang' => $value['panjang']
+                    ,'lebar' => $value['lebar']
+                    ,'tinggi' => $value['tinggi']
+                    ,'berat' => $value['berat']
+                    ,'created_at' => date('Y-m-d H:i:s')
+                    ,'created_by' => Auth::user()->name
+                ]);
+                $insert_relitem = $relitem->save();
+            }
+        }
+
+        ## update rel item jika no new item
+        if (!empty($list_relitem_update)) {
+            foreach ($list_relitem_update as $key => $value) {
+                $update_relitem = array();
+                $update_relitem = [
+                    'harga' => $value['harga']
+                    ,'deskripsi' => $value['deskripsi']
+                    ,'panjang' => $value['panjang']
+                    ,'lebar' => $value['lebar']
+                    ,'tinggi' => $value['tinggi']
+                    ,'berat' => $value['berat']
+                    ,'updated_at' => date('Y-m-d H:i:s')
+                    ,'modified_by' => Auth::user()->name
+                ];
+                RelitemModel::where('id',$value['id'])->update($update_relitem);
+            }
+        }
 
         return redirect('/order/'.$id.'/edit')->with('success', 'Success Input Data');      
     }

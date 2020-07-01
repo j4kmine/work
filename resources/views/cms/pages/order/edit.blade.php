@@ -22,8 +22,8 @@
 
                     $(document).ready(function() {
                         var count = {{ count($rel_item) }};
-                        console.log(count);
-                        dynamic_field(count);
+                        // console.log(count);
+                        // dynamic_field(count);
 
                         function dynamic_field(number){
                             var html = '<tr>';
@@ -34,6 +34,7 @@
                             html += '<td><input type="text" id="tinggi" name="tinggi[]" class="form-control"></td>';
                             html += '<td><input type="text" id="berat" name="berat[]" class="form-control"></td>';
                             html += '<td><input type="text" id="harga" name="harga[]" class="form-control harga"></td>';
+                            html += '<input type="hidden" id="id_rel_item" name="id_rel_item[]" value="">';
                             if (number > 1) {
                                 html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
                                 $('tbody').append(html);
@@ -549,6 +550,7 @@
                                                         <td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td>
                                                     @endif
                                                 </tr>
+                                                <input type="hidden" name="id_rel_item[]" value="{{ $value->id }}">
                                             @endforeach
                                         </tbody>
                                     </table>
