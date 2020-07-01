@@ -218,7 +218,7 @@ class OrderController extends Controller
         //     'nama'=>'required',
         //     'id_negara'=>'required'
         // ]);
-         
+        echo "<pre>";var_dump($request);exit();
         $update = [
             'id_user' => $request->id_user
             ,'kota_asal' => '16417'
@@ -256,9 +256,8 @@ class OrderController extends Controller
             ,'updated_at' => date('Y-m-d H:i:s')
             ,'modified_by' => Auth::user()->name
         ];
-
-
         OrderModel::where('id',$id)->update($update);
+
         return redirect('/order/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
 
@@ -269,14 +268,13 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-       
+    {  
         OrderModel::where('id',$id)->delete();
+        RelitemModel::where('id_order',$id)->delete();
         return redirect('/order')->with('success', 'Deleted Successfully');
     }
     public function hapus($id)
     {
-       
         OrderModel::where('id',$id)->delete();
         RelitemModel::where('id_order',$id)->delete();
         return redirect('/order')->with('success', 'Deleted Successfully');

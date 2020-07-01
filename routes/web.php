@@ -40,10 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('users/postProcess', 'CMS\UserController@postProcess');
 
     ## ORDER
-    Route::get('order/import', 'CMS\OrderController@import')->name('order.import');
-    Route::post('order/importData', 'CMS\OrderController@importData')->name('order.importData');
-    Route::resource('order', 'CMS\OrderController');
     Route::get('order/hapus/{id}', 'CMS\OrderController@hapus');
+    Route::resource('order', 'CMS\OrderController');
     Route::post('order/postProcess', 'CMS\OrderController@postProcess');
 
     ## ADDRESS

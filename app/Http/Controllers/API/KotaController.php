@@ -32,5 +32,21 @@
                       
         return response()->json([$kotaQuery], 200);
     }
-    
+   
+    public function getKota(Request $request)
+    {
+   
+        // $this->validate($request, [
+        //     'id_kota' => 'required'
+           
+        // ]);
+        $conditional = "";
+        $id = $request->input('id');
+        $kotaQuery = KotaModel::join('negara', 'kota.id_negara', '=', 'negara.id')
+                        ->select('kota.*', 'kota.nama as text')  
+                        ->where('kota.id', '=', $id)
+                        ->first();
+
+        return response()->json([$kotaQuery], 200);
+    } 
 }
