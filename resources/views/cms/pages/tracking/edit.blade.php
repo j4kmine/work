@@ -17,13 +17,34 @@
               </div>
             @endif
             <div class="container">
-                <script src="{{ asset('node_modules/tinymce/tinymce.min.js') }}"></script>
+                <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+                <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+                <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
                 <script>
-                    tinymce.init({
-                        selector:'textarea',
-                        height: 400
-                    });
+                    $(document).ready(function(){
+                        $('#mySelect2').select2({
+                            ajax: {
+                                url: "<?php echo url('webservice/getListOrder');?>",
+                                dataType: 'json',
+                                processResults: function (data) {
+                                    return {
+                                        results: data
+                                    };
+                                },
+                            
+                            }
+                        });
+                        $('#mySelect2').on("select2:select", function (e) { 
+                            $("#textSelect").val(e.params.data.text)
+                        });                   
+                    })
+                    
                 </script>
+                <style>
+                    .select2-container .select2-selection--single{
+                        height: 38px;
+                    }
+                </style>
                 <div class="row my-3">
                     <div class="col-md-8 offset-md-2">
                         <form method="post" action="{{ route('tracking.update', $tracking->id) }}">
@@ -38,7 +59,54 @@
                                             <a class="btn btn-primary btn-sm " href="{{url('tracking')}}">List tracking</a>
                                         </div>
                                     </div>
-                                  
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <label for="Order" class="col-form-label s-12">Order</label>
+                                            <div class="form-group m-0">
+                                                <select id="mySelect2" class="form-control" name="id_order">
+                                                    @if ($tracking->id_order!= "")
+                                                        <option value="{{ $tracking->id_order }}" selected>{{ $tracking->id_order }} / {{ $tracking->user->name }}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="textSelect" name="textSelect" value="{{ $tracking->id_order }} / {{ $tracking->user->name }}"/>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group m-0">
+                                                <label for="status" class="col-form-label s-12">Status</label>
+                                                <select class="form-control" id="status" name="status">
+                                                    <option value="">--Select Status--</option>
+                                                    <option value="1" @if ($tracking->status == "1") {{ 'selected' }} @endif>Document Handling</option>
+                                                    <option value="2" @if ($tracking->status == "2") {{ 'selected' }} @endif>Collected</option>
+                                                    <option value="3" @if ($tracking->status == "3") {{ 'selected' }} @endif>Delivering</option>
+                                                    <option value="4" @if ($tracking->status == "4") {{ 'selected' }} @endif>Delivered</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group m-0">
+                                                <label for="flag" class="col-form-label s-12">Flag</label>
+                                                <select class="form-control" id="flag" name="flag">
+                                                    <option value="">--Select Flag--</option>
+                                                    <option value="1" @if ($tracking->flag == "1") {{ 'selected' }} @endif>Lancar</option>
+                                                    <option value="2" @if ($tracking->flag == "2") {{ 'selected' }} @endif>Peringatan</option>
+                                                    <option value="3" @if ($tracking->flag == "3") {{ 'selected' }} @endif>Gagal</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="form-group m-0">
+                                            <textarea class="form-control" name="keterangan" placeholder="Keterangan"rows="5" id="comment">{{$tracking->keterangan}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>

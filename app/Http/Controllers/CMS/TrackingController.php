@@ -6,8 +6,10 @@ use Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\TrackingModel;
+use App\Models\OrderModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UserModel;
 class TrackingController extends Controller
 {
      /**
@@ -91,7 +93,15 @@ class TrackingController extends Controller
         //
         $where = array('id' => $id);
         $data['tracking'] = TrackingModel::where($where)->first();
-      
+        if($data['tracking']->id_order != 0){
+                $where = array('id' => $data['tracking']->id_order);
+                $data['tracking']->order = OrderModel::where($where)->first();
+        }
+        if($data['tracking']->order->id_user != 0){
+            $where = array('id' => $data['tracking']->order->id_user );
+            $data['tracking']->user = UserModel::where($where)->first();
+        }
+   
         return view('cms.pages.tracking.edit', $data);
     }
 
@@ -116,7 +126,7 @@ class TrackingController extends Controller
                     'keterangan' => $request->keterangan,
                     'flag' => $request->flag,
                     'status' => $request->status,
-                    'modified_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                   
                 ];
         TrackingModel::where('id',$id)->update($update);
