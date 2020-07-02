@@ -22,7 +22,8 @@
 
                     $(document).ready(function() {
                         var count = {{ count($rel_item) }};
-                        dynamic_field(count);
+                        // console.log(count);
+                        // dynamic_field(count);
 
                         function dynamic_field(number){
                             var html = '<tr>';
@@ -33,6 +34,7 @@
                             html += '<td><input type="text" id="tinggi" name="tinggi[]" class="form-control"></td>';
                             html += '<td><input type="text" id="berat" name="berat[]" class="form-control"></td>';
                             html += '<td><input type="text" id="harga" name="harga[]" class="form-control harga"></td>';
+                            html += '<input type="hidden" id="id_rel_item" name="id_rel_item[]" value="">';
                             if (number > 1) {
                                 html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
                                 $('tbody').append(html);
@@ -61,7 +63,7 @@
                             var destination = $('#kota_tujuan').val();
                             var tipe_pengiriman = $('#tipe_pengiriman').val();
                             var jenis = $('#barang_kategori').val();
-                            
+                            console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis);
                             $.ajax({
                                 type: "POST",
                                 url: "http://18.141.205.174/api/cekongkir",
@@ -153,7 +155,7 @@
                             $('#penerima_negara').val(penerima_negara);
                         });
 
-                        $(".kota_tujuan").select2({
+                        $("#kota_tujuans").select2({
                           ajax: {
                             url: "http://18.141.205.174/api/listkotanegara",
                             dataType: 'json',
@@ -176,9 +178,28 @@
                           placeholder: 'Kota Tujuan',
                           minimumInputLength: 2
                         }).on("change", function(e) {
-                            var kota_tujuan = $('.kota_tujuan').val();
+                            var kota_tujuan = $('#kota_tujuans').val();
                             $('#kota_tujuan').val(kota_tujuan);
                             $('#kota_tujuan_text').val($('.select2-chosen').text());
+                        });
+
+                        var $option = $('<option selected>Loading...</option>').val({{$order->kota_tujuan}});
+                        $("#kota_tujuans").append($option).trigger('change');
+                        var id_kota_tujuan = {{$order->kota_tujuan}};
+                        $.ajax({ // make the request for the selected data object
+                            type: "POST",
+                            url: "http://18.141.205.174/api/getkota/",
+                            // The key needs to match your method's input parameter (case-sensitive).
+                            data: JSON.stringify({ 
+                                "id": id_kota_tujuan
+                                }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                        }).then(function (data) {
+                          // Here we should have the data object
+                          $option.text(data[0].text).val(data[0].id); // update the text that is displayed (and maybe even the value)
+                          $option.removeData(); // remove any caching data that might be associated
+                          $("#kota_tujuans").trigger('change'); // notify JavaScript components of possible changes
                         });
 
                         $('#tanggal_order').datetimepicker({
@@ -220,7 +241,7 @@
                         $("#id_users").val({{$order->id_user}}).trigger('change');
                         $("#pengirim_negaras").val({{$order->pengirim_negara}}).trigger('change');
                         $("#penerima_negaras").val({{$order->penerima_negara}}).trigger('change');
-                        $(".kota_tujuan").val({{$order->kota_tujuan}}).trigger('change');
+                        $("#kota_tujuan").val("{{$order->kota_tujuan}}").trigger('change');
                         $("#tipe_pengiriman").val({{$order->tipe_pengiriman}});
                         $("#barang_kategori").val({{$order->barang_kategori}});
                         $("#status").val({{$order->status}});
@@ -229,6 +250,7 @@
             <div class="row my-3">
                 <div class="col-md-8 offset-md-2">
                     <form method="post" action="{{ route('order.update', $order->id) }}">
+                        {{ method_field('PATCH') }}
                         <div class="card no-b">
                             <div class="card-body">
                                 <div class="form-row">
@@ -258,8 +280,8 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="kota_tujuan" class="col-form-label s-12">Kota tujuan</label>
-                                            <select class="kota_tujuan"></select>
+                                            <label for="kota_tujuans" class="col-form-label s-12">Kota tujuan</label>
+                                            <select id="kota_tujuans"><option></option></select>
                                             <input type="hidden" id="kota_tujuan" name="kota_tujuan" class="input-top" value="{{ $order->kota_tujuan }}">
                                             <input type="hidden" id="kota_tujuan_text" name="kota_asal_text">
                                         </div>
@@ -516,18 +538,19 @@
                                         <tbody>
                                             @foreach ($rel_item as $key => $value)
                                                 <tr>
-                                                    <td><input type="text" id="deskripsi" name="deskripsi[]" value="{{ $value->deskripsi }}" class="form-control"></td>
-                                                    <td><input type="text" id="panjang" name="panjang[]" value="{{ $value->panjang }}" class="form-control"></td>
-                                                    <td><input type="text" id="lebar" name="lebar[]" value="{{ $value->lebar }}" class="form-control"></td>
-                                                    <td><input type="text" id="tinggi" name="tinggi[]" value="{{ $value->tinggi }}" class="form-control"></td>
-                                                    <td><input type="text" id="berat" name="berat[]" value="{{ $value->berat }}" class="form-control"></td>
-                                                    <td><input type="text" id="harga" name="harga[]" value="{{ $value->harga }}" class="form-control harga"></td>
+                                                    <td><input type="text" id="deskripsi{{ $key }}" name="deskripsi[]" value="{{ $value->deskripsi }}" class="form-control"></td>
+                                                    <td><input type="text" id="panjang{{ $key }}" name="panjang[]" value="{{ $value->panjang }}" class="form-control"></td>
+                                                    <td><input type="text" id="lebar{{ $key }}" name="lebar[]" value="{{ $value->lebar }}" class="form-control"></td>
+                                                    <td><input type="text" id="tinggi{{ $key }}" name="tinggi[]" value="{{ $value->tinggi }}" class="form-control"></td>
+                                                    <td><input type="text" id="berat{{ $key }}" name="berat[]" value="{{ $value->berat }}" class="form-control"></td>
+                                                    <td><input type="text" id="harga{{ $key }}" name="harga[]" value="{{ $value->harga }}" class="form-control harga"></td>
                                                     @if ($key == '0') 
                                                         <td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
                                                     @else 
                                                         <td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td>
                                                     @endif
                                                 </tr>
+                                                <input type="hidden" name="id_rel_item[]" value="{{ $value->id }}">
                                             @endforeach
                                         </tbody>
                                     </table>

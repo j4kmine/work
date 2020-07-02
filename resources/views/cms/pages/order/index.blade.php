@@ -25,7 +25,6 @@
                                         </div>
                                         <div class="col-md-9 text-right">
                                             <div class="mt-3">
-                                                <!-- <a  href="{{ route('order.import') }}" class="btn btn-warning btn-sm"><i class="icon-upload mr-2"></i> Import Data</a> -->
                                                 <a  href="{{ route('order.create') }}" class="btn btn-success btn-sm"><i class="icon-plus mr-2"></i> Add Data</a>
                                             </div>
                                         </div>
