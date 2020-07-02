@@ -51,6 +51,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('address', 'CMS\AddressController');
     Route::post('address/postProcess', 'CMS\AddressController@postProcess');
 
+    ## TRACKING
+    Route::get('tracking/hapus/{id}', 'CMS\TrackingController@hapus');
+    Route::resource('tracking', 'CMS\TrackingController');
+    Route::post('tracking/postProcess', 'CMS\TrackingController@postProcess');
+    
+
     ## BLOG
     Route::get('blog/hapus/{id}', 'CMS\BlogController@hapus');
     Route::resource('blog', 'CMS\BlogController');
@@ -86,4 +92,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     ## WEBSERVICE
     Route::get('webservice/getListNegara', 'CMS\WebserviceController@getListNegara');
+    Route::get('webservice/getListOrder', 'CMS\WebserviceController@getListOrder');
 });
