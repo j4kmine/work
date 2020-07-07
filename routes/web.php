@@ -54,6 +54,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('tracking', 'CMS\TrackingController');
     Route::post('tracking/postProcess', 'CMS\TrackingController@postProcess');
     
+    ## TRACKING
+    Route::get('item/hapus/{id}', 'CMS\ItemController@hapus');
+    Route::resource('item', 'CMS\ItemController');
+    Route::post('item/postProcess', 'CMS\ItemController@postProcess');
 
     ## BLOG
     Route::get('blog/hapus/{id}', 'CMS\BlogController@hapus');
