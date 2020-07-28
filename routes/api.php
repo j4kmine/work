@@ -17,7 +17,10 @@ Route::post('cekharga', 'API\PriceController@index');
 Route::post('listblog', 'API\BlogController@index');
 Route::get('listkotanegara', 'API\KotaController@index');
 Route::post('getkota', 'API\KotaController@getKota');
-Route::post('userselect2', 'API\UsersController@userSelect2');
+Route::post('getAddressByUser', 'API\AddressController@getAddressByUser');
+Route::post('getAddressById', 'API\AddressController@getAddressById');
+Route::get('userselect2', 'API\UsersController@userSelect2');
+Route::post('getItemById', 'API\ItemController@getItemById');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
 
