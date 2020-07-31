@@ -67,6 +67,7 @@
                             $.ajax({
                                 type: "POST",
                                 url: "http://18.141.205.174/api/cekongkir",
+                                // url: "http://127.0.0.1:8000/api/cekongkir",
                                 // The key needs to match your method's input parameter (case-sensitive).
                                 data: JSON.stringify({ 
                                     "panjang": panjang,
@@ -95,33 +96,6 @@
                             
                         });
 
-                        function cekHarga(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis) {
-                            console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis);
-                            $.ajax({
-                                type: "POST",
-                                url: "http://18.141.205.174/api/cekongkir",
-                                // The key needs to match your method's input parameter (case-sensitive).
-                                data: JSON.stringify({ 
-                                    "panjang": panjang,
-                                    "lebar": lebar,
-                                    "tinggi": tinggi,
-                                    "dimensi": berat,
-                                    "destination": destination,
-                                    "tipe_pengiriman": tipe_pengiriman,
-                                    "jenis": jenis
-                                    }),
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                success: function(data){
-                                    console.log(data);
-                                    return data;
-                                },
-                                failure: function(errMsg) {
-                                    console.log(errMsg);
-                                    return errMsg;
-                                }
-                            });
-                        }
                         function calculateSum() {
                             var sum = 0;
                             $(".harga").each(function () {

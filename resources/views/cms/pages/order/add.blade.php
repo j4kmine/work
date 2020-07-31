@@ -21,6 +21,7 @@
                 <script>
 
                     $(document).ready(function() {
+                        /* table barang */
                         var count = 1;
                         dynamic_field(count);
 
@@ -35,14 +36,13 @@
                             html += '<td><input type="text" id="harga" name="harga[]" class="form-control harga"></td>';
                             if (number > 1) {
                                 html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
-                                $('tbody').append(html);
+                                $('#tbody-barang').append(html);
                             } else {
                                 html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td></tr>';
-                                $('tbody').html(html);
+                                $('#tbody-barang').html(html);
                             }
                         }
 
-                        // $('#add').click(function(){
                         $(document).on('click', '#add', function(){
                             count++;
                             dynamic_field(count);
@@ -59,12 +59,14 @@
                             var tinggi = +$(this).closest("tr").find('input[name^="tinggi"]').val();
                             var berat = +$(this).closest("tr").find('input[name^="berat"]').val();
                             var destination = $('#kota_tujuan').val();
+                            if (destination == "") {destination = "2911"};
                             var tipe_pengiriman = $('#tipe_pengiriman').val();
                             var jenis = $('#barang_kategori').val();
-                            
+                            console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis);
                             $.ajax({
                                 type: "POST",
                                 url: "http://18.141.205.174/api/cekongkir",
+                                // url: "http://127.0.0.1:8000/api/cekongkir",
                                 // The key needs to match your method's input parameter (case-sensitive).
                                 data: JSON.stringify({ 
                                     "panjang": panjang,
@@ -78,7 +80,8 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    // console.log(this);
+                                    console.log(this);
+                                    console.log(data);
                                     // $('#harga').val(data.paket.door_to_door);
                                     $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
                                         console.log(data,this);
@@ -92,34 +95,71 @@
                             });
                             
                         });
+                        /* table addons */
+                        var count_addons = 1;
+                        dynamic_field_addons(count_addons);
 
-                        function cekHarga(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis) {
-                            console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis);
+                        function dynamic_field_addons(number){
+                            var html = '<tr>';
+                            
+                            html += '<td><select id="id_item'+number+'" name="id_item[]"><option value="">-Pilih-</option>@foreach($item as $i)<option value="{{ $i->id }}">{{ $i->title }}</option>@endforeach';
+                            html += '</select><input type="text" id="namaid" name="namaid[]" value="'+number+'" class="form-control" hidden><input type="text" id="title'+number+'" name="title[]" class="form-control" hidden></td>';
+                            html += '<td><input type="text" id="jumlah'+number+'" name="jumlah[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="satuan'+number+'" name="satuan[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="harga_satuan'+number+'" name="harga_satuan[]" class="form-control"></td>';
+                            html += '<td><input type="text" id="harga_total'+number+'" name="harga_total[]" class="form-control harga-addons"></td>';
+                            if (number > 1) {
+                                html += '<td><button type="button" name="remove_addons" id="remove_addons" class="btn btn-danger">Remove</button></td></tr>';
+                                $('#tbody-addons').append(html);
+                            } else {
+                                html += '<td><button type="button" name="add_addons" id="add_addons" class="btn btn-success">Add</button></td></tr>';
+                                $('#tbody-addons').html(html);
+                            }
+                        }
+
+                        $(document).on('click', '#add_addons', function(){
+                            count_addons++;
+                            dynamic_field_addons(count_addons);
+                        });
+
+                        $(document).on('click', '#remove_addons', function(){
+                            count_addons--;
+                            $(this).closest("tr").remove();
+                        });
+
+                        $("table#addons-table").on("change", 'select[name^="id_item"]', function (event) {
+                            var id_item = +$(this).closest("tr").find('select[name^="id_item"]').val();
+                            var numbers = +$(this).closest("tr").find('input[name^="namaid"]').val();
                             $.ajax({
                                 type: "POST",
-                                url: "http://18.141.205.174/api/cekongkir",
+                                // url: "http://18.141.205.174/api/cekongkir",
+                                url: "http://127.0.0.1:8000/api/getItemById",
                                 // The key needs to match your method's input parameter (case-sensitive).
                                 data: JSON.stringify({ 
-                                    "panjang": panjang,
-                                    "lebar": lebar,
-                                    "tinggi": tinggi,
-                                    "dimensi": berat,
-                                    "destination": destination,
-                                    "tipe_pengiriman": tipe_pengiriman,
-                                    "jenis": jenis
+                                    "id": id_item
                                     }),
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    console.log(data);
-                                    return data;
+                                    console.log(this);
+                                    console.log(data.list.data[0]);
+                                    $("#title"+numbers).val(data.list.data[0].title);
+                                    $("#harga_satuan"+numbers).val(data.list.data[0].harga);
+                                    $("table#addons-table").on("change", 'select[name^="id_item"],input[name^="namaid"], input[name^="title"], input[name^="jumlah"], input[name^="satuan"], input[name^="harga_satuan"], input[name^="harga_total"]', function (event) {
+                                        console.log(this);
+                                        var jumlah = +$(this).closest("tr").find('input[name^="jumlah"]').val();
+                                        var harga_satuan = +$(this).closest("tr").find('input[name^="harga_satuan"]').val();
+                                        var total_harga = jumlah*harga_satuan;
+                                        $(this).closest("tr").find('input[name^="harga_total"]').val(total_harga);
+                                        calculateSumAddons();
+                                    });
                                 },
                                 failure: function(errMsg) {
                                     console.log(errMsg);
-                                    return errMsg;
                                 }
-                            });
-                        }
+                            });     
+                        });
+
                         function calculateSum() {
                             var sum = 0;
                             $(".harga").each(function () {
@@ -131,11 +171,97 @@
                         }
                         $(document).on("change", ".harga", calculateSum);
 
+                        function calculateSumAddons() {
+                            var sum = 0;
+                            $(".harga-addons").each(function () {
+                                if (!isNaN(this.value) && this.value.length != 0) {
+                                    sum += parseFloat(this.value);
+                                }
+                            });
+                            $("#total_harga_addons").val(sum.toFixed(0));
+                        }
+                        $(document).on("change", ".harga-addons", calculateSumAddons);
+
                         $("#id_users").select2({
                             placeholder: "Pilih User"
                         }).on("change", function(e) {
                             var id_user = $('#id_users').val();
                             $('#id_user').val(id_user);
+                            pengirimAddress(id_user);
+                            penerimaAddress(id_user);
+                        });
+
+                        $("#pengirims_choose_address").select2({
+                            placeholder: "Pilih Pengirim Alamat"
+                        }).on("change", function(e) {
+                            var pengirims_choose_address = $('#pengirims_choose_address').val();
+                            $('#pengirim_choose_address').val(pengirims_choose_address);
+                            console.log(pengirims_choose_address);
+                            $.ajax({
+                                type: "POST",
+                                url: "http://127.0.0.1:8000/api/getAddressById",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "id": pengirims_choose_address
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    var listdata = data.list.data;
+                                    console.log(listdata);
+                                    $.each( listdata, function( key, value ) {
+                                        $("#pengirim_negaras").val(value.id_negara).trigger('change');
+                                        $('#pengirim_kodepos').val(value.kode_pos);
+                                        $('#pengirim_kota').val(value.id_kota);
+                                        $('#pengirim_alamat').val(value.alamat);
+                                        $('#pengirim_perusahaan').val(value.company);
+                                        $('#pengirim_telepon').val(value.no_hp);
+                                        $('#pengirim_email').val(value.email);
+                                        $('#pengirim_koleksi_intruksi').val(value.catatan);
+                                    });
+                                    return data;
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                    return errMsg;
+                                }
+                            });
+                        });
+
+                        $("#penerimas_choose_address").select2({
+                            placeholder: "Pilih Penerima Alamat"
+                        }).on("change", function(e) {
+                            var penerimas_choose_address = $('#penerimas_choose_address').val();
+                            $('#penerima_choose_address').val(penerimas_choose_address);
+                            $.ajax({
+                                type: "POST",
+                                url: "http://127.0.0.1:8000/api/getAddressById",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "id": penerimas_choose_address
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    var listdata = data.list.data;
+                                    console.log(listdata);
+                                    $.each( listdata, function( key, value ) {
+                                        $("#penerima_negaras").val(value.id_negara).trigger('change');
+                                        $('#penerima_kodepos').val(value.kode_pos);
+                                        $('#penerima_kota').val(value.id_kota);
+                                        $('#penerima_alamat').val(value.alamat);
+                                        $('#penerima_perusahaan').val(value.company);
+                                        $('#penerima_telepon').val(value.no_hp);
+                                        $('#penerima_email').val(value.email);
+                                        $('#referensi_customer').val(value.catatan);
+                                    });
+                                    return data;
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                    return errMsg;
+                                }
+                            });
                         });
 
                         $("#pengirim_negaras").select2({
@@ -216,6 +342,59 @@
                             },
                         });
 
+                        function pengirimAddress(id_user) {
+                            console.log(id_user);
+                            $.ajax({
+                                type: "POST",
+                                url: "http://127.0.0.1:8000/api/getAddressByUser",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "id_user": id_user,
+                                    "tipe_user": '0'
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    console.log(data.list.data);
+                                    var listdata = data.list.data;
+                                    $.each( listdata, function( key, value ) {
+                                      $('#pengirims_choose_address').append("<option value='"+value.id+"'>"+value.alamat+"</option>")
+                                    });
+                                    return data;
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                    return errMsg;
+                                }
+                            });
+                        }
+
+                        function penerimaAddress(id_user) {
+                            console.log(id_user);
+                            $.ajax({
+                                type: "POST",
+                                url: "http://127.0.0.1:8000/api/getAddressByUser",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "id_user": id_user,
+                                    "tipe_user": '1'
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    console.log(data.list.data);
+                                    var listdata = data.list.data;
+                                    $.each( listdata, function( key, value ) {
+                                      $('#penerimas_choose_address').append("<option value='"+value.id+"'>"+value.alamat+"</option>")
+                                    });
+                                    return data;
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                    return errMsg;
+                                }
+                            });
+                        }
                     });
                 </script>
             <div class="row my-3">
@@ -270,12 +449,24 @@
                                     </div>
                                 </div>
 
-                                <h1><b>DATA PEGIRIM</b></h1>
+                                <h1><b>DATA PENGIRIM</b></h1>
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="pengirim_nama" class="col-form-label s-12">Pengirim Nama</label>
                                             <input id="pengirim_nama" placeholder="Enter Pengirim Nama" name="pengirim_nama" value="{{ old('pengirim_nama') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="pengirims_choose_address" class="col-form-label s-12">Pilih Alamat</label>
+                                            <select id="pengirims_choose_address">
+                                                    <option></option>
+                                            </select>
+                                            <input type="hidden" id="pengirim_choose_address" name="pengirim_choose_address" value="{{ old('pengirim_choose_address') }}" />
                                         </div>
                                     </div>
                                 </div>
@@ -371,6 +562,18 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
+                                            <label for="penerimas_choose_address" class="col-form-label s-12">Pilih Alamat</label>
+                                            <select id="penerimas_choose_address">
+                                                    <option></option>
+                                            </select>
+                                            <input type="hidden" id="penerima_choose_address" name="penerima_choose_address" value="{{ old('penerima_choose_address') }}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
                                             <label for="penerima_negaras" class="col-form-label s-12">penerima Negara</label>
                                             <select id="penerima_negaras">
                                                 @foreach($negara as $n)
@@ -457,56 +660,28 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- 
-                                    <div class="col-md-6">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="barang_deskripsi" class="col-form-label s-12">Barang Deskripsi</label>
-                                            <input id="barang_deskripsi" placeholder="Enter Barang Deskripsi" name="barang_deskripsi" value="{{ old('barang_deskripsi') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="barang-table" class="col-form-label s-12">Daftar Barang</label>
+                                            <table class="table table-bordered table-striped mt-1" id="barang-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Deskripsi</th>
+                                                        <th>Panjang</th>
+                                                        <th>Lebar</th>
+                                                        <th>Tinggi</th>
+                                                        <th>Berat</th>
+                                                        <th>Harga</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody-barang"></tbody>
+                                            </table>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_nilai" class="col-form-label s-12">Barang Nilai</label>
-                                            <input id="barang_nilai" placeholder="Enter Barang Nilai" name="barang_nilai" value="{{ old('barang_nilai') }}" class="form-control r-0 light s-12 " type="number"  min="0">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_jumlah" class="col-form-label s-12">Barang Jumlah</label>
-                                            <input id="barang_jumlah" placeholder="Enter Barang Jumlah" name="barang_jumlah" value="{{ old('barang_jumlah') }}" class="form-control r-0 light s-12 " type="number"  min="0">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_dimensi" class="col-form-label s-12">Barang Dimensi</label>
-                                            <input id="barang_dimensi" placeholder="Enter Barang Dimensi" name="barang_dimensi" value="{{ old('barang_dimensi') }}" class="form-control r-0 light s-12 " type="number"  min="0">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group m-0">
-                                            <label for="barang_berat" class="col-form-label s-12">Barang Berat</label>
-                                            <input id="barang_berat" placeholder="Enter Barang Berat" name="barang_berat" value="{{ old('barang_berat') }}" class="form-control r-0 light s-12 " type="number"  min="0">
-                                        </div>
-                                    </div> -->
-
-                                    <table class="table table-bordered table-striped mt-5" id="barang-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Deskripsi</th>
-                                                <th>Panjang</th>
-                                                <th>Lebar</th>
-                                                <th>Tinggi</th>
-                                                <th>Berat</th>
-                                                <th>Harga</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
                                 </div>
 
                                 <div class="form-row">
@@ -521,8 +696,47 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="total_harga" class="col-form-label s-12">Total Harga</label>
+                                            <label for="total_harga" class="col-form-label s-12">Total Harga Kirim</label>
                                             <input id="total_harga" placeholder="Enter Total Harga" name="total_harga" value="{{ old('total_harga') }}" class="form-control r-0 light s-12 " type="number" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="addons-table" class="col-form-label s-12">Daftar Addons</label>
+                                            <table class="table table-bordered table-striped mt-1" id="addons-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Layanan Tambahan</th>
+                                                        <th>Qty</th>
+                                                        <th>Satuan</th>
+                                                        <th>Harga Satuan</th>
+                                                        <th>Harga Total</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody-addons"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="total_harga_addons" class="col-form-label s-12">Total Harga Addons</label>
+                                            <input id="total_harga_addons" placeholder="Enter Total Harga" name="total_harga_addons" value="{{ old('total_harga_addons') }}" class="form-control r-0 light s-12 " type="number" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="total_harga_semua" class="col-form-label s-12">Total Harga Semua</label>
+                                            <input id="total_harga_semua" placeholder="Enter Total Harga" name="total_harga_semua" value="{{ old('total_harga_semua') }}" class="form-control r-0 light s-12 " type="number" min="0">
                                         </div>
                                     </div>
                                 </div>

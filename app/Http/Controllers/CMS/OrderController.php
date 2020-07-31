@@ -10,6 +10,7 @@ use App\Models\OrderModel;
 use App\Models\NegaraModel;
 use App\Models\KotaModel;
 use App\Models\UserModel;
+use App\Models\ItemModel;
 use App\Models\RelitemModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,7 @@ class OrderController extends Controller
     {
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
+        $data['item'] = ItemModel::select()->get();
         // $data['tipe_pengiriman'] = array(
         //     array('id'=>'U_DTD_GC_50','nama'=>'Udara DTD General Cargo 50'),
         //     array('id'=>'U_DTD_GC_100','nama'=>'Udara DTD General Cargo 100'),

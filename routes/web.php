@@ -54,10 +54,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('tracking', 'CMS\TrackingController');
     Route::post('tracking/postProcess', 'CMS\TrackingController@postProcess');
     
-    ## TRACKING
+    ## ITEM
     Route::get('item/hapus/{id}', 'CMS\ItemController@hapus');
     Route::resource('item', 'CMS\ItemController');
     Route::post('item/postProcess', 'CMS\ItemController@postProcess');
+
+    ## BARANG KATEOGRI
+    Route::get('barangkategori/hapus/{id}', 'CMS\BarangKategoriController@hapus');
+    Route::resource('barangkategori', 'CMS\BarangKategoriController');
+    Route::post('barangkategori/postProcess', 'CMS\BarangKategoriController@postProcess');
+
+    ## BARANG JENIS
+    Route::get('barangjenis/hapus/{id}', 'CMS\BarangJenisController@hapus');
+    Route::resource('barangjenis', 'CMS\BarangJenisController');
+    Route::post('barangjenis/postProcess', 'CMS\BarangJenisController@postProcess');
 
     ## BLOG
     Route::get('blog/hapus/{id}', 'CMS\BlogController@hapus');
