@@ -59,6 +59,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('item', 'CMS\ItemController');
     Route::post('item/postProcess', 'CMS\ItemController@postProcess');
 
+    ## FOB
+    Route::get('fob/hapus/{id}', 'CMS\FobController@hapus');
+    Route::resource('fob', 'CMS\FobController');
+    Route::post('fob/postProcess', 'CMS\FobController@postProcess');
+
     ## BARANG KATEOGRI
     Route::get('barangkategori/hapus/{id}', 'CMS\BarangKategoriController@hapus');
     Route::resource('barangkategori', 'CMS\BarangKategoriController');
