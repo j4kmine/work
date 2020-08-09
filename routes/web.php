@@ -74,6 +74,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('barangjenis', 'CMS\BarangJenisController');
     Route::post('barangjenis/postProcess', 'CMS\BarangJenisController@postProcess');
 
+    ## BARANG PACKAGE
+    Route::get('barangpackage/hapus/{id}', 'CMS\BarangPackageController@hapus');
+    Route::resource('barangpackage', 'CMS\BarangPackageController');
+    Route::post('barangpackage/postProcess', 'CMS\BarangPackageController@postProcess');
+
+    ## ASURANSI
+    Route::get('asuransi/hapus/{id}', 'CMS\AsuransiController@hapus');
+    Route::resource('asuransi', 'CMS\AsuransiController');
+    Route::post('asuransi/postProcess', 'CMS\AsuransiController@postProcess');
+
     ## BLOG
     Route::get('blog/hapus/{id}', 'CMS\BlogController@hapus');
     Route::resource('blog', 'CMS\BlogController');
