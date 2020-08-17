@@ -33,10 +33,10 @@
                     <ul class="sidebar-menu">
                         <li class="treeview"><a href="<?php echo url('/order')?>"><i class="icon icon-document-list s-24"></i>Order</a></li>
                         <li class="treeview"><a href="<?php echo url('/item')?>"><i class="icon icon-queue s-24"></i>Item</a></li>
-                        <li class="treeview"><a href="<?php echo url('/barangkategori')?>"><i class="icon icon-queue s-24"></i>Barang Kategori</a></li>
-                        <li class="treeview"><a href="<?php echo url('/fob')?>"><i class="icon icon-queue s-24"></i>FOB</a></li>
-                        <li class="treeview"><a href="<?php echo url('/barangjenis')?>"><i class="icon icon-queue s-24"></i>Barang Jenis</a></li>
-                        <li class="treeview"><a href="<?php echo url('/barangpackage')?>"><i class="icon icon-queue s-24"></i>Barang Package</a></li>
+                        <li class="treeview"><a href="<?php echo url('/fob')?>"><i class="icon icon-plus-circle s-24"></i>FOB</a></li>
+                        <li class="treeview"><a href="<?php echo url('/barangkategori')?>"><i class="icon icon-info-circle s-24"></i>Barang Kategori</a></li>
+                        <li class="treeview"><a href="<?php echo url('/barangjenis')?>"><i class="icon icon-info-circle s-24"></i>Barang Jenis</a></li>
+                        <li class="treeview"><a href="<?php echo url('/barangpackage')?>"><i class="icon icon-info-circle s-24"></i>Barang Package</a></li>
                         <li class="treeview"><a href="<?php echo url('/tracking')?>"><i class="icon-local_shipping s-24"></i> &nbsp;&nbsp;Tracking</a></li>
                         <li class="treeview"><a href="<?php echo url('/users')?>"><i class="icon icon-account_box s-24"></i>Users</a></li>
                         <li class="treeview"><a href="<?php echo url('/address')?>"><i class="icon icon-home2 s-24"></i>Alamat</a></li>
@@ -44,7 +44,7 @@
                         <li class="treeview"><a href="<?php echo url('/blog')?>"><i class="icon icon-newspaper-o s-24"></i>Blog</a></li>
                         <li class="treeview"><a href="<?php echo url('/negara')?>"><i class="icon icon-building s-24"></i>Negara</a></li>
                         <li class="treeview"><a href="<?php echo url('/kota')?>"><i class="icon icon-location_city s-24"></i>Kota</a></li>
-                        <li class="treeview"><a href="<?php echo url('/asuransi')?>"><i class="icon icon-location_city s-24"></i>Asuransi</a></li>
+                        <li class="treeview"><a href="<?php echo url('/asuransi')?>"><i class="icon icon-money2 s-24"></i>Asuransi</a></li>
                         <li class="treeview"><a href="<?php echo url('/configuration')?>"><i class="icon icon-gear s-24"></i>Configuration</a></li>
                     </ul>
                 </div>

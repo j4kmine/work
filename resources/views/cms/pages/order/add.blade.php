@@ -641,33 +641,46 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="form-group m-0">
-                                    <label for="tipe_pengiriman" class="col-form-label s-12">Via Pengiriman</label>
-                                    <select class="form-control" id="tipe_pengiriman" name="tipe_pengiriman">
-                                        <option value="1">Udara</option>
-                                        <option value="2">Laut</option>
+                                    <label for="via_pengiriman" class="col-form-label s-12">Via Pengiriman</label>
+                                    <select class="form-control" id="via_pengiriman" name="via_pengiriman">
+                                        @foreach($via_pengiriman as $key => $v)
+                                            <option value="{{ $key }}">{{ $v }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group m-0">
-                                    <label for="tipe_pengiriman" class="col-form-label s-12">Jenis Pengiriman</label>
-                                    <select class="form-control" id="tipe_pengiriman" name="tipe_pengiriman">
-                                        <option value="1">Paket</option>
-                                        <option value="2">Dokumen</option>
+                                    <label for="jenis_pengiriman" class="col-form-label s-12">Jenis Pengiriman</label>
+                                    <select class="form-control" id="jenis_pengiriman" name="jenis_pengiriman">
+                                        @foreach($jenis_pengiriman as $key => $v)
+                                            @if($v['via_pengiriman'] == '1')
+                                                <option value="{{ $key }}">{{ $v['nama'] }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group m-0">
-                                    <label for="barang_kategori" class="col-form-label s-12">Tipe Pengiriman</label>
-                                    <select class="form-control" id="barang_kategori" name="barang_kategori">
-                                        <option value="1">DTD</option>
-                                        <option value="2">DTP</option>
+                                    <label for="tipe_pengiriman" class="col-form-label s-12">Tipe Pengiriman</label>
+                                    <select class="form-control" id="tipe_pengiriman" name="tipe_pengiriman">
+                                        @foreach($tipe_pengiriman as $key => $v)
+                                            <option value="{{ $key }}">{{ $v }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group m-0">
+                                    <label for="qty_container" class="col-form-label s-12">Qty Container(BULK)</label>
+                                    <input id="qty_container" placeholder="Enter Qty Container" name="qty_container" value="{{ old('qty_container') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        
                         </div>
 
                         <h1><b>DATA BARANG</b></h1>
@@ -684,10 +697,20 @@
 
                             <div class="col-md-6">
                                 <div class="form-group m-0">
-                                    <label for="barang_kategori" class="col-form-label s-12">Barang Jenis</label>
-                                    <select class="form-control" id="barang_kategori" name="barang_kategori">
+                                    <label for="barang_jenis" class="col-form-label s-12">Barang Jenis</label>
+                                    <select class="form-control" id="barang_jenis" name="barang_jenis">
                                         <option value="1">Elektronik</option>
                                         <option value="2">Buah Pisang</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group m-0">
+                                    <label for="asuransi" class="col-form-label s-12">Asuransi</label>
+                                    <select class="form-control" id="asuransi" name="asuransi">
+                                        <option value="1">Asuransi 1</option>
+                                        <option value="2">Asuransi 2</option>
                                     </select>
                                 </div>
                             </div>

@@ -50,6 +50,8 @@ class OrderModel extends Model
 		'created_by',
 		'updated_by',
 		'is_deleted',
-		'deleted_at'
+		'deleted_at',
+		'qty_container',
+		'id_asuransi'
     ];
 }

@@ -47,6 +47,25 @@ class OrderController extends Controller
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
         $data['item'] = ItemModel::select()->get();
+
+        $data['via_pengiriman'] = array(
+            '1'=>'Udara'
+            ,'2'=>'Laut'
+        );
+
+        $data['jenis_pengiriman'] = array(
+            '1'=>array('nama'=>'Udara - Paket','via_pengiriman'=>'1'),
+            '2'=>array('nama'=>'Udara - Dokumen','via_pengiriman'=>'1'),
+            '3'=>array('nama'=>'Laut - LCL','via_pengiriman'=>'2'),
+            '4'=>array('nama'=>'Laut - FCL 20','via_pengiriman'=>'2'),
+            '5'=>array('nama'=>'Laut - FCL 40','via_pengiriman'=>'2'),
+            '6'=>array('nama'=>'Laut - BULK','via_pengiriman'=>'2')
+        );
+
+        $data['tipe_pengiriman'] = array(
+            '1'=>'DTD(Door To Door)'
+            ,'2'=>'DTP(Door To Port)'
+        );
         // $data['tipe_pengiriman'] = array(
         //     array('id'=>'U_DTD_GC_50','nama'=>'Udara DTD General Cargo 50'),
         //     array('id'=>'U_DTD_GC_100','nama'=>'Udara DTD General Cargo 100'),
