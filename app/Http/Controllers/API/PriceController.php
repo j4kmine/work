@@ -3,6 +3,7 @@
  namespace App\Http\Controllers\API;
  
  use App\Models\KotaModel;
+ use App\Models\FobModel;
  use Illuminate\Http\Request;
  use App\Http\Controllers\Controller;
  class PriceController extends Controller
@@ -13,6 +14,101 @@
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+    public function cekongkirnew(Request $request){
+        $tipe_cargo = $request->tipe_cargo;
+        $category_cargo =  $request->category_cargo;
+        $tipe_pengiriman = $request->tipe_pengiriman;
+        $tipe_delivery = $request->tipe_delivery;
+        $lebar = $request->lebar;
+        $tinggi = $request->tinggi;
+        $dimensi = $request->dimensi;
+        $dimensi2 = 0;
+        $panjang = $request->panjang;
+        $destination = $request->destination;
+        $qty_container = $request->qty_container;
+        $fob = 0;
+        $barang_umum =0;
+       
+        if ($tipe_pengiriman == 1) {
+            if($tipe_delivery == 1){
+               
+                $dimensi_compare = ($panjang * $lebar * $tinggi) / 5000;
+                if($dimensi_compare >= $dimensi){
+                    $dimensi =  $dimensi_compare;
+                    $dimensi2 =  $dimensi_compare;
+                }else{
+                    $dimensi2 = $dimensi;
+                }
+                if($dimensi2 >= 100 && $dimensi2 < 350){
+                    $field2 = "U_DTP_GC_100";
+                }else if($dimensi2 >= 350 &&  $dimensi2 < 500){
+                    $field2 = "U_DTP_GC_350";
+                }else if($dimensi2 >= 500 && $dimensi2 < 1000){
+                    $field2 = "U_DTP_GC_500";
+                }else if($dimensi2 >= 1000){
+                    $field2 = "U_DTP_GC_1000";
+                }else{
+                    // DTD
+                }
+            }else{
+
+            }
+          
+        }else if($tipe_pengiriman == 2){
+            if($tipe_delivery == 1){
+                $dimensi_compare = ($panjang * $lebar * $tinggi) / 5000;
+                if($dimensi_compare >= $dimensi){
+                    $dimensi =  $dimensi_compare;
+                    $dimensi2 =  $dimensi_compare;
+                }else{
+                    $dimensi2 = $dimensi;
+                }
+                if($dimensi2 <= 2){
+                    $field2 = "L_DTP_GC_LCL_2";
+                }else if($dimensi2  == 3){
+                    $field2 = "L_DTP_GC_LCL_3";
+                }else if($dimensi2 == 4){
+                    $field2 = "L_DTP_GC_LCL_4";
+                }else if($dimensi2 == 5){
+                    $field2 = "L_DTP_GC_LCL_5";
+                }else if($dimensi2 == 6){
+                    $field2 = "L_DTP_GC_LCL_6";
+                }else if($dimensi2 == 7){
+                    $field2 = "L_DTP_GC_LCL_7";
+                }else if($dimensi2 == 8){
+                    $field2 = "L_DTP_GC_LCL_8";
+                }else if($dimensi2 == 9){
+                    $field2 = "L_DTP_GC_LCL_9";
+                }else if($dimensi2 >= 10){
+                    $field2 = "L_DTP_GC_LCL_10";
+                }else{
+                    //kurang dari 2 cbm
+                }
+            }else{
+                 // DTD
+            }
+            
+        }
+       
+        $harga = KotaModel::select('*')->where('id', $destination)->first();
+        if ($tipe_delivery == 1) {
+            $fob = FobModel::select('*')->where('tipe_fob', 1)->first();
+            if($tipe_pengiriman == 1){
+                $fob = $fob->barang_umum;
+            }else if($tipe_pengiriman == 2){
+                $fob = $fob->agriculture;
+            }else if($tipe_pengiriman == 3){
+                $fob = $fob->hewan_hidup;
+            }else if($tipe_pengiriman == 4){
+                $fob = $fob->barang_mudah_terbakar;
+            }
+        }
+        
+       
+        if ($harga->$field2) {
+            $dimensi2 =  $dimensi2* $harga->$field2 + $fob;
+        }
+    }
     public function cekongkir(Request $request){
         $panjang = $request->panjang;
         $destination = $request->destination;
@@ -27,14 +123,9 @@
         $harga = 0;
         $total = 0;   
         $fob = 0;
+        
         if($tipe_pengiriman == 1){
-                $dimensi_compare = ($panjang * $lebar * $tinggi) / 5000;
-                if($dimensi_compare >= $dimensi){
-                    $dimensi =  $dimensi_compare;
-                    $dimensi2 =  $dimensi_compare;
-                }else{
-                    $dimensi2 = $dimensi;
-                }
+              
         
                 if($dimensi >= 50 && $dimensi < 100){
                     $field = "U_DTD_GC_50";

@@ -97,8 +97,62 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
+                                            <label for="storage_agriculture" class="col-form-label s-12">Storage Agriculture</label>
+                                            <input id="storage_agriculture" placeholder="Enter Storage Agriculture" name="storage_agriculture" value="{{ old('storage_agriculture') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="storage_hewan_hidup" class="col-form-label s-12">Storage Hewan Hidup</label>
+                                            <input id="storage_hewan_hidup" placeholder="Enter Storage Hewan Hidup" name="storage_hewan_hidup" value="{{ old('storage_hewan_hidup') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="storage_barang_mudah_terbakar" class="col-form-label s-12">Storage Barang Mudah Terbakar</label>
+                                            <input id="storage_barang_mudah_terbakar" placeholder="Enter Barang Mudah Terbakar" name="storage_barang_mudah_terbakar" value="{{ old('storage_barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
                                             <label for="freaight" class="col-form-label s-12">Freaight</label>
                                             <input id="freaight" placeholder="Enter freaight" name="freaight" value="{{ old('freaight') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="freaight_agriculture" class="col-form-label s-12">Freaight Agriculture</label>
+                                            <input id="freaight_agriculture" placeholder="Enter freaight Agriculture" name="freaight_agriculture" value="{{ old('freaight_agriculture') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="freaight_hewan_hidup" class="col-form-label s-12">Freaight Hewan Hidup</label>
+                                            <input id="freaight_hewan_hidup" placeholder="Enter freaight Hewan Hidup" name="freaight_hewan_hidup" value="{{ old('freaight_hewan_hidup') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="freaight_barang_mudah_terbakar" class="col-form-label s-12">Freaight Barang Mudah Terbakar</label>
+                                            <input id="freaight_barang_mudah_terbakar" placeholder="Enter freaight Barang Mudah Terbakar" name="freaight_barang_mudah_terbakar" value="{{ old('freaight_barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
