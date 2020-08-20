@@ -15,20 +15,23 @@
      * @return \Illuminate\Http\JsonResponse
      */
     public function cekongkirnew(Request $request){
-        $tipe_cargo = $request->tipe_cargo;
-        $category_cargo =  $request->category_cargo;
-        $tipe_pengiriman = $request->tipe_pengiriman;
-        $tipe_delivery = $request->tipe_delivery;
+        $category_cargo =  $request->category_cargo;// animal
+        $tipe_pengiriman = $request->tipe_pengiriman;//laut dan udara
+        $tipe_delivery = $request->tipe_delivery;//dtd / dtp
         $lebar = $request->lebar;
         $tinggi = $request->tinggi;
         $dimensi = $request->dimensi;
         $dimensi2 = 0;
         $panjang = $request->panjang;
-        $destination = $request->destination;
-        $qty_container = $request->qty_container;
+        $destination = $request->destination; //kota
+        $qty_container = $request->qty_container;//qty container
+        $tipe_package= $request->tipe_package;
         $fob = 0;
-        $barang_umum =0;
-       
+        $storage =0;
+        $freight = 1;
+        $dtd = false;
+        $lower = false;
+        $field2 = ""; //nama field
         if ($tipe_pengiriman == 1) {
             if($tipe_delivery == 1){
                
@@ -48,10 +51,10 @@
                 }else if($dimensi2 >= 1000){
                     $field2 = "U_DTP_GC_1000";
                 }else{
-                    // DTD
+                    $lower = true;
                 }
             }else{
-
+                 $dtd = true;
             }
           
         }else if($tipe_pengiriman == 2){
@@ -82,32 +85,182 @@
                 }else if($dimensi2 >= 10){
                     $field2 = "L_DTP_GC_LCL_10";
                 }else{
-                    //kurang dari 2 cbm
+                    $lower = true;
                 }
             }else{
-                 // DTD
+                $dtd = true;
             }
             
         }
        
         $harga = KotaModel::select('*')->where('id', $destination)->first();
-        if ($tipe_delivery == 1) {
+        if ($tipe_pengiriman == 1) {
             $fob = FobModel::select('*')->where('tipe_fob', 1)->first();
-            if($tipe_pengiriman == 1){
+           
+            if($category_cargo == 1){
+               
+                $storage = $fob->storage;
+                $freight = $fob->freaight;
                 $fob = $fob->barang_umum;
-            }else if($tipe_pengiriman == 2){
+            }else if($category_cargo == 2){
+                
+                $storage = $fob->storage_agriculture;
+                $freight = $fob->freaight_agriculture;
                 $fob = $fob->agriculture;
-            }else if($tipe_pengiriman == 3){
+            }else if($category_cargo == 3){
+               
+                $storage = $fob->storage_hewan_hidup;
+                $freight = $fob->freaight_hewan_hidup;
                 $fob = $fob->hewan_hidup;
-            }else if($tipe_pengiriman == 4){
+            }else if($category_cargo == 4){
+                
+                $storage = $fob->storage_barang_mudah_terbakar;
+                $freight = $fob->freaight_barang_mudah_terbakar;
                 $fob = $fob->barang_mudah_terbakar;
             }
+        }else if ($tipe_pengiriman == 2) {
+                if($tipe_package  ==  2){
+                    $fob = FobModel::select('*')->where('tipe_fob', 2)->first();
+                    if($tipe_delivery == 1){
+                        if($category_cargo == 1){
+                          
+                            $storage = $fob->storage;
+                            $freight = $fob->freaight;
+                            $fob = $fob->barang_umum;
+                        }else if($category_cargo == 2){
+                      
+                            $storage = $fob->storage_agriculture;
+                            $freight = $fob->freaight_agriculture;
+                            $fob = $fob->agriculture;
+                        }else if($category_cargo == 3){
+                           
+                            $storage = $fob->storage_hewan_hidup;
+                            $freight = $fob->freaight_hewan_hidup;
+                            $fob = $fob->hewan_hidup;
+                        }else if($category_cargo == 4){
+                        
+                            $storage = $fob->storage_barang_mudah_terbakar;
+                            $freight = $fob->freaight_barang_mudah_terbakar;
+                            $fob = $fob->barang_mudah_terbakar;
+                        }
+                    }else{
+                        $dtd = true;
+                    }
+                    
+                }else if($tipe_package == 3){
+                    $fob = FobModel::select('*')->where('tipe_fob', 3)->first();
+                    if($tipe_delivery == 1){
+                        if($category_cargo == 1){
+                           
+                            $storage = $fob->storage;
+                            $freight = $fob->freaight;
+                            $fob = $fob->barang_umum;
+                        }else if($category_cargo == 2){
+                          
+                            $storage = $fob->storage_agriculture;
+                            $freight = $fob->freaight_agriculture;
+                            $fob = $fob->agriculture;
+                        }else if($category_cargo == 3){
+                          
+                            $storage = $fob->storage_hewan_hidup;
+                            $freight = $fob->freaight_hewan_hidup;
+                            $fob = $fob->hewan_hidup;
+                        }else if($category_cargo == 4){
+                         
+                            $storage = $fob->storage_barang_mudah_terbakar;
+                            $freight = $fob->freaight_barang_mudah_terbakar;
+                            $fob = $fob->barang_mudah_terbakar;
+                        }
+                    }else{
+                        $dtd = true;
+                    }
+                }else if($tipe_package == 4){
+                    $fob = FobModel::select('*')->where('tipe_fob', 4)->first();
+                    if($tipe_delivery == 1){
+                        if($category_cargo == 1){
+                         
+                            $storage = $fob->storage;
+                            $freight = $fob->freaight;
+                            $fob = $fob->barang_umum;
+                        }else if($category_cargo == 2){
+                     
+                            $storage = $fob->storage_agriculture;
+                            $freight = $fob->freaight_agriculture;
+                            $fob = $fob->agriculture;
+                        }else if($category_cargo == 3){
+                           
+                            $storage = $fob->storage_hewan_hidup;
+                            $freight = $fob->freaight_hewan_hidup;
+                            $fob = $fob->hewan_hidup;
+                        }else if($category_cargo == 4){
+                           
+                            $storage = $fob->storage_barang_mudah_terbakar;
+                            $freight = $fob->freaight_barang_mudah_terbakar;
+                            $fob = $fob->barang_mudah_terbakar;
+                        }
+                    }else{
+                        $dtd = true;
+                    }
+                }else if($tipe_package == 5){
+                    $fob = FobModel::select('*')->where('tipe_fob', 5)->first();
+                    if($tipe_delivery == 1){
+                        if($category_cargo == 1){
+                          
+                            $storage = $fob->storage;
+                            $freight = $fob->freaight;
+                            $fob = $fob->barang_umum;
+                        }else if($category_cargo == 2){
+                           
+                            $storage = $fob->storage_agriculture;
+                            $freight = $fob->freaight_agriculture;
+                            $fob = $fob->agriculture;
+                        }else if($category_cargo == 3){
+                      
+                            $storage = $fob->storage_hewan_hidup;
+                            $freight = $fob->freaight_hewan_hidup;
+                            $fob = $fob->hewan_hidup;
+                        }else if($category_cargo == 4){
+                   
+                            $storage = $fob->storage_barang_mudah_terbakar;
+                            $freight = $fob->freaight_barang_mudah_terbakar;
+                            $fob = $fob->barang_mudah_terbakar;
+                        }
+                    }else{
+                        $dtd = true;
+                    }
+                }
         }
-        
-       
         if ($harga->$field2) {
-            $dimensi2 =  $dimensi2* $harga->$field2 + $fob;
+            if($tipe_pengiriman  == 1){
+                $dimensi2 =  $fob + ( $storage * $dimensi2) + ($freight * $dimensi2 * $harga->$field2 );
+            }else if($tipe_pengiriman == 2){
+              
+                if($tipe_package == 2){
+                    $dimensi2 =  $fob + ( $storage * $dimensi2) + ($freight * $dimensi2 * $harga->$field2 );
+                }else if($tipe_package == 3){
+                 
+                    $dimensi2 =  $fob + ( $storage * $dimensi2) + ($freight * $qty_container * $harga->$field2 );
+                }else if($tipe_package == 4){
+                    $dimensi2 =  $fob + ( $storage * $dimensi2) + ($freight * $qty_container * $harga->$field2 );
+                }else if($tipe_package == 5){
+                    $dimensi2 =  $fob + ( $storage * $dimensi2) + ($freight * $qty_container * $harga->$field2 );
+                }
+                
+            }
+            
         }
+        if($lower == true){
+            $total = array('door_to_port'=>$dimensi2,'error'=>'lower than minimum','weight'=>$request->dimensi);
+            return response()->json(['paket' => $total], 201);
+        }else if($dtd == true){
+            $total = array('door_to_port'=>$dimensi2,'error'=>'dtd','weight'=>$request->dimensi);
+            return response()->json(['paket' => $total], 200);
+        }else{
+            $total = array('door_to_port'=>$dimensi2,'weight'=>$request->dimensi);
+            return response()->json(['paket' => $total], 200);
+        }
+       
+        
     }
     public function cekongkir(Request $request){
         $panjang = $request->panjang;

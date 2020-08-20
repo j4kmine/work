@@ -23,7 +23,7 @@ Route::get('userselect2', 'API\UsersController@userSelect2');
 Route::post('getItemById', 'API\ItemController@getItemById');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
-
+Route::post('hargalisting', 'API\PriceController@cekongkirnew');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
