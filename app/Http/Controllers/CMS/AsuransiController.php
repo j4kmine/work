@@ -54,13 +54,18 @@ class AsuransiController extends Controller
     {
         $this->validate($request,[
             'title'=>'required',
-            'id_barang_jenis'=>'required'
+            'id_barang_jenis'=>'required',
+            'is_aktif'=>'required',
+            'rate'=>'required',
+            'harga'=>'required'
         ]);
         
         $asuransi = new AsuransiModel([
             'title' => $request->get('title'),
             'id_jenis_barang' => $request->get('id_barang_jenis'),
             'is_aktif' => $request->get('is_aktif'),
+            'rate' => $request->get('rate'),
+            'harga' => $request->get('harga'),
             'created_at' => date('Y-m-d H:i:s'),
             'created_by' => Auth::user()->name
         ]);
@@ -108,14 +113,17 @@ class AsuransiController extends Controller
         $this->validate($request,[
             'title'=>'required',
             'id_barang_jenis'=>'required',
-            'is_aktif'=>'required'
+            'is_aktif'=>'required',
+            'rate'=>'required',
+            'harga'=>'required'
         ]);
         
-         
         $update = [
                     'title' => $request->title, 
                     'id_jenis_barang' => $request->id_barang_jenis,
                     'is_aktif' => $request->is_aktif,
+                    'rate' => $request->rate,
+                    'harga' => $request->harga,
                     'updated_at' => date('Y-m-d H:i:s'),
                     'updated_by' => Auth::user()->name
                 ];

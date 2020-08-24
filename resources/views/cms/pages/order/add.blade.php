@@ -28,12 +28,15 @@
                 function dynamic_field(number){
                     var html = '<tr>';
                     
-                    html += '<td><input type="text" id="deskripsi" name="deskripsi[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="panjang" name="panjang[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="lebar" name="lebar[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="tinggi" name="tinggi[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="berat" name="berat[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="harga" name="harga[]" class="form-control harga"></td>';
+                    html += '<td><input type="text" id="deskripsi'+number+'" name="deskripsi[]" class="form-control"></td>';
+                    html += '<td><input type="text" id="qty_barang'+number+'" name="qty_barang[]" class="form-control"></td>';
+                    html += '<td><select id="barang_package'+number+'" name="barang_package[]"><option value="">-Pilih-</option>@foreach($barangpackage as $i)<option value="{{ $i->id }}">{{ $i->title }}</option>@endforeach';
+                    html += '</select><input type="text" id="barang_package_namaid'+number+'" name="barang_package_namaid[]" value="'+number+'" class="form-control" hidden><input type="text" id="barang_package_title'+number+'" name="barang_package_title[]" class="form-control" hidden></td>';
+                    html += '<td><input type="text" id="panjang'+number+'" name="panjang[]" class="form-control"></td>';
+                    html += '<td><input type="text" id="lebar'+number+'" name="lebar[]" class="form-control"></td>';
+                    html += '<td><input type="text" id="tinggi'+number+'" name="tinggi[]" class="form-control"></td>';
+                    html += '<td><input type="text" id="berat'+number+'" name="berat[]" class="form-control"></td>';
+                    html += '<td><input type="text" id="harga'+number+'" name="harga[]" class="form-control harga"></td>';
                     if (number > 1) {
                         html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
                         $('#tbody-barang').append(html);
@@ -66,7 +69,6 @@
                     $.ajax({
                         type: "POST",
                         url: "http://18.141.205.174/api/cekongkir",
-                        // url: "http://127.0.0.1:8000/api/cekongkir",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "panjang": panjang,
@@ -132,8 +134,7 @@
                     var numbers = +$(this).closest("tr").find('input[name^="namaid"]').val();
                     $.ajax({
                         type: "POST",
-                        // url: "http://18.141.205.174/api/cekongkir",
-                        url: "http://127.0.0.1:8000/api/getItemById",
+                        url: "http://18.141.205.174/api/getItemById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": id_item
@@ -199,7 +200,7 @@
                     console.log(pengirims_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: "http://127.0.0.1:8000/api/getAddressById",
+                        url: "http://18.141.205.174/api/getAddressById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": pengirims_choose_address
@@ -235,7 +236,7 @@
                     $('#penerima_choose_address').val(penerimas_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: "http://127.0.0.1:8000/api/getAddressById",
+                        url: "http://18.141.205.174/api/getAddressById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": penerimas_choose_address
@@ -346,7 +347,7 @@
                     console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: "http://127.0.0.1:8000/api/getAddressByUser",
+                        url: "http://18.141.205.174/api/getAddressByUser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -373,7 +374,7 @@
                     console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: "http://127.0.0.1:8000/api/getAddressByUser",
+                        url: "http://18.141.205.174/api/getAddressByUser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -395,6 +396,171 @@
                         }
                     });
                 }
+
+                $("#via_pengiriman").change(function(){
+                    if (this.value == 1) {
+                        var newOptions = {
+                            @foreach($jenis_pengiriman as $key => $v)
+                                @if($v['via_pengiriman'] == '1')
+                                    "{{ $v['nama'] }}": "{{ $key }}",
+                                @endif
+                            @endforeach
+                        };
+
+                        $('#group_qty_container').hide();
+                    } else {
+                        var newOptions = {
+                            @foreach($jenis_pengiriman as $key => $v)
+                                @if($v['via_pengiriman'] == '2')
+                                    "{{ $v['nama'] }}": "{{ $key }}",
+                                @endif
+                            @endforeach
+                        };
+
+                        $('#group_qty_container').show();
+                    }
+                    var $el = $("#jenis_pengiriman");
+                    $el.empty(); // remove old options
+                    $.each(newOptions, function(key,value) {
+                      $el.append($("<option></option>")
+                         .attr("value", value).text(key));
+                    });
+                });
+
+                // load first page
+                var barang_kategori_val = $("#barang_kategori").val();
+                $.ajax({
+                    type: "POST",
+                    url: "http://18.141.205.174/api/getBarangJenisByBarangKategori",
+                    // The key needs to match your method's input parameter (case-sensitive).
+                    data: JSON.stringify({ 
+                        "id_barang_kategori": barang_kategori_val
+                        }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data.list.data);
+                        var listdata = data.list.data;
+
+                        var newOptions = {};
+                        $.each( listdata, function( key, value ) {
+                            newOptions[value.title] = value.id;
+                        });
+
+                        var $el = $("#barang_jenis");
+                        $el.empty(); // remove old options
+                        $.each(newOptions, function(key,value) {
+                          $el.append($("<option></option>")
+                             .attr("value", value).text(key));
+                        });
+
+                        // get asuransi
+                        var barang_jenis_val = $("#barang_jenis").val();
+                        console.log(barang_jenis_val);
+                        $.ajax({
+                            type: "POST",
+                            url: "http://18.141.205.174/api/getAsuransiByBarangJenis",
+                            // The key needs to match your method's input parameter (case-sensitive).
+                            data: JSON.stringify({ 
+                                "id_barang_jenis": barang_jenis_val
+                                }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function(data){
+                                console.log(data.list.data);
+                                var listdata = data.list.data;
+
+                                var newOptions = {};
+                                $.each( listdata, function( key, value ) {
+                                    newOptions[value.title] = key;
+                                });
+
+                                var $el = $("#asuransi");
+                                $el.empty(); // remove old options
+                                $.each(newOptions, function(key,value) {
+                                  $el.append($("<option></option>")
+                                     .attr("value", value).text(key));
+                                });
+                            },
+                            failure: function(errMsg) {
+                                console.log(errMsg);
+                                return errMsg;
+                            }
+                        });
+                    },
+                    failure: function(errMsg) {
+                        console.log(errMsg);
+                        return errMsg;
+                    }
+                });
+
+                $("#barang_kategori").change(function(){
+                    console.log(this.value);
+                    $.ajax({
+                        type: "POST",
+                        url: "http://18.141.205.174/api/getBarangJenisByBarangKategori",
+                        // The key needs to match your method's input parameter (case-sensitive).
+                        data: JSON.stringify({ 
+                            "id_barang_kategori": this.value
+                            }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data){
+                            console.log(data.list.data);
+                            var listdata = data.list.data;
+
+                            var newOptions = {};
+                            $.each( listdata, function( key, value ) {
+                                newOptions[value.title] = value.id;
+                            });
+
+                            var $el = $("#barang_jenis");
+                            $el.empty(); // remove old options
+                            $.each(newOptions, function(key,value) {
+                              $el.append($("<option></option>")
+                                 .attr("value", value).text(key));
+                            });
+                        },
+                        failure: function(errMsg) {
+                            console.log(errMsg);
+                            return errMsg;
+                        }
+                    });
+                });
+
+                $("#barang_jenis").change(function(){
+                    console.log(this.value);
+                    $.ajax({
+                        type: "POST",
+                        url: "http://18.141.205.174/api/getAsuransiByBarangJenis",
+                        // The key needs to match your method's input parameter (case-sensitive).
+                        data: JSON.stringify({ 
+                            "id_barang_jenis": this.value
+                            }),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data){
+                            console.log(data.list.data);
+                            var listdata = data.list.data;
+
+                            var newOptions = {};
+                            $.each( listdata, function( key, value ) {
+                                newOptions[value.title] = value.id;
+                            });
+
+                            var $el = $("#asuransi");
+                            $el.empty(); // remove old options
+                            $.each(newOptions, function(key,value) {
+                              $el.append($("<option></option>")
+                                 .attr("value", value).text(key));
+                            });
+                        },
+                        failure: function(errMsg) {
+                            console.log(errMsg);
+                            return errMsg;
+                        }
+                    });
+                });
             });
         </script>
     <div class="row my-3">
@@ -674,10 +840,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="group_qty_container" style="display: none;">
                                 <div class="form-group m-0">
-                                    <label for="qty_container" class="col-form-label s-12">Qty Container(BULK)</label>
-                                    <input id="qty_container" placeholder="Enter Qty Container" name="qty_container" value="{{ old('qty_container') }}" class="form-control r-0 light s-12 " type="text">
+                                    <label for="qty_container" class="col-form-label s-12">Qty Container</label>
+                                    <input id="qty_container" placeholder="Enter Qty Container" name="qty_container" value="1" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         
@@ -689,8 +855,11 @@
                                 <div class="form-group m-0">
                                     <label for="barang_kategori" class="col-form-label s-12">Barang Kategori</label>
                                     <select class="form-control" id="barang_kategori" name="barang_kategori">
-                                        <option value="1">General Cargo</option>
-                                        <option value="2">Live Animal</option>
+                                        @foreach($barangkategori as $key => $v)
+                                            @if($v->is_aktif == '1')
+                                                <option value="{{ $v->id }}">{{ $v->title }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -699,8 +868,6 @@
                                 <div class="form-group m-0">
                                     <label for="barang_jenis" class="col-form-label s-12">Barang Jenis</label>
                                     <select class="form-control" id="barang_jenis" name="barang_jenis">
-                                        <option value="1">Elektronik</option>
-                                        <option value="2">Buah Pisang</option>
                                     </select>
                                 </div>
                             </div>
@@ -709,8 +876,6 @@
                                 <div class="form-group m-0">
                                     <label for="asuransi" class="col-form-label s-12">Asuransi</label>
                                     <select class="form-control" id="asuransi" name="asuransi">
-                                        <option value="1">Asuransi 1</option>
-                                        <option value="2">Asuransi 2</option>
                                     </select>
                                 </div>
                             </div>
@@ -724,6 +889,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Deskripsi</th>
+                                                <th>Qty</th>
+                                                <th>Package</th>
                                                 <th>Panjang</th>
                                                 <th>Lebar</th>
                                                 <th>Tinggi</th>

@@ -19,8 +19,13 @@ class OrderModel extends Model
 		'id_user',
 		'kota_asal',
 		'kota_tujuan',
-		'tipe_pengiriman',
-		'barang_kategori',
+		'id_tipe_pengiriman',
+		'id_barang_kategori',
+		'barang_deskripsi',
+		'barang_nilai',
+		'barang_jumlah',
+		'barang_dimensi',
+		'barang_berat',
 		'pengirim_nama',
 		'pengirim_negara',
 		'pengirim_kodepos',
@@ -52,6 +57,9 @@ class OrderModel extends Model
 		'is_deleted',
 		'deleted_at',
 		'qty_container',
-		'id_asuransi'
+		'id_asuransi',
+		'id_via_pengiriman',
+		'id_jenis_pengiriman',
+		'id_barang_jenis'
     ];
 }

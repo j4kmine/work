@@ -12,6 +12,10 @@ use App\Models\KotaModel;
 use App\Models\UserModel;
 use App\Models\ItemModel;
 use App\Models\RelitemModel;
+use App\Models\ReladdonsModel;
+use App\Models\BarangKategoriModel;
+use App\Models\BarangPackageModel;
+use App\Models\AsuransiModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +51,9 @@ class OrderController extends Controller
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
         $data['item'] = ItemModel::select()->get();
+        $data['barangkategori'] = BarangKategoriModel::select()->get();
+        $data['barangpackage'] = BarangPackageModel::select()->get();
+        $data['asuransi'] = AsuransiModel::select()->get();
 
         $data['via_pengiriman'] = array(
             '1'=>'Udara'
@@ -117,6 +124,8 @@ class OrderController extends Controller
         $lebar = $request->get('lebar');
         $tinggi = $request->get('tinggi');
         $berat = $request->get('berat');
+        $qty_barang = $request->get('qty_barang');
+        $barang_package = $request->get('barang_package');
         $data_rel_item = array();
 
         if (count($harga) > 0) {
@@ -127,18 +136,45 @@ class OrderController extends Controller
                 $data_rel_item[$i]['lebar'] = $lebar[$i];
                 $data_rel_item[$i]['tinggi'] = $tinggi[$i];
                 $data_rel_item[$i]['berat'] = $berat[$i];
+                $data_rel_item[$i]['qty_barang'] = $qty_barang[$i];
+                $data_rel_item[$i]['barang_package'] = $barang_package[$i];
             }
         }
 
+        ## add ons
+        $id_item = $request->get('id_item');
+        $title = $request->get('title');
+        $jumlah = $request->get('jumlah');
+        $satuan = $request->get('satuan');
+        $harga_satuan = $request->get('harga_satuan');
+        $harga_total = $request->get('harga_total');
+        $data_rel_addons = array();
+
+        if (count($harga_total) > 0) {
+            for ($i=0; $i < count($harga_total); $i++) { 
+                $data_rel_addons[$i]['id_item'] = $id_item[$i];
+                $data_rel_addons[$i]['title'] = $title[$i];
+                $data_rel_addons[$i]['jumlah'] = $jumlah[$i];
+                $data_rel_addons[$i]['satuan'] = $satuan[$i];
+                $data_rel_addons[$i]['harga_satuan'] = $harga_satuan[$i];
+                $data_rel_addons[$i]['harga_total'] = $harga_total[$i];
+            }
+        }
 
         $order = new OrderModel([
-
             'id_user' => $request->get('id_user')
             ,'kota_asal' => '16417'
             ,'kota_tujuan' => $request->get('kota_tujuan')
-            ,'tipe_pengiriman' => $request->get('tipe_pengiriman')
 
-            ,'barang_kategori' => $request->get('barang_kategori')
+            ,'id_via_pengiriman' => $request->get('via_pengiriman')
+            ,'id_jenis_pengiriman' => $request->get('jenis_pengiriman')
+            ,'id_tipe_pengiriman' => $request->get('tipe_pengiriman')
+
+            ,'id_barang_kategori' => $request->get('barang_kategori')
+            ,'id_barang_jenis' => $request->get('barang_jenis')
+            
+            ,'qty_container' => $request->get('qty_container')
+            ,'id_asuransi' => $request->get('asuransi')
 
             ,'pengirim_nama' => $request->get('pengirim_nama')
             ,'pengirim_negara' => $request->get('pengirim_negara')
@@ -166,6 +202,7 @@ class OrderController extends Controller
             ,'status' => $request->get('status')
             ,'tanggal_order' => date('Y-m-d H:i:s',strtotime($request->get('tanggal_order')))
             ,'tanggal_kirim' => date('Y-m-d H:i:s',strtotime($request->get('tanggal_kirim')))
+
             ,'created_at' => date('Y-m-d H:i:s')
             ,'created_by' => Auth::user()->name
         ]);
@@ -185,8 +222,28 @@ class OrderController extends Controller
                         ,'berat' => $value['berat']
                         ,'created_at' => date('Y-m-d H:i:s')
                         ,'created_by' => Auth::user()->name
+                        ,'qty_barang' => $value['qty_barang']
+                        ,'id_package_barang' => $value['barang_package']
                     ]);
                     $datarelitem = $relitem->save();
+                }
+            }
+
+            if (count($data_rel_addons) > 0) {
+                foreach ($data_rel_addons as $key => $value) {
+                    $reladdons = new ReladdonsModel([
+                        'id' => $request->get('id')
+                        ,'id_order' => $order->id
+                        ,'id_item' => $value['id_item']
+                        ,'title' => $value['title']
+                        ,'jumlah' => $value['jumlah']
+                        ,'satuan' => $value['satuan']
+                        ,'harga_satuan' => $value['harga_satuan']
+                        ,'harga_total' => $value['harga_total']
+                        ,'created_at' => date('Y-m-d H:i:s')
+                        ,'created_by' => Auth::user()->name
+                    ]);
+                    $datareladdons = $reladdons->save();
                 }
             }
         }

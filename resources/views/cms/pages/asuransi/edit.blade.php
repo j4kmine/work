@@ -52,6 +52,25 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group m-0">
+                                        <label for="rate" class="col-form-label s-12">Rate</label>
+                                        <input id="rate" placeholder="Enter rate" name="rate" value="{{ $asuransi->rate }}" class="form-control r-0 light s-12 " type="number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-group m-0">
+                                        <label for="harga" class="col-form-label s-12">Harga</label>
+                                        <input id="harga" placeholder="Enter harga" name="harga" value="{{ $asuransi->harga }}" class="form-control r-0 light s-12 " type="number">
+                                    </div>
+                                </div>
+                            </div>
+
                             <br/>
                             <div class="form-row">
                                 <div class="col-md-12">

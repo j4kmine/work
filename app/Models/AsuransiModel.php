@@ -15,6 +15,6 @@ class AsuransiModel extends Model
      */
     protected $table ="asuransi";
     protected $fillable = [
-        'id', 'id_jenis_barang', 'title', 'is_aktif', 'created_by', 'updated_by', 'created_at', 'updated_at'
+        'id', 'id_jenis_barang', 'title', 'is_aktif', 'created_by', 'updated_by', 'created_at', 'updated_at', 'rate', 'harga'
     ];
 }

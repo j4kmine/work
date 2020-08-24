@@ -47,6 +47,8 @@
                                             </th>
                                             <th>TITLE</th>
                                             <th>KATEGORI</th>
+                                            <th>RATE</th>
+                                            <th>HARGA</th>
                                             <th>STATUS</th>
                                            
                                             <th></th>
@@ -78,6 +80,24 @@
                                                                             <strong>{{ $bk->title }}</strong>
                                                                         @endif
                                                                     @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div>
+                                                                <div>
+                                                                    <strong>{{ $p->rate }}</strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div>
+                                                                <div>
+                                                                    <strong>{{ $p->harga }}</strong>
                                                                 </div>
                                                             </div>
                                                         </div>

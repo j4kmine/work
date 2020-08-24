@@ -24,6 +24,10 @@ Route::post('getItemById', 'API\ItemController@getItemById');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
 Route::post('hargalisting', 'API\PriceController@cekongkirnew');
+Route::post('getBarangJenisByBarangKategori', 'API\BarangJenisController@getDataByBarangKategori');
+Route::post('getBarangJenisById', 'API\BarangJenisController@getDataById');
+Route::post('getAsuransiByBarangJenis', 'API\AsuransiController@getDataByBarangJenis');
+Route::post('getAsuransiById', 'API\AsuransiController@getDataById');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
