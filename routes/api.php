@@ -17,6 +17,7 @@ Route::post('cekharga', 'API\PriceController@index');
 Route::post('listblog', 'API\BlogController@index');
 Route::get('listkotanegara', 'API\KotaController@index');
 Route::post('getkota', 'API\KotaController@getKota');
+Route::post('getKotaById', 'API\KotaController@getDataById');
 Route::post('getAddressByUser', 'API\AddressController@getAddressByUser');
 Route::post('getAddressById', 'API\AddressController@getAddressById');
 Route::get('userselect2', 'API\UsersController@userSelect2');

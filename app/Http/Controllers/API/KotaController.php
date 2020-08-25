@@ -49,4 +49,18 @@
 
         return response()->json([$kotaQuery], 200);
     } 
+
+    public function getDataById(Request $request)
+    {
+   
+        // $this->validate($request, [
+        //     'title' => 'required'
+           
+        // ]);
+
+        $id = $request->id;
+
+        $address = KotaModel::where('id', '=', $id)->paginate(10);
+        return response()->json(['list' => $address], 200);
+    }    
 }

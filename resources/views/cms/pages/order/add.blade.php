@@ -19,7 +19,8 @@
     <div class="container">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script>
-
+            var origin   = window.location.origin; 
+            console.log(origin);
             $(document).ready(function() {
                 /* table barang */
                 var count = 1;
@@ -61,14 +62,16 @@
                     var lebar = +$(this).closest("tr").find('input[name^="lebar"]').val();
                     var tinggi = +$(this).closest("tr").find('input[name^="tinggi"]').val();
                     var berat = +$(this).closest("tr").find('input[name^="berat"]').val();
+                    var barang_package = +$(this).closest("tr").find('input[name^="barang_package"]').val();
                     var destination = $('#kota_tujuan').val();
-                    if (destination == "") {destination = "2911"};
                     var tipe_pengiriman = $('#tipe_pengiriman').val();
-                    var jenis = $('#barang_kategori').val();
-                    console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman,jenis);
+                    var jenis_pengiriman = $('#jenis_pengiriman').val();
+                    var qty_container = $('#qty_container').val();
+                    
+                    console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman);
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/cekongkir",
+                        url: origin+"/api/hargalisting",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "panjang": panjang,
@@ -76,19 +79,22 @@
                             "tinggi": tinggi,
                             "dimensi": berat,
                             "destination": destination,
-                            "tipe_pengiriman": tipe_pengiriman,
-                            "jenis": jenis
+                            "tipe_delivery": tipe_pengiriman,
+                            "category_cargo" : jenis_pengiriman,
+                            "qty_container" : qty_container,
+                            "tipe_package" : barang_package
                             }),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function(data){
-                            console.log(this);
+                            // console.log(this);
                             console.log(data);
                             // $('#harga').val(data.paket.door_to_door);
                             $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
-                                console.log(data,this);
-                                $(this).closest("tr").find('input[name^="harga"]').val(data.paket.door_to_door);
+                                // console.log(data,this);
+                                $(this).closest("tr").find('input[name^="harga"]').val(data.paket.door_to_port);
                                 calculateSum();
+                                calculateSumAll();
                             });
                         },
                         failure: function(errMsg) {
@@ -134,7 +140,7 @@
                     var numbers = +$(this).closest("tr").find('input[name^="namaid"]').val();
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/getItemById",
+                        url: origin+"/api/getItemById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": id_item
@@ -153,6 +159,7 @@
                                 var total_harga = jumlah*harga_satuan;
                                 $(this).closest("tr").find('input[name^="harga_total"]').val(total_harga);
                                 calculateSumAddons();
+                                calculateSumAll();
                             });
                         },
                         failure: function(errMsg) {
@@ -183,6 +190,17 @@
                 }
                 $(document).on("change", ".harga-addons", calculateSumAddons);
 
+                function calculateSumAll() {
+                    var sum = 0;
+                    var total_harga = $("#total_harga").val();
+                    var total_harga_addons = $("#total_harga_addons").val();
+                    sum = parseFloat(total_harga) + parseFloat(total_harga_addons);
+                    console.log();
+                    $("#total_harga_semua").val(sum.toFixed(0));
+                }
+                $(document).on("change", "#total_harga", calculateSumAll);
+                $(document).on("change", "#total_harga_addons", calculateSumAll);
+
                 $("#id_users").select2({
                     placeholder: "Pilih User"
                 }).on("change", function(e) {
@@ -200,7 +218,7 @@
                     console.log(pengirims_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/getAddressById",
+                        url: origin+"/api/getAddressById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": pengirims_choose_address
@@ -219,6 +237,29 @@
                                 $('#pengirim_telepon').val(value.no_hp);
                                 $('#pengirim_email').val(value.email);
                                 $('#pengirim_koleksi_intruksi').val(value.catatan);
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: origin+"/api/getKotaById",
+                                    // The key needs to match your method's input parameter (case-sensitive).
+                                    data: JSON.stringify({ 
+                                        "id": value.id_kota
+                                        }),
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function(data){
+                                        console.log(data.list.data);
+                                        var listdata = data.list.data;
+
+                                        $.each( listdata, function( key, value ) {
+                                            $('#pengirim_kota').val(value.nama);
+                                        });
+                                    },
+                                    failure: function(errMsg) {
+                                        console.log(errMsg);
+                                        return errMsg;
+                                    }
+                                });
                             });
                             return data;
                         },
@@ -236,7 +277,7 @@
                     $('#penerima_choose_address').val(penerimas_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/getAddressById",
+                        url: origin+"/api/getAddressById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": penerimas_choose_address
@@ -255,6 +296,30 @@
                                 $('#penerima_telepon').val(value.no_hp);
                                 $('#penerima_email').val(value.email);
                                 $('#referensi_customer').val(value.catatan);
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: origin+"/api/getKotaById",
+                                    // The key needs to match your method's input parameter (case-sensitive).
+                                    data: JSON.stringify({ 
+                                        "id": value.id_kota
+                                        }),
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function(data){
+                                        console.log(data.list.data);
+                                        var listdata = data.list.data;
+
+                                        $.each( listdata, function( key, value ) {
+                                            $('#penerima_kota_text').val(value.nama);
+                                        });
+                                    },
+                                    failure: function(errMsg) {
+                                        console.log(errMsg);
+                                        return errMsg;
+                                    }
+                                });
+
                             });
                             return data;
                         },
@@ -281,7 +346,7 @@
 
                 $(".kota_tujuan").select2({
                   ajax: {
-                    url: "http://18.141.205.174/api/listkotanegara",
+                    url: origin+"/api/listkotanegara",
                     dataType: 'json',
                     data: function (params) {
                       return {
@@ -347,7 +412,7 @@
                     console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/getAddressByUser",
+                        url: origin+"/api/getAddressByUser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -374,7 +439,7 @@
                     console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/getAddressByUser",
+                        url: origin+"/api/getAddressByUser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -431,7 +496,7 @@
                 var barang_kategori_val = $("#barang_kategori").val();
                 $.ajax({
                     type: "POST",
-                    url: "http://18.141.205.174/api/getBarangJenisByBarangKategori",
+                    url: origin+"/api/getBarangJenisByBarangKategori",
                     // The key needs to match your method's input parameter (case-sensitive).
                     data: JSON.stringify({ 
                         "id_barang_kategori": barang_kategori_val
@@ -459,7 +524,7 @@
                         console.log(barang_jenis_val);
                         $.ajax({
                             type: "POST",
-                            url: "http://18.141.205.174/api/getAsuransiByBarangJenis",
+                            url: origin+"/api/getAsuransiByBarangJenis",
                             // The key needs to match your method's input parameter (case-sensitive).
                             data: JSON.stringify({ 
                                 "id_barang_jenis": barang_jenis_val
@@ -498,7 +563,7 @@
                     console.log(this.value);
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/getBarangJenisByBarangKategori",
+                        url: origin+"/api/getBarangJenisByBarangKategori",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_barang_kategori": this.value
@@ -520,6 +585,39 @@
                               $el.append($("<option></option>")
                                  .attr("value", value).text(key));
                             });
+
+                            // get asuransi
+                            var id_barang_jenis = $("#barang_jenis").val();
+                            $.ajax({
+                                type: "POST",
+                                url: origin+"/api/getAsuransiByBarangJenis",
+                                // The key needs to match your method's input parameter (case-sensitive).
+                                data: JSON.stringify({ 
+                                    "id_barang_jenis": id_barang_jenis
+                                    }),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function(data){
+                                    console.log(data.list.data);
+                                    var listdata = data.list.data;
+
+                                    var newOptions = {};
+                                    $.each( listdata, function( key, value ) {
+                                        newOptions[value.title] = value.id;
+                                    });
+
+                                    var $el = $("#asuransi");
+                                    $el.empty(); // remove old options
+                                    $.each(newOptions, function(key,value) {
+                                      $el.append($("<option></option>")
+                                         .attr("value", value).text(key));
+                                    });
+                                },
+                                failure: function(errMsg) {
+                                    console.log(errMsg);
+                                    return errMsg;
+                                }
+                            });
                         },
                         failure: function(errMsg) {
                             console.log(errMsg);
@@ -532,7 +630,7 @@
                     console.log(this.value);
                     $.ajax({
                         type: "POST",
-                        url: "http://18.141.205.174/api/getAsuransiByBarangJenis",
+                        url: origin+"/api/getAsuransiByBarangJenis",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_barang_jenis": this.value
@@ -753,7 +851,8 @@
                             <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="penerima_kota" class="col-form-label s-12">penerima Kota</label>
-                                    <input id="penerima_kota" placeholder="Enter penerima Kota" name="penerima_kota" value="{{ old('penerima_kota') }}" class="form-control r-0 light s-12 " type="text">
+                                    <input id="penerima_kota" placeholder="Enter penerima Kota" name="penerima_kota" value="{{ old('penerima_kota') }}" class="form-control r-0 light s-12 " type="text" hidden="hidden">
+                                    <input id="penerima_kota_text" placeholder="Enter penerima Kota" name="penerima_kota_text" value="{{ old('penerima_kota_text') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>

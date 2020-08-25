@@ -197,7 +197,7 @@ class OrderController extends Controller
             ,'referensi_customer' => $request->get('referensi_customer')
 
             ,'layanan_tambahan' => $request->get('layanan_tambahan')
-            ,'total_harga' => $request->get('total_harga')
+            ,'total_harga' => $request->get('total_harga_semua')
             ,'total_approved' => $request->get('total_approved')
             ,'status' => $request->get('status')
             ,'tanggal_order' => date('Y-m-d H:i:s',strtotime($request->get('tanggal_order')))
