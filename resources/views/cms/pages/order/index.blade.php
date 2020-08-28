@@ -82,6 +82,8 @@
                                         
                                                            
                                                         <a href="{{ route('order.edit', $p->id)}}"><i class="icon-pencil"></i></a>
+
+                                                        <a href="{{ url('order/cetak_pdf',$p->id) }}" class="btn btn-primary" target="_blank">CETAK PDF</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

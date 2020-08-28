@@ -662,12 +662,12 @@
             });
         </script>
     <div class="row my-3">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-10 offset-md-1">
             <form enctype='multipart/form-data' method="post" action="{{ route('order.store') }}">
                 <div class="card no-b">
                     <div class="card-body">
                         <div class="form-row">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <div class="form-group m-0">
                                     <label for="id_users" class="col-form-label s-12">User</label>
                                     <select id="id_users">
@@ -679,19 +679,15 @@
                                     <input type="hidden" id="id_user" name="id_user" value="{{ old('id_user') }}" />
                                 </div>
                             </div>
-                        </div>
-                       
-                        <div class="form-row">
-                            <div class="col-md-12">
+
+                            <div class="col-md-4">
                                 <div class="form-group m-0">
                                     <label for="kota_asal" class="col-form-label s-12">Kota asal</label>
                                     <input id="kota_asal" placeholder="Jakarta" name="kota_asal" class="form-control r-0 light s-12 " type="text" readonly="readonly">
                                 </div>
                             </div>
-                        </div>
-                       
-                        <div class="form-row">
-                            <div class="col-md-12">
+
+                            <div class="col-md-4">
                                 <div class="form-group m-0">
                                     <label for="kota_tujuan" class="col-form-label s-12">Kota tujuan</label>
                                     <select class="kota_tujuan"></select>

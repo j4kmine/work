@@ -33,6 +33,7 @@ Route::post('forgotpasswordUser', 'Frontend\UserController@forgotpasswordUser')-
 Route::post('resetpassworduser', 'Frontend\UserController@resetpassworduser')->name('resetpassworduser');
 Route::post('subscibe', 'Frontend\UserController@subscibe')->name('subscibe');
 Route::get('logout', 'Auth\LoginController@doLogout')->name('logout');
+
 Route::group(['middleware' => ['auth']], function () {
     
     Route::get('users/hapus/{id}', 'CMS\UserController@hapus');
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     ## ORDER
     Route::get('order/hapus/{id}', 'CMS\OrderController@hapus');
+    Route::get('order/cetak_pdf/{id}', 'CMS\OrderController@cetak_pdf');
     Route::resource('order', 'CMS\OrderController');
     Route::post('order/postProcess', 'CMS\OrderController@postProcess');
 

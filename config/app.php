@@ -188,7 +188,8 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         App\Providers\TextServiceProvider::class,
         Spatie\Newsletter\NewsletterServiceProvider::class,
-        
+
+        Barryvdh\DomPDF\ServiceProvider::class
     ],
 
     /*
@@ -241,6 +242,8 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Mailchimp' => NZTim\Mailchimp\MailchimpFacade::class,
         'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        
     ],
 
 ];

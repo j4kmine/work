@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\CMS;
 
 use Excel;
+use PDF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\OrderModel;
@@ -270,15 +271,39 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
         $where = array('id' => $id);
         $data['order'] = OrderModel::where($where)->first();
         $where2 = array('id_order' => $id);
         $data['rel_item'] = RelitemModel::where($where2)->get();
+        $where3 = array('id_order' => $id);
+        $data['rel_addons'] = ReladdonsModel::where($where3)->get();
         // echo "<pre>";var_dump($data['rel_item']);exit();
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
+        $data['item'] = ItemModel::select()->get();
+        $data['barangkategori'] = BarangKategoriModel::select()->get();
+        $data['barangpackage'] = BarangPackageModel::select()->get();
+        $data['asuransi'] = AsuransiModel::select()->get();
         
+        $data['via_pengiriman'] = array(
+            '1'=>'Udara'
+            ,'2'=>'Laut'
+        );
+
+        $data['jenis_pengiriman'] = array(
+            '1'=>array('nama'=>'Udara - Paket','via_pengiriman'=>'1'),
+            '2'=>array('nama'=>'Udara - Dokumen','via_pengiriman'=>'1'),
+            '3'=>array('nama'=>'Laut - LCL','via_pengiriman'=>'2'),
+            '4'=>array('nama'=>'Laut - FCL 20','via_pengiriman'=>'2'),
+            '5'=>array('nama'=>'Laut - FCL 40','via_pengiriman'=>'2'),
+            '6'=>array('nama'=>'Laut - BULK','via_pengiriman'=>'2')
+        );
+
+        $data['tipe_pengiriman'] = array(
+            '1'=>'DTD(Door To Door)'
+            ,'2'=>'DTP(Door To Port)'
+        );
+
         return view('cms.pages.order.edit', $data);
     }
 
@@ -578,5 +603,19 @@ class OrderController extends Controller
         //     }
         // });
         return back()->with('success', 'Insert Record successfully.');
+    }
+
+    public function cetak_pdf($id="")
+    {   
+        if ($id == "") {
+            $order = OrderModel::all();   
+        } else {
+            $where = array('id' => $id);
+            $order = OrderModel::where($where)->first();
+        }
+
+        $pdf = PDF::loadview('cms.pages.order.pdf',['order'=>$order]);
+        // return $pdf->download('laporan-order.pdf');
+        return $pdf->stream();
     }
 }
