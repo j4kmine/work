@@ -20,7 +20,7 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script>
             var origin   = window.location.origin; 
-            console.log(origin);
+            // console.log(origin);
             $(document).ready(function() {
                 /* table barang */
                 var count = 1;
@@ -57,32 +57,48 @@
                     $(this).closest("tr").remove();
                 });
 
-                $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
+                $("table#barang-table").on("change", 'input[name^="qty_barang"], input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
+                    var qty_barang = +$(this).closest("tr").find('input[name^="qty_barang"]').val();
                     var panjang = +$(this).closest("tr").find('input[name^="panjang"]').val();
                     var lebar = +$(this).closest("tr").find('input[name^="lebar"]').val();
                     var tinggi = +$(this).closest("tr").find('input[name^="tinggi"]').val();
                     var berat = +$(this).closest("tr").find('input[name^="berat"]').val();
-                    var barang_package = +$(this).closest("tr").find('input[name^="barang_package"]').val();
-                    var destination = $('#kota_tujuan').val();
-                    var tipe_pengiriman = $('#tipe_pengiriman').val();
+                    var via_pengiriman = $('#via_pengiriman').val();
                     var jenis_pengiriman = $('#jenis_pengiriman').val();
+                    var tipe_pengiriman = $('#tipe_pengiriman').val();
+                    var destination = $('#kota_tujuan').val();
+                    if (destination == "") {
+                        alert("Mohon Pilih Kota Tujuan Dahulu.");
+                    }
                     var qty_container = $('#qty_container').val();
-                    
-                    console.log(panjang,lebar,tinggi,berat,destination,tipe_pengiriman);
+                    var fob = '0';
+                    if (jenis_pengiriman == '1' || jenis_pengiriman == '2') {
+                        fob = '1';
+                    } else if (jenis_pengiriman == '3') {
+                        fob = '2';
+                    } else if (jenis_pengiriman == '4') {
+                        fob = '3';
+                    } else if (jenis_pengiriman == '5') {
+                        fob = '4';
+                    } else if (jenis_pengiriman == '6') {
+                        fob = '5';
+                    }
+                    console.log(panjang,lebar,tinggi,berat,via_pengiriman,jenis_pengiriman,tipe_pengiriman,destination,qty_container,fob);
                     $.ajax({
                         type: "POST",
                         url: origin+"/api/hargalisting",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
-                            "panjang": panjang,
+                            "category_cargo" : jenis_pengiriman,
+                            "tipe_pengiriman": via_pengiriman,
+                            "tipe_delivery": tipe_pengiriman,
                             "lebar": lebar,
                             "tinggi": tinggi,
                             "dimensi": berat,
+                            "panjang": panjang,
                             "destination": destination,
-                            "tipe_delivery": tipe_pengiriman,
-                            "category_cargo" : jenis_pengiriman,
                             "qty_container" : qty_container,
-                            "tipe_package" : barang_package
+                            "tipe_package" : fob
                             }),
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
@@ -90,15 +106,18 @@
                             // console.log(this);
                             console.log(data);
                             // $('#harga').val(data.paket.door_to_door);
-                            $("table#barang-table").on("change", 'input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
+                            $("table#barang-table").on("change", 'input[name^="qty_barang"], input[name^="panjang"], input[name^="lebar"], input[name^="tinggi"], input[name^="berat"]', function (event) {
                                 // console.log(data,this);
-                                $(this).closest("tr").find('input[name^="harga"]').val(data.paket.door_to_port);
+                                var qty_barang = +$(this).closest("tr").find('input[name^="qty_barang"]').val();
+                                var hargalisting = data.paket.door_to_port;
+                                var hargaakhir = qty_barang*hargalisting;
+                                $(this).closest("tr").find('input[name^="harga"]').val(hargaakhir);
                                 calculateSum();
                                 calculateSumAll();
                             });
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                         }
                     });
                     
@@ -148,12 +167,12 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function(data){
-                            console.log(this);
-                            console.log(data.list.data[0]);
+                            // console.log(this);
+                            // console.log(data.list.data[0]);
                             $("#title"+numbers).val(data.list.data[0].title);
                             $("#harga_satuan"+numbers).val(data.list.data[0].harga);
                             $("table#addons-table").on("change", 'select[name^="id_item"],input[name^="namaid"], input[name^="title"], input[name^="jumlah"], input[name^="satuan"], input[name^="harga_satuan"], input[name^="harga_total"]', function (event) {
-                                console.log(this);
+                                // console.log(this);
                                 var jumlah = +$(this).closest("tr").find('input[name^="jumlah"]').val();
                                 var harga_satuan = +$(this).closest("tr").find('input[name^="harga_satuan"]').val();
                                 var total_harga = jumlah*harga_satuan;
@@ -163,7 +182,7 @@
                             });
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                         }
                     });     
                 });
@@ -193,9 +212,14 @@
                 function calculateSumAll() {
                     var sum = 0;
                     var total_harga = $("#total_harga").val();
+                    if (total_harga == "") {
+                        total_harga = 0;
+                    }
                     var total_harga_addons = $("#total_harga_addons").val();
+                    if (total_harga_addons == "") {
+                        total_harga_addons = 0;
+                    }
                     sum = parseFloat(total_harga) + parseFloat(total_harga_addons);
-                    console.log();
                     $("#total_harga_semua").val(sum.toFixed(0));
                 }
                 $(document).on("change", "#total_harga", calculateSumAll);
@@ -215,7 +239,7 @@
                 }).on("change", function(e) {
                     var pengirims_choose_address = $('#pengirims_choose_address').val();
                     $('#pengirim_choose_address').val(pengirims_choose_address);
-                    console.log(pengirims_choose_address);
+                    // console.log(pengirims_choose_address);
                     $.ajax({
                         type: "POST",
                         url: origin+"/api/getAddressById",
@@ -227,7 +251,7 @@
                         dataType: "json",
                         success: function(data){
                             var listdata = data.list.data;
-                            console.log(listdata);
+                            // console.log(listdata);
                             $.each( listdata, function( key, value ) {
                                 $("#pengirim_negaras").val(value.id_negara).trigger('change');
                                 $('#pengirim_kodepos').val(value.kode_pos);
@@ -248,7 +272,7 @@
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
                                     success: function(data){
-                                        console.log(data.list.data);
+                                        // console.log(data.list.data);
                                         var listdata = data.list.data;
 
                                         $.each( listdata, function( key, value ) {
@@ -256,7 +280,7 @@
                                         });
                                     },
                                     failure: function(errMsg) {
-                                        console.log(errMsg);
+                                        // console.log(errMsg);
                                         return errMsg;
                                     }
                                 });
@@ -264,7 +288,7 @@
                             return data;
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                             return errMsg;
                         }
                     });
@@ -286,7 +310,7 @@
                         dataType: "json",
                         success: function(data){
                             var listdata = data.list.data;
-                            console.log(listdata);
+                            // console.log(listdata);
                             $.each( listdata, function( key, value ) {
                                 $("#penerima_negaras").val(value.id_negara).trigger('change');
                                 $('#penerima_kodepos').val(value.kode_pos);
@@ -307,7 +331,7 @@
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
                                     success: function(data){
-                                        console.log(data.list.data);
+                                        // console.log(data.list.data);
                                         var listdata = data.list.data;
 
                                         $.each( listdata, function( key, value ) {
@@ -315,7 +339,7 @@
                                         });
                                     },
                                     failure: function(errMsg) {
-                                        console.log(errMsg);
+                                        // console.log(errMsg);
                                         return errMsg;
                                     }
                                 });
@@ -324,7 +348,7 @@
                             return data;
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                             return errMsg;
                         }
                     });
@@ -409,7 +433,7 @@
                 });
 
                 function pengirimAddress(id_user) {
-                    console.log(id_user);
+                    // console.log(id_user);
                     $.ajax({
                         type: "POST",
                         url: origin+"/api/getAddressByUser",
@@ -421,7 +445,7 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function(data){
-                            console.log(data.list.data);
+                            // console.log(data.list.data);
                             var listdata = data.list.data;
                             $.each( listdata, function( key, value ) {
                               $('#pengirims_choose_address').append("<option value='"+value.id+"'>"+value.alamat+"</option>")
@@ -429,14 +453,14 @@
                             return data;
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                             return errMsg;
                         }
                     });
                 }
 
                 function penerimaAddress(id_user) {
-                    console.log(id_user);
+                    // console.log(id_user);
                     $.ajax({
                         type: "POST",
                         url: origin+"/api/getAddressByUser",
@@ -448,7 +472,7 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function(data){
-                            console.log(data.list.data);
+                            // console.log(data.list.data);
                             var listdata = data.list.data;
                             $.each( listdata, function( key, value ) {
                               $('#penerimas_choose_address').append("<option value='"+value.id+"'>"+value.alamat+"</option>")
@@ -456,7 +480,7 @@
                             return data;
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                             return errMsg;
                         }
                     });
@@ -504,7 +528,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function(data){
-                        console.log(data.list.data);
+                        // console.log(data.list.data);
                         var listdata = data.list.data;
 
                         var newOptions = {};
@@ -521,7 +545,7 @@
 
                         // get asuransi
                         var barang_jenis_val = $("#barang_jenis").val();
-                        console.log(barang_jenis_val);
+                        // console.log(barang_jenis_val);
                         $.ajax({
                             type: "POST",
                             url: origin+"/api/getAsuransiByBarangJenis",
@@ -532,7 +556,7 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function(data){
-                                console.log(data.list.data);
+                                // console.log(data.list.data);
                                 var listdata = data.list.data;
 
                                 var newOptions = {};
@@ -548,19 +572,19 @@
                                 });
                             },
                             failure: function(errMsg) {
-                                console.log(errMsg);
+                                // console.log(errMsg);
                                 return errMsg;
                             }
                         });
                     },
                     failure: function(errMsg) {
-                        console.log(errMsg);
+                        // console.log(errMsg);
                         return errMsg;
                     }
                 });
 
                 $("#barang_kategori").change(function(){
-                    console.log(this.value);
+                    // console.log(this.value);
                     $.ajax({
                         type: "POST",
                         url: origin+"/api/getBarangJenisByBarangKategori",
@@ -571,7 +595,7 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function(data){
-                            console.log(data.list.data);
+                            // console.log(data.list.data);
                             var listdata = data.list.data;
 
                             var newOptions = {};
@@ -598,7 +622,7 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    console.log(data.list.data);
+                                    // console.log(data.list.data);
                                     var listdata = data.list.data;
 
                                     var newOptions = {};
@@ -614,20 +638,20 @@
                                     });
                                 },
                                 failure: function(errMsg) {
-                                    console.log(errMsg);
+                                    // console.log(errMsg);
                                     return errMsg;
                                 }
                             });
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                             return errMsg;
                         }
                     });
                 });
 
                 $("#barang_jenis").change(function(){
-                    console.log(this.value);
+                    // console.log(this.value);
                     $.ajax({
                         type: "POST",
                         url: origin+"/api/getAsuransiByBarangJenis",
@@ -638,7 +662,7 @@
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function(data){
-                            console.log(data.list.data);
+                            // console.log(data.list.data);
                             var listdata = data.list.data;
 
                             var newOptions = {};
@@ -654,7 +678,7 @@
                             });
                         },
                         failure: function(errMsg) {
-                            console.log(errMsg);
+                            // console.log(errMsg);
                             return errMsg;
                         }
                     });
@@ -666,6 +690,14 @@
             <form enctype='multipart/form-data' method="post" action="{{ route('order.store') }}">
                 <div class="card no-b">
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="card-title">Add Order</h5>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a class="btn btn-primary btn-sm " href="{{url('order')}}">List Order</a>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="col-md-4">
                                 <div class="form-group m-0">
@@ -710,7 +742,7 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirims_choose_address" class="col-form-label s-12">Pilih Alamat</label>
+                                    <label for="pengirims_choose_address" class="col-form-label s-12">Pilih Alamat(Optional - Ambil Dari Modul Address Berdasarkan User)</label>
                                     <select id="pengirims_choose_address">
                                             <option></option>
                                     </select>
@@ -810,7 +842,7 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="penerimas_choose_address" class="col-form-label s-12">Pilih Alamat</label>
+                                    <label for="penerimas_choose_address" class="col-form-label s-12">Pilih Alamat(Optional - Ambil Dari Modul Address Berdasarkan User)</label>
                                     <select id="penerimas_choose_address">
                                             <option></option>
                                     </select>
@@ -1013,7 +1045,7 @@
                             <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="total_harga" class="col-form-label s-12">Total Harga Kirim</label>
-                                    <input id="total_harga" placeholder="Enter Total Harga" name="total_harga" value="{{ old('total_harga') }}" class="form-control r-0 light s-12 " type="number" min="0">
+                                    <input id="total_harga" placeholder="Enter Total Harga" name="total_harga" value="{{ old('total_harga') }}" class="form-control r-0 light s-12 " type="number" min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -1043,7 +1075,7 @@
                             <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="total_harga_addons" class="col-form-label s-12">Total Harga Addons</label>
-                                    <input id="total_harga_addons" placeholder="Enter Total Harga" name="total_harga_addons" value="{{ old('total_harga_addons') }}" class="form-control r-0 light s-12 " type="number" min="0">
+                                    <input id="total_harga_addons" placeholder="Enter Total Harga" name="total_harga_addons" value="{{ old('total_harga_addons') }}" class="form-control r-0 light s-12 " type="number" min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -1052,7 +1084,7 @@
                             <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="total_harga_semua" class="col-form-label s-12">Total Harga Semua</label>
-                                    <input id="total_harga_semua" placeholder="Enter Total Harga" name="total_harga_semua" value="{{ old('total_harga_semua') }}" class="form-control r-0 light s-12 " type="number" min="0">
+                                    <input id="total_harga_semua" placeholder="Enter Total Harga" name="total_harga_semua" value="{{ old('total_harga_semua') }}" class="form-control r-0 light s-12 " type="number" min="0" value="0">
                                 </div>
                             </div>
                         </div>
