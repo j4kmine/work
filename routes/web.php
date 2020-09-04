@@ -90,6 +90,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('blog/hapus/{id}', 'CMS\BlogController@hapus');
     Route::resource('blog', 'CMS\BlogController');
     Route::post('blog/postProcess', 'CMS\BlogController@postProcess');
+    
+    ## IKLAN
+    Route::get('iklan/hapus/{id}', 'CMS\IklanController@hapus');
+    Route::resource('iklan', 'CMS\IklanController');
+    Route::post('iklan/postProcess', 'CMS\IklanController@postProcess');
 
     ## KOTA
     Route::get('kota/import', 'CMS\KotaController@import')->name('kota.import');

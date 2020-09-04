@@ -39,6 +39,7 @@
                         <li class="treeview"><a href="<?php echo url('/barangjenis')?>"><i class="icon icon-info-circle s-24"></i>Barang Jenis</a></li>
                         <li class="treeview"><a href="<?php echo url('/barangpackage')?>"><i class="icon icon-info-circle s-24"></i>Barang Package</a></li>
                         <li class="treeview"><a href="<?php echo url('/users')?>"><i class="icon icon-account_box s-24"></i>Users</a></li>
+                        <li class="treeview"><a href="<?php echo url('/iklan')?>"><i class="icon icon-info-circle s-24"></i>Iklan</a></li>
                         <li class="treeview"><a href="<?php echo url('/address')?>"><i class="icon icon-home2 s-24"></i>Alamat</a></li>
                         <li class="treeview"><a href="<?php echo url('/image')?>"><i class="icon icon-image s-24"></i>Image</a></li>
                         <li class="treeview"><a href="<?php echo url('/blog')?>"><i class="icon icon-newspaper-o s-24"></i>Blog</a></li>
