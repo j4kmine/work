@@ -41,10 +41,10 @@
                             html += '<input type="hidden" id="id_rel_item" name="id_rel_item[]" value="">';
                             if (number > 1) {
                                 html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
-                                $('tbody').append(html);
+                                $('#tbody-barang').append(html);
                             } else {
                                 html += '<td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td></tr>';
-                                $('tbody').html(html);
+                                $('#tbody-barang').html(html);
                             }
                         }
 
@@ -56,6 +56,8 @@
 
                         $(document).on('click', '#remove', function(){
                             count--;
+                            var harga = +$(this).closest("tr").find('input[name^="harga"]').val();
+                            penguranganHarga(harga);
                             $(this).closest("tr").remove();
                         });
 
@@ -137,7 +139,7 @@
                             html += '<td><input type="text" id="satuan'+number+'" name="satuan[]" class="form-control"></td>';
                             html += '<td><input type="text" id="harga_satuan'+number+'" name="harga_satuan[]" class="form-control"></td>';
                             html += '<td><input type="text" id="harga_total'+number+'" name="harga_total[]" class="form-control harga-addons"></td>';
-                            html += '<input type="hidden" id="id_rel_addpons" name="id_rel_addpons[]" value="">';
+                            html += '<input type="hidden" id="id_rel_addons" name="id_rel_addons[]" value="">';
                             if (number > 1) {
                                 html += '<td><button type="button" name="remove_addons" id="remove_addons" class="btn btn-danger">Remove</button></td></tr>';
                                 $('#tbody-addons').append(html);
@@ -153,10 +155,12 @@
 
                         $(document).on('click', '#remove_addons', function(){
                             count_addons--;
+                            var harga = +$(this).closest("tr").find('input[name^="harga_total"]').val();
+                            penguranganHargaAddons(harga);
                             $(this).closest("tr").remove();
                         });
 
-                        $("table#addons-table").on("change", 'select[name^="id_item"]', function (event) {
+                        $("table#addons-table").on("change", 'select[name^="id_item"],input[name^="namaid"], input[name^="title"], input[name^="jumlah"], input[name^="satuan"], input[name^="harga_satuan"], input[name^="harga_total"]', function (event) {
                             var id_item = +$(this).closest("tr").find('select[name^="id_item"]').val();
                             var numbers = +$(this).closest("tr").find('input[name^="namaid"]').val();
                             $.ajax({
@@ -227,6 +231,23 @@
                         $(document).on("change", "#total_harga", calculateSumAll);
                         $(document).on("change", "#total_harga_addons", calculateSumAll);
 
+                        function penguranganHarga(harga) {
+                            var total_harga = $("#total_harga").val();
+                            var total_harga_semua = $("#total_harga_semua").val();
+                            var kurang_harga = total_harga-harga;
+                            var kurang_harga_semua = total_harga_semua-harga;
+                            $("#total_harga").val(kurang_harga.toFixed(0));
+                            $("#total_harga_semua").val(kurang_harga_semua.toFixed(0));
+                        }
+
+                        function penguranganHargaAddons(harga) {
+                            var total_harga_addons = $("#total_harga_addons").val();
+                            var total_harga_semua = $("#total_harga_semua").val();
+                            var kurang_harga = total_harga_addons-harga;
+                            var kurang_harga_semua = total_harga_semua-harga;
+                            $("#total_harga_addons").val(kurang_harga.toFixed(0));
+                            $("#total_harga_semua").val(kurang_harga_semua.toFixed(0));
+                        }
 
                         $("#id_users").select2({
                             placeholder: "Pilih User"
@@ -338,7 +359,7 @@
                                                 var listdata = data.list.data;
 
                                                 $.each( listdata, function( key, value ) {
-                                                    $('#penerima_kota_text').val(value.nama);
+                                                    $('#penerima_kota').val(value.nama);
                                                 });
                                             },
                                             failure: function(errMsg) {
@@ -713,6 +734,11 @@
                                 }
                             });
                         });
+
+                        calculateSum();
+                        calculateSumAddons();
+                        calculateSumAll();
+                        calculateSumAll();
                     });
                 </script>
             <div class="row my-3">
@@ -1043,6 +1069,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Deskripsi</th>
+                                                <th>Qty</th>
+                                                <th>Package</th>
                                                 <th>Panjang</th>
                                                 <th>Lebar</th>
                                                 <th>Tinggi</th>
@@ -1051,10 +1079,27 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="tbody-barang">
                                             @foreach ($rel_item as $key => $value)
                                                 <tr>
                                                     <td><input type="text" id="deskripsi{{ $key }}" name="deskripsi[]" value="{{ $value->deskripsi }}" class="form-control"></td>
+                                                    <td><input type="text" id="qty_barang{{ $key }}" name="qty_barang[]" value="{{ $value->qty_barang }}" class="form-control"></td>
+                                                    <td>
+                                                        <select id="barang_package{{ $key }}" name="barang_package[]">
+                                                            <option value="">-Pilih-</option>
+                                                            @foreach($barangpackage as $i)
+                                                                @php
+                                                                    $selecteds = '';
+                                                                    $id1 = $value->id_package_barang;
+                                                                    $id2 = $i->id;
+                                                                    if ($id1  ==  $id2){$selecteds = 'selected';}
+                                                                @endphp
+                                                                <option {{ $selecteds }}  value="{{ $i->id }}">{{ $i->title }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                            <input type="text" id="barang_package_namaid{{ $key }}" name="barang_package_namaid[]" value="{{ $key }}" class="form-control" hidden>
+                                                            <input type="text" id="barang_package_title{{ $key }}" name="barang_package_title[]" class="form-control" hidden>
+                                                        </td>
                                                     <td><input type="text" id="panjang{{ $key }}" name="panjang[]" value="{{ $value->panjang }}" class="form-control"></td>
                                                     <td><input type="text" id="lebar{{ $key }}" name="lebar[]" value="{{ $value->lebar }}" class="form-control"></td>
                                                     <td><input type="text" id="tinggi{{ $key }}" name="tinggi[]" value="{{ $value->tinggi }}" class="form-control"></td>
@@ -1065,8 +1110,8 @@
                                                     @else 
                                                         <td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td>
                                                     @endif
+                                                    <input type="hidden" name="id_rel_item[]" value="{{ $value->id }}">
                                                 </tr>
-                                                <input type="hidden" name="id_rel_item[]" value="{{ $value->id }}">
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -1110,12 +1155,10 @@
                                                         <tr>
                                                             <td>
                                                                 <select id="id_item{{ $key }}" name="id_item[]">
-                                                                    @php
-                                                                        $selected = '';
-                                                                    @endphp
-                                                                    <option {{ $selected }} value="">-Pilih-</option>
+                                                                    <option value="">-Pilih-</option>
                                                                     @foreach($item as $i)
                                                                         @php
+                                                                            $selected = '';
                                                                             $id1 = $value->id_item;
                                                                             $id2 = $i->id;
                                                                             if ($id1  ==  $id2){$selected = 'selected';}
@@ -1131,12 +1174,12 @@
                                                             <td><input type="text" id="harga_satuan{{ $key }}" name="harga_satuan[]" value="{{ $value->harga_satuan }}" class="form-control"></td>
                                                             <td><input type="text" id="harga_total{{ $key }}" name="harga_total[]" value="{{ $value->harga_total }}" class="form-control harga-addons"></td>
                                                             @if ($key == '0') 
-                                                                <td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
+                                                                <td><button type="button" name="add_addons" id="add_addons" class="btn btn-success">Add</button></td>
                                                             @else 
-                                                                <td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td>
+                                                                <td><button type="button" name="remove_addons" id="remove_addons" class="btn btn-danger">Remove</button></td>
                                                             @endif
+                                                            <input type="hidden" name="id_rel_addons[]" value="{{ $value->id }}">
                                                         </tr>
-                                                        <input type="hidden" name="id_rel_item[]" value="{{ $value->id }}">
                                                     @endforeach
                                                 </tbody>
                                             </table>

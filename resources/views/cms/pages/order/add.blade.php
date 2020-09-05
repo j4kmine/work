@@ -37,7 +37,7 @@
                     html += '<td><input type="text" id="lebar'+number+'" name="lebar[]" class="form-control"></td>';
                     html += '<td><input type="text" id="tinggi'+number+'" name="tinggi[]" class="form-control"></td>';
                     html += '<td><input type="text" id="berat'+number+'" name="berat[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="harga'+number+'" name="harga[]" class="form-control harga"></td>';
+                    html += '<td><input type="text" id="harga'+number+'" name="harga[]" class="form-control harga" readonly></td>';
                     if (number > 1) {
                         html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
                         $('#tbody-barang').append(html);
@@ -54,6 +54,8 @@
 
                 $(document).on('click', '#remove', function(){
                     count--;
+                    var harga = +$(this).closest("tr").find('input[name^="harga"]').val();
+                    penguranganHarga(harga);
                     $(this).closest("tr").remove();
                 });
 
@@ -134,7 +136,7 @@
                     html += '<td><input type="text" id="jumlah'+number+'" name="jumlah[]" class="form-control"></td>';
                     html += '<td><input type="text" id="satuan'+number+'" name="satuan[]" class="form-control"></td>';
                     html += '<td><input type="text" id="harga_satuan'+number+'" name="harga_satuan[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="harga_total'+number+'" name="harga_total[]" class="form-control harga-addons"></td>';
+                    html += '<td><input type="text" id="harga_total'+number+'" name="harga_total[]" class="form-control harga-addons" readonly></td>';
                     if (number > 1) {
                         html += '<td><button type="button" name="remove_addons" id="remove_addons" class="btn btn-danger">Remove</button></td></tr>';
                         $('#tbody-addons').append(html);
@@ -151,10 +153,12 @@
 
                 $(document).on('click', '#remove_addons', function(){
                     count_addons--;
+                    var harga = +$(this).closest("tr").find('input[name^="harga_total"]').val();
+                    penguranganHargaAddons(harga);
                     $(this).closest("tr").remove();
                 });
 
-                $("table#addons-table").on("change", 'select[name^="id_item"]', function (event) {
+                $("table#addons-table").on("change", 'select[name^="id_item"],input[name^="namaid"], input[name^="title"], input[name^="jumlah"], input[name^="satuan"], input[name^="harga_satuan"], input[name^="harga_total"]', function (event) {
                     var id_item = +$(this).closest("tr").find('select[name^="id_item"]').val();
                     var numbers = +$(this).closest("tr").find('input[name^="namaid"]').val();
                     $.ajax({
@@ -224,6 +228,24 @@
                 }
                 $(document).on("change", "#total_harga", calculateSumAll);
                 $(document).on("change", "#total_harga_addons", calculateSumAll);
+
+                function penguranganHarga(harga) {
+                    var total_harga = $("#total_harga").val();
+                    var total_harga_semua = $("#total_harga_semua").val();
+                    var kurang_harga = total_harga-harga;
+                    var kurang_harga_semua = total_harga_semua-harga;
+                    $("#total_harga").val(kurang_harga.toFixed(0));
+                    $("#total_harga_semua").val(kurang_harga_semua.toFixed(0));
+                }
+
+                function penguranganHargaAddons(harga) {
+                    var total_harga_addons = $("#total_harga_addons").val();
+                    var total_harga_semua = $("#total_harga_semua").val();
+                    var kurang_harga = total_harga_addons-harga;
+                    var kurang_harga_semua = total_harga_semua-harga;
+                    $("#total_harga_addons").val(kurang_harga.toFixed(0));
+                    $("#total_harga_semua").val(kurang_harga_semua.toFixed(0));
+                }
 
                 $("#id_users").select2({
                     placeholder: "Pilih User"
@@ -335,7 +357,7 @@
                                         var listdata = data.list.data;
 
                                         $.each( listdata, function( key, value ) {
-                                            $('#penerima_kota_text').val(value.nama);
+                                            $('#penerima_kota').val(value.nama);
                                         });
                                     },
                                     failure: function(errMsg) {
@@ -880,7 +902,6 @@
                                 <div class="form-group m-0">
                                     <label for="penerima_kota" class="col-form-label s-12">penerima Kota</label>
                                     <input id="penerima_kota" placeholder="Enter penerima Kota" name="penerima_kota" value="{{ old('penerima_kota') }}" class="form-control r-0 light s-12 " type="text" hidden="hidden">
-                                    <input id="penerima_kota_text" placeholder="Enter penerima Kota" name="penerima_kota_text" value="{{ old('penerima_kota_text') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>

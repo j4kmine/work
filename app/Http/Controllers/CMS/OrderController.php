@@ -277,7 +277,7 @@ class OrderController extends Controller
         $data['rel_item'] = RelitemModel::where($where2)->get();
         $where3 = array('id_order' => $id);
         $data['rel_addons'] = ReladdonsModel::where($where3)->get();
-        // echo "<pre>";var_dump($data['rel_item']);exit();
+        
         $data['negara'] = NegaraModel::select()->get();
         $data['user'] = UserModel::select()->get();
         $data['item'] = ItemModel::select()->get();
@@ -320,13 +320,15 @@ class OrderController extends Controller
         //     'nama'=>'required',
         //     'id_negara'=>'required'
         // ]);
-        
+
         $deskripsi = $request->deskripsi;
         $harga = $request->harga;
         $panjang = $request->panjang;
         $lebar = $request->lebar;
         $tinggi = $request->tinggi;
         $berat = $request->berat;
+        $qty_barang = $request->qty_barang;
+        $barang_package = $request->barang_package;
         $id_rel_item = $request->id_rel_item;
         $data_rel_item = array();
 
@@ -339,6 +341,8 @@ class OrderController extends Controller
                 $data_rel_item[$i]['lebar'] = $lebar[$i];
                 $data_rel_item[$i]['tinggi'] = $tinggi[$i];
                 $data_rel_item[$i]['berat'] = $berat[$i];
+                $data_rel_item[$i]['qty_barang'] = $qty_barang[$i];
+                $data_rel_item[$i]['id_package_barang'] = $barang_package[$i];
             }
         }
 
@@ -352,13 +356,52 @@ class OrderController extends Controller
             $list_id_relitem_diff = array_diff($id_rel_item2, $id_rel_item1);
         }
 
+        ## add ons
+        $id_item = $request->id_item;
+        $title = $request->title;
+        $jumlah = $request->jumlah;
+        $satuan = $request->satuan;
+        $harga_satuan = $request->harga_satuan;
+        $harga_total = $request->harga_total;
+        $id_rel_addons = $request->id_rel_addons;
+        $data_rel_addons = array();
+
+        if (count($harga_total) > 0) {
+            for ($i=0; $i < count($harga_total); $i++) { 
+                $data_rel_addons[$i]['id'] = $id_rel_addons[$i];
+                $data_rel_addons[$i]['id_item'] = $id_item[$i];
+                $data_rel_addons[$i]['title'] = $title[$i];
+                $data_rel_addons[$i]['jumlah'] = $jumlah[$i];
+                $data_rel_addons[$i]['satuan'] = $satuan[$i];
+                $data_rel_addons[$i]['harga_satuan'] = $harga_satuan[$i];
+                $data_rel_addons[$i]['harga_total'] = $harga_total[$i];
+            }
+        }
+        // echo "<pre>";var_dump($data_rel_addons);exit();
+        ## cari id rel addons yang dihapus
+        $id_rel_addons1 = $id_rel_addons;
+        $where2 = array('id_order' => $id);
+        $id_rel_addons2 = ReladdonsModel::where($where2)->pluck('id')->toArray();
+
+        $list_id_reladdons_diff = array_diff($id_rel_addons1, $id_rel_addons2);
+        if (empty($list_id_reladdons_diff)) {
+            $list_id_reladdons_diff = array_diff($id_rel_addons2, $id_rel_addons1);
+        }
+
         $update = [
             'id_user' => $request->id_user
             ,'kota_asal' => '16417'
             ,'kota_tujuan' => $request->kota_tujuan
-            ,'tipe_pengiriman' => $request->tipe_pengiriman
 
-            ,'barang_kategori' => $request->barang_kategori
+            ,'id_via_pengiriman' => $request->via_pengiriman
+            ,'id_jenis_pengiriman' => $request->jenis_pengiriman
+            ,'id_tipe_pengiriman' => $request->tipe_pengiriman
+
+            ,'id_barang_kategori' => $request->barang_kategori
+            ,'id_barang_jenis' => $request->barang_jenis
+
+            ,'qty_container' => $request->qty_container
+            ,'id_asuransi' => $request->asuransi
 
             ,'pengirim_nama' => $request->pengirim_nama
             ,'pengirim_negara' => $request->pengirim_negara
@@ -381,7 +424,7 @@ class OrderController extends Controller
             ,'referensi_customer' => $request->referensi_customer
 
             ,'layanan_tambahan' => $request->layanan_tambahan
-            ,'total_harga' => $request->total_harga
+            ,'total_harga' => $request->total_harga_semua
             ,'total_approved' => $request->total_approved
             ,'status' => $request->status
             ,'tanggal_order' => date('Y-m-d H:i:s',strtotime($request->tanggal_order))
@@ -446,6 +489,64 @@ class OrderController extends Controller
                     ,'modified_by' => Auth::user()->name
                 ];
                 RelitemModel::where('id',$value['id'])->update($update_relitem);
+            }
+        }
+
+        # hapus rel addons dari id yang didapat
+        if (!empty($list_id_reladdons_diff)) {
+            foreach ($list_id_reladdons_diff as $key => $value) {
+                if ($value != NULL) {
+                    ReladdonsModel::where('id',$value)->delete();
+                }
+            }
+        }
+
+        ## pisahkan list_artikel untuk diinsert dan diupdate
+        $list_reladdons_insert = array();
+        $list_reladdons_update = array();
+        // echo "<pre>";var_dump($data_rel_addons);exit();
+        foreach ($data_rel_addons as $key => $value) {
+            if ($value['id'] == NULL) {
+                $list_reladdons_insert[] = $value;
+            } else {
+                $list_reladdons_update[] = $value;
+            }
+        }
+        
+        ## insert rel addons jika new addons
+        if (!empty($list_reladdons_insert)) {
+            foreach ($list_reladdons_insert as $key => $value) {
+                $reladdons = new ReladdonsModel([
+                    'id' => $value['id']
+                    ,'id_order' => $id
+                    ,'id_item' => $value['id_item']
+                    ,'title' => $value['title']
+                    ,'jumlah' => $value['jumlah']
+                    ,'satuan' => $value['satuan']
+                    ,'harga_satuan' => $value['harga_satuan']
+                    ,'harga_total' => $value['harga_total']
+                    ,'created_at' => date('Y-m-d H:i:s')
+                    ,'created_by' => Auth::user()->name
+                ]);
+                $insert_reladdons = $reladdons->save();
+            }
+        }
+
+        ## update rel addons jika no new addons
+        if (!empty($list_reladdons_update)) {
+            foreach ($list_reladdons_update as $key => $value) {
+                $update_reladdons = array();
+                $update_reladdons = [
+                    'id_item' => $value['id_item']
+                    ,'title' => $value['title']
+                    ,'jumlah' => $value['jumlah']
+                    ,'satuan' => $value['satuan']
+                    ,'harga_satuan' => $value['harga_satuan']
+                    ,'harga_total' => $value['harga_total']
+                    ,'updated_at' => date('Y-m-d H:i:s')
+                    ,'modified_by' => Auth::user()->name
+                ];
+                ReladdonsModel::where('id',$value['id'])->update($update_reladdons);
             }
         }
 
