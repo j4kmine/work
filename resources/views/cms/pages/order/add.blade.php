@@ -901,7 +901,7 @@
                             <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="penerima_kota" class="col-form-label s-12">penerima Kota</label>
-                                    <input id="pengirim_kota" placeholder="Enter Pengirim Kota" name="pengirim_kota" value="{{ old('pengirim_kota') }}" class="form-control r-0 light s-12 " type="text">
+                                    <input id="penerima_kota" placeholder="Enter Pengirim Kota" name="penerima_kota" value="{{ old('penerima_kota') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>
