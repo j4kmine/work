@@ -1129,11 +1129,9 @@
                                 <div class="form-group m-0">
                                     <label for="status" class="col-form-label s-12">Status</label>
                                     <select class="form-control" id="status" name="status">
-                                      <option value="1">Status 1</option>
-                                      <option value="2">Status 2</option>
-                                      <option value="3">Status 3</option>
-                                      <option value="4">Status 4</option>
-                                      <option value="5">Status 5</option>
+                                        @foreach($status_order as $key => $v)
+                                            <option value="{{ $key }}">{{ $v }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

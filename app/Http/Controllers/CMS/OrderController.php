@@ -6,7 +6,9 @@ namespace App\Http\Controllers\CMS;
 use Excel;
 use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+
 use App\Models\OrderModel;
 use App\Models\NegaraModel;
 use App\Models\KotaModel;
@@ -56,52 +58,13 @@ class OrderController extends Controller
         $data['barangpackage'] = BarangPackageModel::select()->get();
         $data['asuransi'] = AsuransiModel::select()->get();
 
-        $data['via_pengiriman'] = array(
-            '1'=>'Udara'
-            ,'2'=>'Laut'
-        );
+        $data['via_pengiriman'] = config('global.via_pengiriman');
 
-        $data['jenis_pengiriman'] = array(
-            '1'=>array('nama'=>'Udara - Paket','via_pengiriman'=>'1'),
-            '2'=>array('nama'=>'Udara - Dokumen','via_pengiriman'=>'1'),
-            '3'=>array('nama'=>'Laut - LCL','via_pengiriman'=>'2'),
-            '4'=>array('nama'=>'Laut - FCL 20','via_pengiriman'=>'2'),
-            '5'=>array('nama'=>'Laut - FCL 40','via_pengiriman'=>'2'),
-            '6'=>array('nama'=>'Laut - BULK','via_pengiriman'=>'2')
-        );
+        $data['jenis_pengiriman'] = config('global.jenis_pengiriman');
 
-        $data['tipe_pengiriman'] = array(
-            '1'=>'DTD(Door To Door)'
-            ,'2'=>'DTP(Door To Port)'
-        );
-        // $data['tipe_pengiriman'] = array(
-        //     array('id'=>'U_DTD_GC_50','nama'=>'Udara DTD General Cargo 50'),
-        //     array('id'=>'U_DTD_GC_100','nama'=>'Udara DTD General Cargo 100'),
-        //     array('id'=>'U_DTD_GC_350','nama'=>'Udara DTD General Cargo 350'),
-        //     array('id'=>'U_DTD_GC_500','nama'=>'Udara DTD General Cargo 500'),
-        //     array('id'=>'U_DTD_GC_1000','nama'=>'Udara DTD General Cargo 1000'),
-        //     array('id'=>'L_DTD_GC_LCL_2','nama'=>'Laut DTD General Cargo LCL 2'),
-        //     array('id'=>'L_DTD_GC_LCL_6','nama'=>'Laut DTD General Cargo LCL 6'),
-        //     array('id'=>'L_DTD_GC_LCL_10','nama'=>'Laut DTD General Cargo LCL 10'),
-        //     array('id'=>'L_DTD_GC_FCL_20ft','nama'=>'Laut DTD General Cargo FCL 20ft'),
-        //     array('id'=>'L_DTD_GC_FCL_40ft','nama'=>'Laut DTD General Cargo FCL 40ft'),
-        //     array('id'=>'U_DTP_GC_50','nama'=>'Udara DTP General Cargo 50'),
-        //     array('id'=>'U_DTP_GC_100','nama'=>'Udara DTP General Cargo 100'),
-        //     array('id'=>'U_DTP_GC_350','nama'=>'Udara DTP General Cargo 350'),
-        //     array('id'=>'U_DTP_GC_500','nama'=>'Udara DTP General Cargo 500'),
-        //     array('id'=>'U_DTP_GC_1000','nama'=>'Udara DTP General Cargo 1000'),
-        //     array('id'=>'L_DTP_GC_LCL_2','nama'=>'Laut DTP General Cargo LCL 2'),
-        //     array('id'=>'L_DTP_GC_LCL_3','nama'=>'Laut DTP General Cargo LCL 3'),
-        //     array('id'=>'L_DTP_GC_LCL_4','nama'=>'Laut DTP General Cargo LCL 4'),
-        //     array('id'=>'L_DTP_GC_LCL_5','nama'=>'Laut DTP General Cargo LCL 5'),
-        //     array('id'=>'L_DTP_GC_LCL_6','nama'=>'Laut DTP General Cargo LCL 6'),
-        //     array('id'=>'L_DTP_GC_LCL_7','nama'=>'Laut DTP General Cargo LCL 7'),
-        //     array('id'=>'L_DTP_GC_LCL_8','nama'=>'Laut DTP General Cargo LCL 8'),
-        //     array('id'=>'L_DTP_GC_LCL_9','nama'=>'Laut DTP General Cargo LCL 9'),
-        //     array('id'=>'L_DTP_GC_LCL_10','nama'=>'Laut DTP General Cargo LCL 10'),
-        //     array('id'=>'L_DTP_GC_FCL_20ft','nama'=>'Laut DTP General Cargo FCL 20ft'),
-        //     array('id'=>'L_DTP_GC_FCL_40ft','nama'=>'Laut DTP General Cargo FCL 40ft')
-        // );
+        $data['tipe_pengiriman'] = config('global.tipe_pengiriman');
+
+        $data['status_order'] = config('global.status_order');
 
         return view('cms.pages.order.add', $data);
     }
@@ -114,10 +77,34 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request,[
-        //     'nama'=>'required',
-        //     'id_negara'=>'required'
-        // ]);
+        $this->validate($request,[
+            'kota_tujuan' => 'required'
+            ,'qty_container' => 'required'
+            ,'pengirim_nama' => 'required'
+            ,'pengirim_negara' => 'required'
+            ,'pengirim_kodepos' => 'required'
+            ,'pengirim_kota' => 'required'
+            ,'pengirim_alamat' => 'required'
+            ,'pengirim_perusahaan' => 'required'
+            ,'pengirim_telepon' => 'required'
+            ,'pengirim_email' => 'required'
+            ,'pengirim_koleksi_intruksi' => 'required'
+            ,'penerima_nama' => 'required'
+            ,'penerima_negara' => 'required'
+            ,'penerima_kodepos' => 'required'
+            ,'penerima_kota' => 'required'
+            ,'penerima_alamat' => 'required'
+            ,'penerima_perusahaan' => 'required'
+            ,'penerima_telepon' => 'required'
+            ,'penerima_email' => 'required'
+            ,'referensi_customer' => 'required'
+            ,'layanan_tambahan' => 'required'
+            ,'total_harga' => 'required'
+            ,'total_approved' => 'required'
+            ,'status' => 'required'
+            ,'tanggal_order' => 'required'
+            ,'tanggal_kirim' => 'required'
+        ]);
 
         $deskripsi = $request->get('deskripsi');
         $harga = $request->get('harga');
@@ -285,24 +272,13 @@ class OrderController extends Controller
         $data['barangpackage'] = BarangPackageModel::select()->get();
         $data['asuransi'] = AsuransiModel::select()->get();
         
-        $data['via_pengiriman'] = array(
-            '1'=>'Udara'
-            ,'2'=>'Laut'
-        );
+        $data['via_pengiriman'] = config('global.via_pengiriman');
 
-        $data['jenis_pengiriman'] = array(
-            '1'=>array('nama'=>'Udara - Paket','via_pengiriman'=>'1'),
-            '2'=>array('nama'=>'Udara - Dokumen','via_pengiriman'=>'1'),
-            '3'=>array('nama'=>'Laut - LCL','via_pengiriman'=>'2'),
-            '4'=>array('nama'=>'Laut - FCL 20','via_pengiriman'=>'2'),
-            '5'=>array('nama'=>'Laut - FCL 40','via_pengiriman'=>'2'),
-            '6'=>array('nama'=>'Laut - BULK','via_pengiriman'=>'2')
-        );
+        $data['jenis_pengiriman'] = config('global.jenis_pengiriman');
 
-        $data['tipe_pengiriman'] = array(
-            '1'=>'DTD(Door To Door)'
-            ,'2'=>'DTP(Door To Port)'
-        );
+        $data['tipe_pengiriman'] = config('global.tipe_pengiriman');
+
+        $data['status_order'] = config('global.status_order');
 
         return view('cms.pages.order.edit', $data);
     }
@@ -316,10 +292,34 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $this->validate($request,[
-        //     'nama'=>'required',
-        //     'id_negara'=>'required'
-        // ]);
+        $this->validate($request,[
+            'kota_tujuan' => 'required'
+            ,'qty_container' => 'required'
+            ,'pengirim_nama' => 'required'
+            ,'pengirim_negara' => 'required'
+            ,'pengirim_kodepos' => 'required'
+            ,'pengirim_kota' => 'required'
+            ,'pengirim_alamat' => 'required'
+            ,'pengirim_perusahaan' => 'required'
+            ,'pengirim_telepon' => 'required'
+            ,'pengirim_email' => 'required'
+            ,'pengirim_koleksi_intruksi' => 'required'
+            ,'penerima_nama' => 'required'
+            ,'penerima_negara' => 'required'
+            ,'penerima_kodepos' => 'required'
+            ,'penerima_kota' => 'required'
+            ,'penerima_alamat' => 'required'
+            ,'penerima_perusahaan' => 'required'
+            ,'penerima_telepon' => 'required'
+            ,'penerima_email' => 'required'
+            ,'referensi_customer' => 'required'
+            ,'layanan_tambahan' => 'required'
+            ,'total_harga' => 'required'
+            ,'total_approved' => 'required'
+            ,'status' => 'required'
+            ,'tanggal_order' => 'required'
+            ,'tanggal_kirim' => 'required'
+        ]);
 
         $deskripsi = $request->deskripsi;
         $harga = $request->harga;
@@ -712,9 +712,17 @@ class OrderController extends Controller
             $order = OrderModel::all();   
         } else {
             $where = array('id' => $id);
-            $order = OrderModel::where($where)->first();
+            $order['order'] = OrderModel::where($where)->first();
+            $where2 = array('id_order' => $id);
+            $order['rel_item'] = RelitemModel::where($where2)->get();
+            $where3 = array('id_order' => $id);
+            $order['rel_addons'] = ReladdonsModel::where($where3)->get();
+            $where4 = array('id' => $order['order']['pengirim_negara']);
+            $order['pengirim_negara'] = NegaraModel::where($where4)->first();
+            $where5 = array('id' => $order['order']['penerima_negara']);
+            $order['penerima_negara'] = NegaraModel::where($where5)->first();
         }
-
+        // echo "<pre>";var_dump($order);exit();
         $pdf = PDF::loadview('cms.pages.order.pdf',['order'=>$order]);
         // return $pdf->download('laporan-order.pdf');
         return $pdf->stream();

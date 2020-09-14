@@ -1200,7 +1200,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="total_harga_semua" class="col-form-label s-12">Total Harga Semua</label>
-                                            <input id="total_harga_semua" placeholder="Enter Total Harga" name="total_harga_semua" value="{{ old('total_harga_semua') }}" class="form-control r-0 light s-12 " type="number" min="0">
+                                            <input id="total_harga_semua" placeholder="Enter Total Harga" name="total_harga_semua" value="{{ $order->total_harga }}" class="form-control r-0 light s-12 " type="number" min="0">
                                         </div>
                                     </div>
                                 </div>
@@ -1210,10 +1210,10 @@
                                         <div class="form-group m-0">
                                             <label for="total_approved" class="col-form-label s-12">Total Approved</label>
                                             <div class="radio">
-                                              <label><input type="radio" name="total_approved" value="1">Ya</label>
+                                              <label><input type="radio" name="total_approved" value="1" @if ($order->total_approved == "1") {{ 'checked' }} @endif>Ya</label>
                                             </div>
                                             <div class="radio">
-                                              <label><input type="radio" name="total_approved" value="0" checked>Tidak</label>
+                                              <label><input type="radio" name="total_approved" value="0" @if ($order->total_approved == "0") {{ 'checked' }} @endif>Tidak</label>
                                             </div>
                                         </div>
                                     </div>
@@ -1224,11 +1224,9 @@
                                         <div class="form-group m-0">
                                             <label for="status" class="col-form-label s-12">Status</label>
                                             <select class="form-control" id="status" name="status">
-                                              <option value="1">Status 1</option>
-                                              <option value="2">Status 2</option>
-                                              <option value="3">Status 3</option>
-                                              <option value="4">Status 4</option>
-                                              <option value="5">Status 5</option>
+                                                @foreach($status_order as $key => $v)
+                                                    <option value="{{ $key }}">{{ $v }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

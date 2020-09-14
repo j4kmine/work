@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\TrackingModel;
 use App\Models\OrderModel;
+use App\Mail\TrackingEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Models\UserModel;
 class TrackingController extends Controller
 {
@@ -56,17 +58,31 @@ class TrackingController extends Controller
             'flag'=>'required',
             'status'=>'required'
         ]);
-        
+
         $tracking = new TrackingModel([
             'id_order' => $request->get('id_order'),
             'keterangan' => $request->get('keterangan'),
             'flag' => $request->get('flag'),
             'status' => $request->get('status'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'created_at' => date('Y-m-d H:i:s')
         ]);
         $data = $tracking->save();
-       
+        if ($data) {
+            $data_email['tracking'] = [
+                'id_order' => $request->get('id_order'),
+                'keterangan' => $request->get('keterangan'),
+                'flag' => $request->get('flag'),
+                'status' => $request->get('status'),
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+            ## get detail order
+            $where = array('id' => $data_email['tracking']['id_order']);
+            $data_email['order'] = OrderModel::where($where)->first();
+            // echo "<pre>";var_dump($data_email['order']->pengirim_email);exit();
+
+            Mail::to($data_email['order']->pengirim_email)->send(new TrackingEmail($data_email));
+            // Mail::to("faturrachmandonny@gmail.com")->send(new TrackingEmail($data_email));
+        }
         return redirect('/tracking/create')->with('success', 'Success Input Data');
     }
 
@@ -126,10 +142,25 @@ class TrackingController extends Controller
                     'keterangan' => $request->keterangan,
                     'flag' => $request->flag,
                     'status' => $request->status,
-                    'updated_at' => date('Y-m-d H:i:s'),
-                  
+                    'updated_at' => date('Y-m-d H:i:s')
                 ];
-        TrackingModel::where('id',$id)->update($update);
+        $data = TrackingModel::where('id',$id)->update($update);
+        if ($data) {
+            $data_email['tracking'] = [
+                'id_order' => $request->id_order, 
+                'keterangan' => $request->keterangan,
+                'flag' => $request->flag,
+                'status' => $request->status,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+            ## get detail order
+            $where = array('id' => $data_email['tracking']['id_order']);
+            $data_email['order'] = OrderModel::where($where)->first();
+            // echo "<pre>";var_dump($data_email['order']->pengirim_email);exit();
+
+            Mail::to($data_email['order']->pengirim_email)->send(new TrackingEmail($data_email));
+            // Mail::to("faturrachmandonny@gmail.com")->send(new TrackingEmail($data_email));
+        }
         return redirect('/tracking/'.$id.'/edit')->with('success', 'Success Input Data');      
     }
 
