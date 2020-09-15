@@ -37,7 +37,7 @@
                     html += '<td><input type="text" id="lebar'+number+'" name="lebar[]" class="form-control"></td>';
                     html += '<td><input type="text" id="tinggi'+number+'" name="tinggi[]" class="form-control"></td>';
                     html += '<td><input type="text" id="berat'+number+'" name="berat[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="harga'+number+'" name="harga[]" class="form-control harga" readonly></td>';
+                    html += '<td><input type="text" id="harga'+number+'" name="harga[]" class="form-control harga" ></td>';
                     if (number > 1) {
                         html += '<td><button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button></td></tr>';
                         $('#tbody-barang').append(html);
@@ -136,7 +136,7 @@
                     html += '<td><input type="text" id="jumlah'+number+'" name="jumlah[]" class="form-control"></td>';
                     html += '<td><input type="text" id="satuan'+number+'" name="satuan[]" class="form-control"></td>';
                     html += '<td><input type="text" id="harga_satuan'+number+'" name="harga_satuan[]" class="form-control"></td>';
-                    html += '<td><input type="text" id="harga_total'+number+'" name="harga_total[]" class="form-control harga-addons" readonly></td>';
+                    html += '<td><input type="text" id="harga_total'+number+'" name="harga_total[]" class="form-control harga-addons" ></td>';
                     if (number > 1) {
                         html += '<td><button type="button" name="remove_addons" id="remove_addons" class="btn btn-danger">Remove</button></td></tr>';
                         $('#tbody-addons').append(html);
