@@ -15,20 +15,54 @@ class UsersController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-   
-    public function register(Request $request)
+    public function registercompany(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:3',
+            'nama_depan' => 'required|min:3',
+            'nama_belakang' => 'required|min:3',
+            'nohp' => 'required|min:3',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'perusahaan' => 'required',
+            'npwp' => 'required',
+            'c_password' => 'required|same:password' ,
+            'tos' => 'required',
+            'update' => 'required',
         ]);
  
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->name." ".$request->nama_belakang,
+            'phone' => $request->nohp,
+            'email' => $request->email,
+            'perusahaan' => $request->perusahaan,
+            'password' => bcrypt($request->password),
+            'role' => 3
+        ]);
+ 
+        $token = $user->createToken('TutsForWeb')->accessToken;
+ 
+        return response()->json(['token' => $token], 200);
+    }
+ 
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'nama_depan' => 'required|min:3',
+            'nama_belakang' => 'required|min:3',
+            'nohp' => 'required|min:3',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'c_password' => 'required|same:password' ,
+            'tos' => 'required',
+            'update' => 'required',
+        ]);
+ 
+        $user = User::create([
+            'name' => $request->name." ".$request->nama_belakang,
+            'phone' => $request->nohp,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $request->role
+            'role' => 3
         ]);
  
         $token = $user->createToken('TutsForWeb')->accessToken;
@@ -46,8 +80,7 @@ class UsersController extends Controller
     {
         $credentials = [
             'email' => $request->email,
-            'password' => $request->password,
-            'role' => $request->role
+            'password' => $request->password
         ];
  
         if (auth()->attempt($credentials)) {

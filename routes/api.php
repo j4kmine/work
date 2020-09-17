@@ -24,6 +24,7 @@ Route::get('userselect2', 'API\UsersController@userSelect2');
 Route::post('getItemById', 'API\ItemController@getItemById');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
+Route::post('authregistercompany', 'API\UsersController@registercompany');
 Route::post('hargalisting', 'API\PriceController@cekongkirnew');
 Route::post('getBarangJenisByBarangKategori', 'API\BarangJenisController@getDataByBarangKategori');
 Route::post('getBarangJenisById', 'API\BarangJenisController@getDataById');
