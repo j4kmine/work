@@ -114,6 +114,15 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
+                                            <label for="nama" class="col-form-label s-12">Nama</label>
+                                            <input id="nama" placeholder="Enter nama" name="nama" value="{{ old('nama') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
                                             <label for="company" class="col-form-label s-12">Company</label>
                                             <input id="company" placeholder="Enter company" name="company" value="{{ old('company') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>

@@ -129,6 +129,15 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
+                                            <label for="nama" class="col-form-label s-12">Nama</label>
+                                            <input id="nama" placeholder="Enter nama" name="nama" value="{{ $address->nama }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
                                             <label for="company" class="col-form-label s-12">Company</label>
                                             <input id="company" placeholder="Enter company" name="company" value="{{ $address->company }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
@@ -158,10 +167,10 @@
                                         <div class="form-group m-0">
                                             <label for="tipe_user" class="col-form-label s-12">Tipe User</label>
                                             <div class="radio">
-                                              <label><input type="radio" name="tipe_user" value="0" checked>Pengirim</label>
+                                              <label><input type="radio" name="tipe_user" value="0" @if ($address->tipe_user == "0") {{ 'checked' }} @endif>Pengirim</label>
                                             </div>
                                             <div class="radio">
-                                              <label><input type="radio" name="tipe_user" value="1">Penerima</label>
+                                              <label><input type="radio" name="tipe_user" value="1" @if ($address->tipe_user == "1") {{ 'checked' }} @endif>Penerima</label>
                                             </div>
                                         </div>
                                     </div>

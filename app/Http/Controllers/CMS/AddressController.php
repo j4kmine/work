@@ -53,6 +53,7 @@ class AddressController extends Controller
     {
         $this->validate($request,[
             'id_user'=>'required',
+            'nama'=>'required',
             'company'=>'required',
             'no_hp'=>'required',
             'email'=>'required',
@@ -61,6 +62,7 @@ class AddressController extends Controller
         
         $address = new AddressModel([
             'id_user' => $request->get('id_user'),
+            'nama' => $request->get('nama'),
             'company' => $request->get('company'),
             'no_hp' => $request->get('no_hp'),
             'email' => $request->get('email'),
@@ -124,6 +126,7 @@ class AddressController extends Controller
     {
         $this->validate($request,[
             'id_user'=>'required',
+            'nama'=>'required',
             'company'=>'required',
             'no_hp'=>'required',
             'email'=>'required',
@@ -132,6 +135,7 @@ class AddressController extends Controller
          
         $update = [
             'id_user' => $request->id_user,
+            'nama' => $request->nama,
             'company' => $request->company,
             'no_hp' => $request->no_hp,
             'email' => $request->email,

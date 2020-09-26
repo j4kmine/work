@@ -46,10 +46,12 @@
                                                 </div>
                                             </th>
                                             <th>ID</th>
+                                            <th>USER</th>
                                             <th>PENGIRIM</th>
-                                            <th>TIPE PENGIRIMAN</th>
                                             <th>PENERIMA</th>
-                                            <th>NEGARA</th>
+                                            <th>JENIS PENGIRIMAN</th>
+                                            <th>STATUS</th>
+                                            <th>NEGARA TUJUAN</th>
                                             <th></th>
                                         </tr>
                                         </thead>   
@@ -65,11 +67,36 @@
                                                         <div class="d-none d-lg-block">{{ $p->id }}</div>
                                                     </td>
                                                     <td>
+                                                        <div class="d-flex"><strong>{{ $p->id_user }}</strong></div>
+                                                    </td>
+                                                    <td>
                                                         <div class="d-flex"><strong>{{ $p->pengirim_nama }}</strong></div>
                                                     </td>
+
                                                     <td>
                                                         <div class="d-flex"><strong>{{ $p->penerima_nama }}</strong></div>
                                                     </td>
+
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            @foreach($jenis_pengiriman as $key => $n)
+                                                                @if($key == $p->id_jenis_pengiriman)
+                                                                    <strong> {{ $n['nama'] }}</strong>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            @foreach($status_order as $key => $n)
+                                                                @if($key == $p->status)
+                                                                    <strong> {{ $n }}</strong>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </td>
+
                                                     <td>
                                                         @foreach($negara as $n)
                                                             @if($n->id == $p->penerima_negara)

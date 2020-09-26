@@ -276,6 +276,7 @@
                             // console.log(listdata);
                             $.each( listdata, function( key, value ) {
                                 $("#pengirim_negaras").val(value.id_negara).trigger('change');
+                                $('#pengirim_nama').val(value.nama);
                                 $('#pengirim_kodepos').val(value.kode_pos);
                                 $('#pengirim_kota').val(value.id_kota);
                                 $('#pengirim_alamat').val(value.alamat);
@@ -335,6 +336,7 @@
                             // console.log(listdata);
                             $.each( listdata, function( key, value ) {
                                 $("#penerima_negaras").val(value.id_negara).trigger('change');
+                                $('#penerima_nama').val(value.nama);
                                 $('#penerima_kodepos').val(value.kode_pos);
                                 $('#penerima_kota').val(value.id_kota);
                                 $('#penerima_alamat').val(value.alamat);
@@ -755,8 +757,11 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirim_nama" class="col-form-label s-12">Pengirim Nama</label>
-                                    <input id="pengirim_nama" placeholder="Enter Pengirim Nama" name="pengirim_nama" value="{{ old('pengirim_nama') }}" class="form-control r-0 light s-12 " type="text">
+                                    <label for="pengirims_choose_address" class="col-form-label s-12">Pilih Alamat(Optional - Ambil Dari Modul Address Berdasarkan User)</label>
+                                    <select id="pengirims_choose_address">
+                                            <option></option>
+                                    </select>
+                                    <input type="hidden" id="pengirim_choose_address" name="pengirim_choose_address" value="{{ old('pengirim_choose_address') }}" />
                                 </div>
                             </div>
                         </div>
@@ -764,11 +769,8 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirims_choose_address" class="col-form-label s-12">Pilih Alamat(Optional - Ambil Dari Modul Address Berdasarkan User)</label>
-                                    <select id="pengirims_choose_address">
-                                            <option></option>
-                                    </select>
-                                    <input type="hidden" id="pengirim_choose_address" name="pengirim_choose_address" value="{{ old('pengirim_choose_address') }}" />
+                                    <label for="pengirim_nama" class="col-form-label s-12">Pengirim Nama</label>
+                                    <input id="pengirim_nama" placeholder="Enter Pengirim Nama" name="pengirim_nama" value="{{ old('pengirim_nama') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>
@@ -855,8 +857,11 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="penerima_nama" class="col-form-label s-12">penerima Nama</label>
-                                    <input id="penerima_nama" placeholder="Enter penerima Nama" name="penerima_nama" value="{{ old('penerima_nama') }}" class="form-control r-0 light s-12 " type="text">
+                                    <label for="penerimas_choose_address" class="col-form-label s-12">Pilih Alamat(Optional - Ambil Dari Modul Address Berdasarkan User)</label>
+                                    <select id="penerimas_choose_address">
+                                            <option></option>
+                                    </select>
+                                    <input type="hidden" id="penerima_choose_address" name="penerima_choose_address" value="{{ old('penerima_choose_address') }}" />
                                 </div>
                             </div>
                         </div>
@@ -864,11 +869,8 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="penerimas_choose_address" class="col-form-label s-12">Pilih Alamat(Optional - Ambil Dari Modul Address Berdasarkan User)</label>
-                                    <select id="penerimas_choose_address">
-                                            <option></option>
-                                    </select>
-                                    <input type="hidden" id="penerima_choose_address" name="penerima_choose_address" value="{{ old('penerima_choose_address') }}" />
+                                    <label for="penerima_nama" class="col-form-label s-12">penerima Nama</label>
+                                    <input id="penerima_nama" placeholder="Enter penerima Nama" name="penerima_nama" value="{{ old('penerima_nama') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>

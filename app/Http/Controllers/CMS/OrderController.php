@@ -41,7 +41,10 @@ class OrderController extends Controller
         $order = OrderModel::where('pengirim_nama', 'LIKE', '%' . $search . '%')
                      ->paginate(10);
 
-        return view('cms.pages.order.index', compact(['order','negara']));
+        $jenis_pengiriman = config('global.jenis_pengiriman');
+        $status_order = config('global.status_order');
+
+        return view('cms.pages.order.index', compact(['order','negara','jenis_pengiriman','status_order']));
     }
 
     /**

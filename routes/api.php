@@ -30,6 +30,7 @@ Route::post('getBarangJenisByBarangKategori', 'API\BarangJenisController@getData
 Route::post('getBarangJenisById', 'API\BarangJenisController@getDataById');
 Route::post('getAsuransiByBarangJenis', 'API\AsuransiController@getDataByBarangJenis');
 Route::post('getAsuransiById', 'API\AsuransiController@getDataById');
+Route::post('getOrderById', 'API\OrderController@getOrderById');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

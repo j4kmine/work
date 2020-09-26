@@ -15,6 +15,6 @@ class AddressModel extends Model
      */
     protected $table ="address";
     protected $fillable = [
-        'id', 'id_user', 'company', 'no_hp', 'email', 'tipe_user', 'catatan', 'created_at', 'updated_at', 'created_by', 'modified_by' , 'id_kota', 'id_negara', 'kode_pos' , 'alamat'
+        'id', 'id_user', 'nama', 'company', 'no_hp', 'email', 'tipe_user', 'catatan', 'created_at', 'updated_at', 'created_by', 'modified_by' , 'id_kota', 'id_negara', 'kode_pos' , 'alamat'
     ];
 }

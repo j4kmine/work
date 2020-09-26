@@ -47,6 +47,7 @@
                                             </th>
                                             <th>ID</th>
                                             <th>USER</th>
+                                            <th>NAMA</th>
                                             <th>ALAMAT</th>
                                             <th>TIPE</th>
                                             <th></th>
@@ -68,10 +69,15 @@
                                                     </td>
                                                     <td>
                                                         <div class="d-flex">
+                                                            <strong>{{ $p->nama }}</strong>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex">
                                                             <strong>{{ $p->alamat }}</strong>
                                                         </div>
                                                     </td>
-                                                    <td> <div class="d-none d-lg-block">{{ $p->tipe }}</div></td>
+                                                    <td> <div class="d-none d-lg-block">@if ($p->tipe_user == "0") {{ 'Pengirim' }} @else {{ 'Penerima' }} @endif</div></td>
                                                     <td>
                                                         <a href="{{ url('address/hapus',$p->id) }}"><i class="icon-trash-can"></i></a>
                                         
