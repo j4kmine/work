@@ -12,25 +12,47 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+## price
 Route::post('cekongkir', 'API\PriceController@cekongkir');
 Route::post('cekharga', 'API\PriceController@index');
+Route::post('hargalisting', 'API\PriceController@cekongkirnew');
+## blog
 Route::post('listblog', 'API\BlogController@index');
+## kota
 Route::get('listkotanegara', 'API\KotaController@index');
 Route::post('getkota', 'API\KotaController@getKota');
-Route::post('getKotaById', 'API\KotaController@getDataById');
-Route::post('getAddressByUser', 'API\AddressController@getAddressByUser');
-Route::post('getAddressById', 'API\AddressController@getAddressById');
+Route::post('getkotabyid', 'API\KotaController@getDataById');
+## address
+Route::post('getaddressbyuser', 'API\AddressController@getAddressByUser');
+Route::post('getaddressbyid', 'API\AddressController@getAddressById');
+Route::post('insertaddress', 'API\AddressController@store');
+Route::post('updateaddress/{id}', 'API\AddressController@update');
+Route::post('deleteaddress/{id}', 'API\AddressController@destroy');
+## user
 Route::get('userselect2', 'API\UsersController@userSelect2');
-Route::post('getItemById', 'API\ItemController@getItemById');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
 Route::post('authregistercompany', 'API\UsersController@registercompany');
-Route::post('hargalisting', 'API\PriceController@cekongkirnew');
-Route::post('getBarangJenisByBarangKategori', 'API\BarangJenisController@getDataByBarangKategori');
-Route::post('getBarangJenisById', 'API\BarangJenisController@getDataById');
-Route::post('getAsuransiByBarangJenis', 'API\AsuransiController@getDataByBarangJenis');
-Route::post('getAsuransiById', 'API\AsuransiController@getDataById');
-Route::post('getOrderById', 'API\OrderController@getOrderById');
+## item
+Route::post('getitembyid', 'API\ItemController@getItemById');
+## barang jenis
+Route::post('getbarangjenisbybarangkategori', 'API\BarangJenisController@getDataByBarangKategori');
+Route::post('getbarangjenisbyid', 'API\BarangJenisController@getDataById');
+## asuransi
+Route::post('getasuransibybarangjenis', 'API\AsuransiController@getDataByBarangJenis');
+Route::post('getasuransibyid', 'API\AsuransiController@getDataById');
+## order
+Route::get('listallorder', 'API\OrderController@listAllOrder');
+Route::post('getorderbyid', 'API\OrderController@getOrderById');
+Route::post('insertorder', 'API\OrderController@store');
+Route::post('updateorder/{id}','API\OrderController@update');
+Route::post('deleteorder/{id}','API\OrderController@destroy');
+## tracking
+Route::post('detailtracking', 'API\TrackingController@detail');
+Route::post('inserttracking', 'API\TrackingController@store');
+Route::post('updatetracking/{id}', 'API\TrackingController@update');
+Route::post('deletetracking/{id}', 'API\TrackingController@destroy');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

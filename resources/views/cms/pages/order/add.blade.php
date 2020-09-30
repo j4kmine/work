@@ -163,7 +163,7 @@
                     var numbers = +$(this).closest("tr").find('input[name^="namaid"]').val();
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getItemById",
+                        url: origin+"/api/getitembyid",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": id_item
@@ -261,10 +261,10 @@
                 }).on("change", function(e) {
                     var pengirims_choose_address = $('#pengirims_choose_address').val();
                     $('#pengirim_choose_address').val(pengirims_choose_address);
-                    // console.log(pengirims_choose_address);
+                    console.log(pengirims_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getAddressById",
+                        url: origin+"/api/getaddressbyid",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": pengirims_choose_address
@@ -287,7 +287,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: origin+"/api/getKotaById",
+                                    url: origin+"/api/getkotabyid",
                                     // The key needs to match your method's input parameter (case-sensitive).
                                     data: JSON.stringify({ 
                                         "id": value.id_kota
@@ -324,7 +324,7 @@
                     $('#penerima_choose_address').val(penerimas_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getAddressById",
+                        url: origin+"/api/getaddressbyid",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": penerimas_choose_address
@@ -347,7 +347,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: origin+"/api/getKotaById",
+                                    url: origin+"/api/getkotabyid",
                                     // The key needs to match your method's input parameter (case-sensitive).
                                     data: JSON.stringify({ 
                                         "id": value.id_kota
@@ -460,7 +460,7 @@
                     // console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getAddressByUser",
+                        url: origin+"/api/getaddressbyuser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -487,7 +487,7 @@
                     // console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getAddressByUser",
+                        url: origin+"/api/getaddressbyuser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -544,7 +544,7 @@
                 var barang_kategori_val = $("#barang_kategori").val();
                 $.ajax({
                     type: "POST",
-                    url: origin+"/api/getBarangJenisByBarangKategori",
+                    url: origin+"/api/getbarangjenisbybarangkategori",
                     // The key needs to match your method's input parameter (case-sensitive).
                     data: JSON.stringify({ 
                         "id_barang_kategori": barang_kategori_val
@@ -572,7 +572,7 @@
                         // console.log(barang_jenis_val);
                         $.ajax({
                             type: "POST",
-                            url: origin+"/api/getAsuransiByBarangJenis",
+                            url: origin+"/api/getasuransibybarangjenis",
                             // The key needs to match your method's input parameter (case-sensitive).
                             data: JSON.stringify({ 
                                 "id_barang_jenis": barang_jenis_val
@@ -611,7 +611,7 @@
                     // console.log(this.value);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getBarangJenisByBarangKategori",
+                        url: origin+"/api/getbarangjenisbybarangkategori",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_barang_kategori": this.value
@@ -638,7 +638,7 @@
                             var id_barang_jenis = $("#barang_jenis").val();
                             $.ajax({
                                 type: "POST",
-                                url: origin+"/api/getAsuransiByBarangJenis",
+                                url: origin+"/api/getasuransibybarangjenis",
                                 // The key needs to match your method's input parameter (case-sensitive).
                                 data: JSON.stringify({ 
                                     "id_barang_jenis": id_barang_jenis
@@ -678,7 +678,7 @@
                     // console.log(this.value);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getAsuransiByBarangJenis",
+                        url: origin+"/api/getasuransibybarangjenis",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_barang_jenis": this.value

@@ -203,8 +203,7 @@ class OrderController extends Controller
             if (count($data_rel_item) > 0) {
                 foreach ($data_rel_item as $key => $value) {
                     $relitem = new RelitemModel([
-                        'id' => $request->get('id')
-                        ,'id_order' => $order->id
+                        'id_order' => $order->id
                         ,'harga' => $value['harga']
                         ,'deskripsi' => $value['deskripsi']
                         ,'panjang' => $value['panjang']
@@ -223,8 +222,7 @@ class OrderController extends Controller
             if (count($data_rel_addons) > 0) {
                 foreach ($data_rel_addons as $key => $value) {
                     $reladdons = new ReladdonsModel([
-                        'id' => $request->get('id')
-                        ,'id_order' => $order->id
+                        'id_order' => $order->id
                         ,'id_item' => $value['id_item']
                         ,'title' => $value['title']
                         ,'jumlah' => $value['jumlah']
@@ -566,12 +564,14 @@ class OrderController extends Controller
     {  
         OrderModel::where('id',$id)->delete();
         RelitemModel::where('id_order',$id)->delete();
+        ReladdonsModel::where('id_order',$id)->delete();
         return redirect('/order')->with('success', 'Deleted Successfully');
     }
     public function hapus($id)
     {
         OrderModel::where('id',$id)->delete();
         RelitemModel::where('id_order',$id)->delete();
+        ReladdonsModel::where('id_order',$id)->delete();
         return redirect('/order')->with('success', 'Deleted Successfully');
     }
     public function postProcess(Request $request){
