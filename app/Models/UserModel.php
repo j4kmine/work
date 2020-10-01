@@ -15,6 +15,6 @@ class UserModel extends Model
      */
     protected $table ="users";
     protected $fillable = [
-        'name', 'email', 'password','role','phone','address','negara','perusahaan','code','status'
+        'name', 'email', 'password','role','phone','address','negara','perusahaan','code','status','npwp'
     ];
 }

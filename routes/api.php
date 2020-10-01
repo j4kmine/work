@@ -34,6 +34,7 @@ Route::get('userselect2', 'API\UsersController@userSelect2');
 Route::post('authlogin', 'API\UsersController@login');
 Route::post('authregister', 'API\UsersController@register');
 Route::post('authregistercompany', 'API\UsersController@registercompany');
+Route::post('aktivasi', 'API\UsersController@aktivasi');
 ## item
 Route::post('getitembyid', 'API\ItemController@getItemById');
 ## barang jenis
