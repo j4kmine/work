@@ -45,6 +45,7 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="login-box">
                         <form data-toggle="validator" method="post" action="{{ route('loginuser') }}">
+                            
                             <div class="form-group">
                                 <input type="email" placeholder="Alamat Email" name="email" class="form-control" id="email" required="true">
                             </div>
