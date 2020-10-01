@@ -25,7 +25,7 @@
      */
     public function listAllOrder()
     {   
-        $order = OrderModel::all();
+        $order = OrderModel::paginate(10);
         return response()->json([$order], 200);
     }
 

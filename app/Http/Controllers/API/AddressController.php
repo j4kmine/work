@@ -13,6 +13,13 @@
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+    public function listing()
+    {
+        $data = AddressModel::paginate(10);
+
+        return response()->json([$data], 200);
+    }
+
     public function getAddressByUser(Request $request)
     {
    

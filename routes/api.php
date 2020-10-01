@@ -25,6 +25,7 @@ Route::post('getkotabyid', 'API\KotaController@getDataById');
 ## address
 Route::post('getaddressbyuser', 'API\AddressController@getAddressByUser');
 Route::post('getaddressbyid', 'API\AddressController@getAddressById');
+Route::get('listaddress', 'API\AddressController@listing');
 Route::post('insertaddress', 'API\AddressController@store');
 Route::post('updateaddress/{id}', 'API\AddressController@update');
 Route::post('deleteaddress/{id}', 'API\AddressController@destroy');
@@ -45,13 +46,16 @@ Route::post('getasuransibyid', 'API\AsuransiController@getDataById');
 Route::get('listallorder', 'API\OrderController@listAllOrder');
 Route::post('getorderbyid', 'API\OrderController@getOrderById');
 Route::post('insertorder', 'API\OrderController@store');
-Route::post('updateorder/{id}','API\OrderController@update');
-Route::post('deleteorder/{id}','API\OrderController@destroy');
+Route::post('updateorder/{id}', 'API\OrderController@update');
+Route::post('deleteorder/{id}', 'API\OrderController@destroy');
 ## tracking
+Route::get('listtracking', 'API\TrackingController@listing');
 Route::post('detailtracking', 'API\TrackingController@detail');
 Route::post('inserttracking', 'API\TrackingController@store');
 Route::post('updatetracking/{id}', 'API\TrackingController@update');
 Route::post('deletetracking/{id}', 'API\TrackingController@destroy');
+## contactus
+Route::post('sendcontactus', 'API\ContactusController@send');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
