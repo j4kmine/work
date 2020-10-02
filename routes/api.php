@@ -17,7 +17,12 @@ Route::post('cekongkir', 'API\PriceController@cekongkir');
 Route::post('cekharga', 'API\PriceController@index');
 Route::post('hargalisting', 'API\PriceController@cekongkirnew');
 ## blog
+Route::get('listallblog', 'API\BlogController@listing');
 Route::post('listblog', 'API\BlogController@index');
+Route::post('detailblog', 'API\BlogController@detail');
+Route::post('insertblog', 'API\BlogController@store');
+Route::post('updateblog/{id}', 'API\BlogController@update');
+Route::post('deleteblog/{id}', 'API\BlogController@destroy');
 ## kota
 Route::get('listkotanegara', 'API\KotaController@index');
 Route::post('getkota', 'API\KotaController@getKota');
@@ -57,6 +62,12 @@ Route::post('updatetracking/{id}', 'API\TrackingController@update');
 Route::post('deletetracking/{id}', 'API\TrackingController@destroy');
 ## contactus
 Route::post('sendcontactus', 'API\ContactusController@send');
+## iklan
+Route::get('listiklan', 'API\IklanController@listing');
+Route::post('detailiklan', 'API\IklanController@getIklanById');
+Route::post('insertiklan', 'API\IklanController@store');
+Route::post('updateiklan/{id}', 'API\IklanController@update');
+Route::post('deleteiklan/{id}', 'API\IklanController@destroy');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
