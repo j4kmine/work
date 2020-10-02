@@ -163,7 +163,7 @@
                     var numbers = +$(this).closest("tr").find('input[name^="namaid"]').val();
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getitembyid",
+                        url: origin+"/api/getItemById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": id_item
@@ -261,10 +261,10 @@
                 }).on("change", function(e) {
                     var pengirims_choose_address = $('#pengirims_choose_address').val();
                     $('#pengirim_choose_address').val(pengirims_choose_address);
-                    console.log(pengirims_choose_address);
+                    // console.log(pengirims_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getaddressbyid",
+                        url: origin+"/api/getAddressById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": pengirims_choose_address
@@ -287,7 +287,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: origin+"/api/getkotabyid",
+                                    url: origin+"/api/getKotaById",
                                     // The key needs to match your method's input parameter (case-sensitive).
                                     data: JSON.stringify({ 
                                         "id": value.id_kota
@@ -324,7 +324,7 @@
                     $('#penerima_choose_address').val(penerimas_choose_address);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getaddressbyid",
+                        url: origin+"/api/getAddressById",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id": penerimas_choose_address
@@ -347,7 +347,7 @@
 
                                 $.ajax({
                                     type: "POST",
-                                    url: origin+"/api/getkotabyid",
+                                    url: origin+"/api/getKotaById",
                                     // The key needs to match your method's input parameter (case-sensitive).
                                     data: JSON.stringify({ 
                                         "id": value.id_kota
@@ -460,7 +460,7 @@
                     // console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getaddressbyuser",
+                        url: origin+"/api/getAddressByUser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -487,7 +487,7 @@
                     // console.log(id_user);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getaddressbyuser",
+                        url: origin+"/api/getAddressByUser",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_user": id_user,
@@ -544,7 +544,7 @@
                 var barang_kategori_val = $("#barang_kategori").val();
                 $.ajax({
                     type: "POST",
-                    url: origin+"/api/getbarangjenisbybarangkategori",
+                    url: origin+"/api/getBarangJenisByBarangKategori",
                     // The key needs to match your method's input parameter (case-sensitive).
                     data: JSON.stringify({ 
                         "id_barang_kategori": barang_kategori_val
@@ -572,7 +572,7 @@
                         // console.log(barang_jenis_val);
                         $.ajax({
                             type: "POST",
-                            url: origin+"/api/getasuransibybarangjenis",
+                            url: origin+"/api/getAsuransiByBarangJenis",
                             // The key needs to match your method's input parameter (case-sensitive).
                             data: JSON.stringify({ 
                                 "id_barang_jenis": barang_jenis_val
@@ -611,7 +611,7 @@
                     // console.log(this.value);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getbarangjenisbybarangkategori",
+                        url: origin+"/api/getBarangJenisByBarangKategori",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_barang_kategori": this.value
@@ -638,7 +638,7 @@
                             var id_barang_jenis = $("#barang_jenis").val();
                             $.ajax({
                                 type: "POST",
-                                url: origin+"/api/getasuransibybarangjenis",
+                                url: origin+"/api/getAsuransiByBarangJenis",
                                 // The key needs to match your method's input parameter (case-sensitive).
                                 data: JSON.stringify({ 
                                     "id_barang_jenis": id_barang_jenis
@@ -678,7 +678,7 @@
                     // console.log(this.value);
                     $.ajax({
                         type: "POST",
-                        url: origin+"/api/getasuransibybarangjenis",
+                        url: origin+"/api/getAsuransiByBarangJenis",
                         // The key needs to match your method's input parameter (case-sensitive).
                         data: JSON.stringify({ 
                             "id_barang_jenis": this.value
@@ -753,7 +753,7 @@
                             </div>
                         </div>
 
-                        <h1><b>DATA PENGIRIM</b></h1>
+                        <h3><b>DATA PENGIRIM</b></h3>
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
@@ -765,12 +765,21 @@
                                 </div>
                             </div>
                         </div>
-
+<div class="row">
+<div class="col-md-6">
+<div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="pengirim_nama" class="col-form-label s-12">Nama Pengirim</label>
+                                    <input id="pengirim_nama" placeholder="Enter Pengirim Nama" name="pengirim_nama" value="{{ old('pengirim_nama') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirim_nama" class="col-form-label s-12">Pengirim Nama</label>
-                                    <input id="pengirim_nama" placeholder="Enter Pengirim Nama" name="pengirim_nama" value="{{ old('pengirim_nama') }}" class="form-control r-0 light s-12 " type="text">
+                                    <label for="pengirim_perusahaan" class="col-form-label s-12">Perusahaan Pengirim</label>
+                                    <input id="pengirim_perusahaan" placeholder="Enter Pengirim Perusahaan" name="pengirim_perusahaan" value="{{ old('pengirim_perusahaan') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>
@@ -778,7 +787,36 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirim_negaras" class="col-form-label s-12">Pengirim Negara</label>
+                                    <label for="pengirim_telepon" class="col-form-label s-12">Telepon Pengirim</label>
+                                    <input id="pengirim_telepon" placeholder="Enter Pengirim Telepon" name="pengirim_telepon" value="{{ old('pengirim_telepon') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="pengirim_email" class="col-form-label s-12">Email Pengirim</label>
+                                    <input id="pengirim_email" placeholder="Enter Pengirim Email" name="pengirim_email" value="{{ old('pengirim_email') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="pengirim_koleksi_intruksi" class="col-form-label s-12">Koleksi Intruksi Pengirim</label>
+                                    <input id="pengirim_koleksi_intruksi" placeholder="Enter Pengirim Koleksi Intruksi" name="pengirim_koleksi_intruksi" value="{{ old('pengirim_koleksi_intruksi') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        </div>
+
+</div>
+<div class="col-md-6">
+<div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="pengirim_negaras" class="col-form-label s-12">Negara Pengirim</label>
                                     <select id="pengirim_negaras">
                                         @foreach($negara as $n)
                                             <option></option>
@@ -793,67 +831,41 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirim_kodepos" class="col-form-label s-12">Pengirim Kode Pos</label>
+                                    <label for="pengirim_kodepos" class="col-form-label s-12">Kode Pos Pengirim</label>
                                     <input id="pengirim_kodepos" placeholder="Enter Pengirim Kode Pos" name="pengirim_kodepos" value="{{ old('pengirim_kodepos') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirim_kota" class="col-form-label s-12">Pengirim Kota</label>
+                                    <label for="pengirim_kota" class="col-form-label s-12">Kota Pengirim</label>
                                     <input id="pengirim_kota" placeholder="Enter Pengirim Kota" name="pengirim_kota" value="{{ old('pengirim_kota') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="pengirim_alamat" class="col-form-label s-12">Pengirim Alamat</label>
+                                    <label for="pengirim_alamat" class="col-form-label s-12">Alamat Pengirim</label>
                                     <input id="pengirim_alamat" placeholder="Enter Pengirim Alamat" name="pengirim_alamat" value="{{ old('pengirim_alamat') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>
+</div>
+</div>
+                        
+                        
 
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="pengirim_perusahaan" class="col-form-label s-12">Pengirim Perusahaan</label>
-                                    <input id="pengirim_perusahaan" placeholder="Enter Pengirim Perusahaan" name="pengirim_perusahaan" value="{{ old('pengirim_perusahaan') }}" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                            </div>
-                        </div>
+                       
 
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="pengirim_telepon" class="col-form-label s-12">Pengirim Telepon</label>
-                                    <input id="pengirim_telepon" placeholder="Enter Pengirim Telepon" name="pengirim_telepon" value="{{ old('pengirim_telepon') }}" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                            </div>
-                        </div>
+                        
 
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="pengirim_email" class="col-form-label s-12">Pengirim Email</label>
-                                    <input id="pengirim_email" placeholder="Enter Pengirim Email" name="pengirim_email" value="{{ old('pengirim_email') }}" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                            </div>
-                        </div>
+                        
 
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="pengirim_koleksi_intruksi" class="col-form-label s-12">Pengirim Koleksi Intruksi</label>
-                                    <input id="pengirim_koleksi_intruksi" placeholder="Enter Pengirim Koleksi Intruksi" name="pengirim_koleksi_intruksi" value="{{ old('pengirim_koleksi_intruksi') }}" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                            </div>
-                        </div>
+                       
 
-                        <h1><b>DATA PENERIMA</b></h1>
+                        <h3><b>DATA PENERIMA</b></h3>
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
@@ -865,62 +877,20 @@
                                 </div>
                             </div>
                         </div>
-
+<div class="row">
+<div class="col-md-6">
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="penerima_nama" class="col-form-label s-12">penerima Nama</label>
+                                    <label for="penerima_nama" class="col-form-label s-12">Nama Penerima</label>
                                     <input id="penerima_nama" placeholder="Enter penerima Nama" name="penerima_nama" value="{{ old('penerima_nama') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="penerima_negaras" class="col-form-label s-12">penerima Negara</label>
-                                    <select id="penerima_negaras">
-                                        @foreach($negara as $n)
-                                            <option></option>
-                                            <option value="{{ $n->id }}">{{ $n->nama }}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="hidden" id="penerima_negara" name="penerima_negara" value="{{ old('penerima_negara') }}" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="penerima_kodepos" class="col-form-label s-12">penerima Kode Pos</label>
-                                    <input id="penerima_kodepos" placeholder="Enter penerima Kode Pos" name="penerima_kodepos" value="{{ old('penerima_kodepos') }}" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="penerima_kota" class="col-form-label s-12">penerima Kota</label>
-                                    <input id="penerima_kota" placeholder="Enter Pengirim Kota" name="penerima_kota" value="{{ old('penerima_kota') }}" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="penerima_alamat" class="col-form-label s-12">penerima Alamat</label>
-                                    <input id="penerima_alamat" placeholder="Enter penerima Alamat" name="penerima_alamat" value="{{ old('penerima_alamat') }}" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="penerima_perusahaan" class="col-form-label s-12">penerima Perusahaan</label>
+                                    <label for="penerima_perusahaan" class="col-form-label s-12">Perusahaan Penerima</label>
                                     <input id="penerima_perusahaan" placeholder="Enter penerima Perusahaan" name="penerima_perusahaan" value="{{ old('penerima_perusahaan') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
@@ -929,7 +899,7 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="penerima_telepon" class="col-form-label s-12">penerima Telepon</label>
+                                    <label for="penerima_telepon" class="col-form-label s-12">Telepon Penerima</label>
                                     <input id="penerima_telepon" placeholder="Enter penerima Telepon" name="penerima_telepon" value="{{ old('penerima_telepon') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
@@ -938,7 +908,7 @@
                         <div class="form-row">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
-                                    <label for="penerima_email" class="col-form-label s-12">penerima Email</label>
+                                    <label for="penerima_email" class="col-form-label s-12">Email Penerima</label>
                                     <input id="penerima_email" placeholder="Enter penerima Email" name="penerima_email" value="{{ old('penerima_email') }}" class="form-control r-0 light s-12 " type="text">
                                 </div>
                             </div>
@@ -952,6 +922,57 @@
                                 </div>
                             </div>
                         </div>
+        </div>
+        <div class="col-md-6">
+        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="penerima_negaras" class="col-form-label s-12">Negara Penerima</label>
+                                    <select id="penerima_negaras">
+                                        @foreach($negara as $n)
+                                            <option></option>
+                                            <option value="{{ $n->id }}">{{ $n->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" id="penerima_negara" name="penerima_negara" value="{{ old('penerima_negara') }}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="penerima_kodepos" class="col-form-label s-12">Kode Pos Penerima</label>
+                                    <input id="penerima_kodepos" placeholder="Enter penerima Kode Pos" name="penerima_kodepos" value="{{ old('penerima_kodepos') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="penerima_kota" class="col-form-label s-12">Kota Penerima</label>
+                                    <input id="penerima_kota" placeholder="Enter Pengirim Kota" name="penerima_kota" value="{{ old('penerima_kota') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="penerima_alamat" class="col-form-label s-12">Alamat Penerima</label>
+                                    <input id="penerima_alamat" placeholder="Enter penerima Alamat" name="penerima_alamat" value="{{ old('penerima_alamat') }}" class="form-control r-0 light s-12 " type="text">
+                                </div>
+                            </div>
+                        </div>
+        </div>
+        </div>    
+                        
+
+                       
+
+                       
+
+                        
+
+                       
 
                         <h1><b>DATA PENGIRIMAN</b></h1>
                         <div class="form-row">

@@ -19,7 +19,7 @@
             <div class="container">
           
             <div class="row my-3">
-                <div class="col-md-8 offset-md-2">
+                <div class="col-md-10 offset-md-1">
                     <form enctype='multipart/form-data' method="post" action="{{ route('fob.store') }}">
                         <div class="card no-b">
                             <div class="card-body">
@@ -48,12 +48,13 @@
                                     </div>
                                 </div>
                                 <br/>
-
+                                <div class="row">
+<div class="col-md-4">
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="barang_umum" class="col-form-label s-12">Barang Umum</label>
-                                            <input id="barang_umum" placeholder="Enter barang_umum" name="barang_umum" value="{{ old('barang_umum') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="barang_umum" class="col-form-label s-12">FOB General Cargo</label>
+                                            <input id="barang_umum" placeholder="Enter General Cargo" name="barang_umum" value="{{ old('barang_umum') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -61,8 +62,8 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="agriculture" class="col-form-label s-12">Agriculture</label>
-                                            <input id="agriculture" placeholder="Enter agriculture" name="agriculture" value="{{ old('agriculture') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="agriculture" class="col-form-label s-12">FOB Agriculture</label>
+                                            <input id="agriculture" placeholder="Enter Agriculture" name="agriculture" value="{{ old('agriculture') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -70,8 +71,8 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="hewan_hidup" class="col-form-label s-12">Hewan Hidup</label>
-                                            <input id="hewan_hidup" placeholder="Enter hewan_hidup" name="hewan_hidup" value="{{ old('hewan_hidup') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="hewan_hidup" class="col-form-label s-12">FOB Hewan Hidup</label>
+                                            <input id="hewan_hidup" placeholder="Enter Hewan Hidup" name="hewan_hidup" value="{{ old('hewan_hidup') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -79,16 +80,18 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="barang_mudah_terbakar" class="col-form-label s-12">Barang Mudah Terbakar</label>
-                                            <input id="barang_mudah_terbakar" placeholder="Enter barang_mudah_terbakar" name="barang_mudah_terbakar" value="{{ old('barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="barang_mudah_terbakar" class="col-form-label s-12">FOB Barang Mudah Terbakar</label>
+                                            <input id="barang_mudah_terbakar" placeholder="Enter Barang Mudah Terbakar" name="barang_mudah_terbakar" value="{{ old('barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
                                 <br/>
+</div>
+<div class="col-md-4">
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="storage" class="col-form-label s-12">Storage</label>
+                                            <label for="storage" class="col-form-label s-12">Storage General Cargo</label>
                                             <input id="storage" placeholder="Enter storage" name="storage" value="{{ old('storage') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
@@ -116,7 +119,18 @@
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
                                             <label for="storage_barang_mudah_terbakar" class="col-form-label s-12">Storage Barang Mudah Terbakar</label>
-                                            <input id="storage_barang_mudah_terbakar" placeholder="Enter Barang Mudah Terbakar" name="storage_barang_mudah_terbakar" value="{{ old('storage_barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
+                                            <input id="storage_barang_mudah_terbakar" placeholder="Enter Storage Barang Mudah Terbakar" name="storage_barang_mudah_terbakar" value="{{ old('storage_barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+</div>
+<div class="col-md-4">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="form-group m-0">
+                                            <label for="freaight" class="col-form-label s-12">Freight General Cargo</label>
+                                            <input id="freaight" placeholder="Enter Freight" name="freaight" value="{{ old('freaight') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -124,8 +138,8 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="freaight" class="col-form-label s-12">Freaight</label>
-                                            <input id="freaight" placeholder="Enter freaight" name="freaight" value="{{ old('freaight') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="freaight_agriculture" class="col-form-label s-12">Freight Agriculture</label>
+                                            <input id="freaight_agriculture" placeholder="Enter Freight Agriculture" name="freaight_agriculture" value="{{ old('freaight_agriculture') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -133,8 +147,8 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="freaight_agriculture" class="col-form-label s-12">Freaight Agriculture</label>
-                                            <input id="freaight_agriculture" placeholder="Enter freaight Agriculture" name="freaight_agriculture" value="{{ old('freaight_agriculture') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="freaight_hewan_hidup" class="col-form-label s-12">Freight Hewan Hidup</label>
+                                            <input id="freaight_hewan_hidup" placeholder="Enter Freight Hewan Hidup" name="freaight_hewan_hidup" value="{{ old('freaight_hewan_hidup') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -142,22 +156,15 @@
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <div class="form-group m-0">
-                                            <label for="freaight_hewan_hidup" class="col-form-label s-12">Freaight Hewan Hidup</label>
-                                            <input id="freaight_hewan_hidup" placeholder="Enter freaight Hewan Hidup" name="freaight_hewan_hidup" value="{{ old('freaight_hewan_hidup') }}" class="form-control r-0 light s-12 " type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <br/>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="form-group m-0">
-                                            <label for="freaight_barang_mudah_terbakar" class="col-form-label s-12">Freaight Barang Mudah Terbakar</label>
-                                            <input id="freaight_barang_mudah_terbakar" placeholder="Enter freaight Barang Mudah Terbakar" name="freaight_barang_mudah_terbakar" value="{{ old('freaight_barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
+                                            <label for="freaight_barang_mudah_terbakar" class="col-form-label s-12">Freight Barang Mudah Terbakar</label>
+                                            <input id="freaight_barang_mudah_terbakar" placeholder="Enter Freight Barang Mudah Terbakar" name="freaight_barang_mudah_terbakar" value="{{ old('freaight_barang_mudah_terbakar') }}" class="form-control r-0 light s-12 " type="text">
                                         </div>
                                     </div>
                                 </div>
                                 <br/>
                             </div>
+</div>
+</div>
                             <div class="card-body">
                                 <button type="submit" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>
                             </div>
