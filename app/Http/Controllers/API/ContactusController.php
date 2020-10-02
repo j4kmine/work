@@ -23,12 +23,12 @@ class ContactusController extends Controller
 
         // ]);
 
-        $is_jenis = $request->is_jenis;
-        $id_tracking = $request->id_tracking;
-        $name = $request->name;
-        $email = $request->email;
-        $message = $request->message;
-        $email_tujuan = $request->email_tujuan;
+        // $is_jenis = $request->is_jenis;
+        // $id_tracking = $request->id_tracking;
+        // $name = $request->name;
+        // $email = $request->email;
+        // $message = $request->message;
+        // $email_tujuan = $request->email_tujuan;
 
         $data_email['contactus'] = [
             'is_jenis' => $request->input('is_jenis'),
