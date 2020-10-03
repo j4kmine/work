@@ -47,6 +47,23 @@
         return response()->json([$data], 200);
     }
 
+    public function select2(Request $request)
+    {
+   
+        // $this->validate($request, [
+        //     'id_kota' => 'required'
+           
+        // ]);
+        
+        $id = $request->input('q');
+
+        $data['order'] = OrderModel::where('id', 'like', '%' . $id . '%')->first();
+        $data['rel_item'] = RelitemModel::where('id_order', 'like', '%' . $id . '%')->get();
+        $data['rel_addons'] = ReladdonsModel::where('id_order', 'like', '%' . $id . '%')->get();
+
+        return response()->json([$data], 200);
+    }
+
     public function store(Request $request)
     {
         // $this->validate($request,[

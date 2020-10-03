@@ -27,6 +27,9 @@ Route::post('deleteblog/{id}', 'API\BlogController@destroy');
 Route::get('listkotanegara', 'API\KotaController@index');
 Route::post('getkota', 'API\KotaController@getKota');
 Route::post('getkotabyid', 'API\KotaController@getDataById');
+Route::post('insertkota', 'API\KotaController@store');
+Route::post('updatekota/{id}', 'API\KotaController@update');
+Route::post('deletekota/{id}', 'API\KotaController@destroy');
 ## address
 Route::post('getaddressbyuser', 'API\AddressController@getAddressByUser');
 Route::post('getaddressbyid', 'API\AddressController@getAddressById');
@@ -51,6 +54,7 @@ Route::post('getasuransibyid', 'API\AsuransiController@getDataById');
 ## order
 Route::get('listallorder', 'API\OrderController@listAllOrder');
 Route::post('getorderbyid', 'API\OrderController@getOrderById');
+Route::post('orderselect2', 'API\OrderController@select2');
 Route::post('insertorder', 'API\OrderController@store');
 Route::post('updateorder/{id}', 'API\OrderController@update');
 Route::post('deleteorder/{id}', 'API\OrderController@destroy');
