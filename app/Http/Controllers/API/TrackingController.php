@@ -79,10 +79,10 @@ class TrackingController extends Controller
 
             $send = Mail::to($data_email['order']->pengirim_email)->send(new TrackingEmail($data_email));
             // Mail::to("faturrachmandonny@gmail.com")->send(new TrackingEmail($data_email));
-            if($send){
-                return response()->json(["status_query"=>$data,"status_mail"=>$send,"email_tujuan"=>$data_email['order']->pengirim_email,"message" => "INSERT SUKSES, KIRIM EMAIL SUKSES"], 200);
+            if ($send) {
+                return response()->json(["status_query" => $data, "status_mail" => $send, "email_tujuan" => $data_email['order']->pengirim_email, "message" => "INSERT SUKSES, KIRIM EMAIL SUKSES"], 200);
             } else {
-                return response()->json(["status_query"=>$data,"status_mail"=>$send,"email_tujuan"=>$data_email['order']->pengirim_email,"message" => "INSERT SUKSES, KIRIM EMAIL GAGAL"], 200);
+                return response()->json(["status_query" => $data, "status_mail" => $send, "email_tujuan" => $data_email['order']->pengirim_email, "message" => "INSERT SUKSES, KIRIM EMAIL GAGAL"], 200);
             }
         } else {
             return response()->json(["INSERT GAGAL"], 200);
@@ -97,6 +97,15 @@ class TrackingController extends Controller
         //     'flag'=>'required',
         //     'status'=>'required'
         // ]);
+        // $data_email['tracking'] = [
+        //     'id_order' => $request->input('id_order'),
+        //     'keterangan' => $request->input('keterangan'),
+        //     'flag' => $request->input('flag'),
+        //     'status' => $request->input('status'),
+        //     'updated_at' => date('Y-m-d H:i:s')
+        // ];
+        // $return = new TrackingEmail($data_email);
+        // return response()->json([$return], 200);
 
         $update = [
             'id_order' => $request->input('id_order'),
@@ -117,15 +126,13 @@ class TrackingController extends Controller
             ## get detail order
             $where = array('id' => $data_email['tracking']['id_order']);
             $data_email['order'] = OrderModel::where($where)->first();
-            // echo "<pre>";var_dump($data_email['order']->pengirim_email);exit();
 
             $send = Mail::to($data_email['order']->pengirim_email)->send(new TrackingEmail($data_email));
-            // Mail::to("faturrachmandonny@gmail.com")->send(new TrackingEmail($data_email));
-            
-            if($send){
-                return response()->json(["status_query"=>$data,"status_mail"=>$send,"email_tujuan"=>$data_email['order']->pengirim_email,"message" => "UPDATE SUKSES, KIRIM EMAIL SUKSES"], 200);
+
+            if ($send) {
+                return response()->json(["status_query" => $data, "status_mail" => $send, "email_tujuan" => $data_email['order']->pengirim_email, "message" => "UPDATE SUKSES, KIRIM EMAIL SUKSES"], 200);
             } else {
-                return response()->json(["status_query"=>$data,"status_mail"=>$send,"email_tujuan"=>$data_email['order']->pengirim_email,"message" => "UPDATE SUKSES, KIRIM EMAIL GAGAL"], 200);
+                return response()->json(["status_query" => $data, "status_mail" => $send, "email_tujuan" => $data_email['order']->pengirim_email, "message" => "UPDATE SUKSES, KIRIM EMAIL GAGAL"], 200);
             }
         } else {
             return response()->json(["UPDATE GAGAL"], 200);

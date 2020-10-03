@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
-    xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
     <meta charset="utf-8">
@@ -14,9 +13,7 @@
     <title></title>
     <!-- The title tag shows in email notifications, like Android 4.4. -->
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <!-- CSS Reset : BEGIN -->
     <style>
@@ -564,21 +561,18 @@
 
 <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #222222;">
     <center style="width: 100%; background-color: #f1f1f1;">
-        <div
-            style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+        <div style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
             &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
         </div>
         <div style="max-width: 600px; margin: 0 auto;" class="email-container">
             <!-- BEGIN BODY -->
-            <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                style="margin: auto;">
+            <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
                 <tr>
                     <td valign="top" class="bg_white" style="padding: 1em 2.5em;">
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td width="40%" class="logo" style="text-align: left;">
-                                    <img src="images/logo.png" alt=""
-                                        style="width: 70%;max-width: 300px;height: auto;/* margin: auto; */display: block;">
+                                    <img src="https://mrexportir.s3-ap-southeast-1.amazonaws.com/backend/images/email/logo.png" alt="" style="width: 70%;max-width: 300px;height: auto;/* margin: auto; */display: block;">
                                 </td>
                                 <td width="60%" class="logo" style="text-align: right;"></td>
                             </tr>
@@ -595,11 +589,9 @@
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                                         <tr>
                                             <td valign="middle" width="90%">
-                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0"
-                                                    width="100%">
+                                                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                                                     <tr>
-                                                        <td class="text-services"
-                                                            style="text-align: left; padding-left:25px;">
+                                                        <td class="text-services" style="text-align: left; padding-left:25px;">
                                                             <div class="heading-section">
                                                                 <h2>Hi,
                                                                     {{ $data['users']['name'] }}
@@ -627,37 +619,9 @@
                 <!-- end:tr -->
                 <!-- 1 Column Text + Button : END -->
             </table>
-            <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                style="margin: auto;">
-                <!-- end: tr -->
-                <tr>
-                    <td valign="middle" class="bg_footer footer email-section">
-                        <table>
-                            <tr>
-                                <td valign="top" width="70%">
-                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                        <tr>
-                                            <td style="text-align: left; padding-right: 10px;">
-                                                <p>&copy; 2020 PT. Triton Nusantara Tangguh</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td valign="top" width="30%">
-                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                                        <tr>
-                                            <td style="text-align: left; padding-right: 10px;">
-                                                <img src="images/playstore.png" alt=""
-                                                    style="width: 100%;max-width: 300px;height: auto;/* margin: auto; */display: block;">
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <img src="https://mrexportir.s3-ap-southeast-1.amazonaws.com/backend/images/email/logo-footer.png" alt="" style="max-width: 600px;">
+            </div>
 
         </div>
     </center>

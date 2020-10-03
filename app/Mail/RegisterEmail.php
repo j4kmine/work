@@ -28,8 +28,9 @@ class RegisterEmail extends Mailable
      */
     public function build()
     {
-     return $this->from('info@mrexportir.com')
-                       ->view('cms.pages.users.email_register')
-                       ->with(['data' => $this->data]);
+        return $this->from('info@mrexportir.com')
+            ->subject("Xportir - Registrasi Berhasil")
+            ->markdown('cms.pages.users.email_register')
+            ->with(['data' => $this->data]);
     }
 }

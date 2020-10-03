@@ -28,8 +28,9 @@ class ContactusEmail extends Mailable
      */
     public function build()
     {
-     return $this->from('info@mrexportir.com')
-                       ->view('cms.pages.contactus.email')
-                       ->with(['data' => $this->data]);
+        return $this->from('info@mrexportir.com')
+            ->subject("Seseorang Mengirimkan Pesan Dari Halaman Kontak")
+            ->markdown('cms.pages.contactus.email')
+            ->with(['data' => $this->data]);
     }
 }

@@ -581,7 +581,7 @@
                             <tr style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
                                 <td width="40%" class="logo"
                                     style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-align:left;mso-table-lspace:0 !important;mso-table-rspace:0 !important;">
-                                    <img src="{{url('images/email/logo.png')}}" alt=""
+                                    <img src="https://mrexportir.s3-ap-southeast-1.amazonaws.com/backend/images/email/logo.png" alt=""
                                         style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;width:70%;max-width:300px;height:auto;/* margin:auto;*/display:block;-ms-interpolation-mode:bicubic;">
                                 </td>
                                 <td width="60%" class="logo"
@@ -676,46 +676,9 @@
                 <!-- end:tr -->
                 <!-- 1 Column Text + Button : END -->
             </table>
-            <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;margin-top:0 !important;margin-bottom:0 !important;margin-right:auto !important;margin-left:auto !important;mso-table-lspace:0 !important;mso-table-rspace:0 !important;border-spacing:0 !important;border-collapse:collapse !important;table-layout:fixed !important;">
-                <!-- end: tr -->
-                <tr style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
-                    <td valign="middle" class="bg_footer footer email-section"
-                        style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;mso-table-lspace:0 !important;mso-table-rspace:0 !important;background-image:url('./images/footer_bg.png');padding-top:2.5em;padding-bottom:2.5em;padding-right:2.5em;padding-left:2.5em;color:rgba(255, 255, 255, .8);">
-                        <table
-                            style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;mso-table-lspace:0 !important;mso-table-rspace:0 !important;border-spacing:0 !important;border-collapse:collapse !important;table-layout:fixed !important;margin-top:0 !important;margin-bottom:0 !important;margin-right:auto !important;margin-left:auto !important;">
-                            <tr style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
-                                <td valign="top" width="70%"
-                                    style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;mso-table-lspace:0 !important;mso-table-rspace:0 !important;">
-                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                                        style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;mso-table-lspace:0 !important;mso-table-rspace:0 !important;border-spacing:0 !important;border-collapse:collapse !important;table-layout:fixed !important;margin-top:0 !important;margin-bottom:0 !important;margin-right:auto !important;margin-left:auto !important;">
-                                        <tr style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
-                                            <td
-                                                style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-align:left;padding-right:10px;mso-table-lspace:0 !important;mso-table-rspace:0 !important;">
-                                                <p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
-                                                    &copy; 2020 PT. Triton Nusantara Tangguh</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                                <td valign="top" width="30%"
-                                    style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;mso-table-lspace:0 !important;mso-table-rspace:0 !important;">
-                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                                        style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;mso-table-lspace:0 !important;mso-table-rspace:0 !important;border-spacing:0 !important;border-collapse:collapse !important;table-layout:fixed !important;margin-top:0 !important;margin-bottom:0 !important;margin-right:auto !important;margin-left:auto !important;">
-                                        <tr style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
-                                            <td
-                                                style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-align:left;padding-right:10px;mso-table-lspace:0 !important;mso-table-rspace:0 !important;">
-                                                <img src="{{url('images/email/playstore.png')}}" alt=""
-                                                    style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;width:100%;max-width:300px;height:auto;/* margin:auto;*/display:block;-ms-interpolation-mode:bicubic;">
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <img src="https://mrexportir.s3-ap-southeast-1.amazonaws.com/backend/images/email/logo-footer.png" alt="" style="max-width: 600px;">
+            </div>
 
         </div>
     </center>

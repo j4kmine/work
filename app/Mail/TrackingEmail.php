@@ -28,8 +28,9 @@ class TrackingEmail extends Mailable
      */
     public function build()
     {
-     return $this->from('info@mrexportir.com')
-                       ->view('cms.pages.tracking.email')
-                       ->with(['data' => $this->data]);
+        return $this->from('info@mrexportir.com')
+            ->subject("Info Tracking Order ".$this->data['tracking']['id_order'])
+            ->markdown('cms.pages.tracking.email')
+            ->with(['data' => $this->data]);
     }
 }
