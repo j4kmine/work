@@ -21,7 +21,14 @@ class TrackingController extends Controller
     public function listing()
     {
         $data = TrackingModel::paginate(10);
-        
+        foreach ($data as $key => $value) {
+             $data[$key]->date_create = date('d F Y', strtotime($value->created_at ));
+             if(isset($value->id_order) && $value->id_order != 0){
+                  $where = array('id' => $value->id_order );
+                  $data[$key]->order =  OrderModel::where($where)->first();
+
+             }
+        }
         $response = [
             'pagination' => [
                 'total' => $data->total(),
