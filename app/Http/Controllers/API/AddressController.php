@@ -5,7 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Models\AddressModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+ use App\Models\KotaModel;
+ use App\Models\NegaraModel;
 class AddressController extends Controller
 {
     /**
@@ -60,6 +61,16 @@ class AddressController extends Controller
         // $id = $request->id;
 
         $address = AddressModel::where('id', '=', $id)->first();
+      
+        if(isset($address->id_kota) && $address->id_kota != 0){
+              $where = array('id' => $address->id_kota);
+              $address['kota'] =  KotaModel::where($where)->first();
+        }
+        if(isset($address->id_negara) && $address->id_negara != 0){
+             $where = array('id' => $address->id_negara);
+              $address['negara'] = NegaraModel::where($where)->first();
+        }
+       
         return response()->json(['list' => $address], 200);
     }
 
