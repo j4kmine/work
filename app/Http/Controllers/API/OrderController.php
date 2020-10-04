@@ -30,20 +30,19 @@
         return response()->json([$order], 200);
     }
 
-    public function getOrderById(Request $request)
+    public function getOrderById(Request $request,$id)
     {   
         // $this->validate($request, [
         //     'id' => 'required'      
         // ]);
 
-        $id = $request->id;
-
+       
         $where = array('id' => $id);
         $data['order'] = OrderModel::where($where)->first();
         $where2 = array('id_order' => $id);
         $data['rel_item'] = RelitemModel::where($where2)->get();
-        $where3 = array('id_order' => $id);
-        $data['rel_addons'] = ReladdonsModel::where($where3)->get();
+        $data['rel_addons'] = ReladdonsModel::where($where2)->get();
+        $data['tracking'] = TrackingModel::where($where2)->get();
 
         return response()->json([$data], 200);
     }
