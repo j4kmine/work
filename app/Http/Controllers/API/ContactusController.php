@@ -37,7 +37,7 @@ class ContactusController extends Controller
         if($send){
             return response()->json(['status' => $send,'message' => 'KIRIM EMAIL SUKSES'], 200);
         } else {
-            return response()->json(['status' => $send,'message' => 'KIRIM EMAIL GAGAL'], 201);
+            return response()->json(['status' => $send,'message' => 'KIRIM EMAIL GAGAL'], 200);
         }
     }
 }

@@ -37,7 +37,7 @@ class UsersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([$validator->errors()], 200);
+            return response()->json([$validator->errors()], 201);
         }
 
         $user = User::create([
@@ -48,13 +48,13 @@ class UsersController extends Controller
             'npwp' => $request->npwp,
             'password' => bcrypt($request->password),
             'role' => $request->role,
-            'code' => md5($request->nama_depan.$request->email),
+            'code' => md5($request->nama_depan . $request->email),
             'negara' => $request->negara,
             'address' => $request->address
         ]);
 
-        $url_aktivasi = URL::to('/')."/api/aktivasi"."?email=".$request->email."&code=".md5($request->nama_depan.$request->email);
-        if($user){
+        $url_aktivasi = URL::to('/') . "/api/aktivasi" . "?email=" . $request->email . "&code=" . md5($request->nama_depan . $request->email);
+        if ($user) {
             $token = $user->createToken('TutsForWeb')->accessToken;
 
             $data_email['users'] = [
@@ -62,19 +62,21 @@ class UsersController extends Controller
                 'phone' => $request->nohp,
                 'email' => $request->email,
                 'role' => $request->role,
-                'code' => md5($request->nama_depan.$request->email),
+                'code' => md5($request->nama_depan . $request->email),
                 'url_aktivasi' => $url_aktivasi
             ];
-    
+
             $send = Mail::to($request->email)->send(new RegisterEmail($data_email));
-            
+
             if ($send) {
-                return response()->json(['token' => $token,'status_query' => $user,'status_send' => $send,'message' => "REGISTER COMPANY SUKSES EMAIL SUKSES"], 200);
+                $data_user = UserModel::where('email', '=', $request->email)->first();
+                return response()->json(['token' => $token, 'status_query' => $user, 'data' => $data_user, 'status_send' => $send, 'message' => "REGISTER COMPANY SUKSES EMAIL SUKSES"], 200);
             } else {
-                return response()->json(['token' => $token,'status_query' => $user,'status_send' => $send,'message' => "REGISTER COMPANY SUKSES EMAIL GAGAL"], 200);
+                $data_user = UserModel::where('email', '=', $request->email)->first();
+                return response()->json(['token' => $token, 'status_query' => $user, 'data' => $data_user, 'status_send' => $send, 'message' => "REGISTER COMPANY SUKSES EMAIL GAGAL"], 200);
             }
         } else {
-            return response()->json(['status_query' => $user,'message' => "REGISTER COMPANY GAGAL"], 200);
+            return response()->json(['status_query' => $user, 'message' => "REGISTER COMPANY GAGAL"], 200);
         }
     }
 
@@ -91,24 +93,24 @@ class UsersController extends Controller
             'tos' => 'required',
             'update' => 'required'
         ]);
-        
+
         if ($validator->fails()) {
-            return response()->json([$validator->errors()], 200);
+            return response()->json([$validator->errors()], 201);
         }
-        
+
         $user = User::create([
             'name' => $request->nama_depan . " " . $request->nama_belakang,
             'phone' => $request->nohp,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => $request->role,
-            'code' => md5($request->nama_depan.$request->email),
+            'code' => md5($request->nama_depan . $request->email),
             'negara' => $request->negara,
             'address' => $request->address,
             'created_at' => date('Y-m-d H:i:s')
         ]);
-        $url_aktivasi = URL::to('/')."/api/aktivasi"."?email=".$request->email."&code=".md5($request->nama_depan.$request->email);
-        if($user){
+        $url_aktivasi = URL::to('/') . "/api/aktivasi" . "?email=" . $request->email . "&code=" . md5($request->nama_depan . $request->email);
+        if ($user) {
             $token = $user->createToken('TutsForWeb')->accessToken;
 
             $data_email['users'] = [
@@ -116,19 +118,21 @@ class UsersController extends Controller
                 'phone' => $request->nohp,
                 'email' => $request->email,
                 'role' => $request->role,
-                'code' => md5($request->nama_depan.$request->email),
+                'code' => md5($request->nama_depan . $request->email),
                 'url_aktivasi' => $url_aktivasi
             ];
-    
+
             $send = Mail::to($request->email)->send(new RegisterEmail($data_email));
-            
+
             if ($send) {
-                return response()->json(['token' => $token,'status_query' => $user,'status_send' => $send,'message' => "REGISTER SUKSES EMAIL SUKSES"], 200);
+                $data_user = UserModel::where('email', '=', $request->email)->first();
+                return response()->json(['token' => $token, 'status_query' => $user, 'data' => $data_user, 'status_send' => $send, 'message' => "REGISTER SUKSES EMAIL SUKSES"], 200);
             } else {
-                return response()->json(['token' => $token,'status_query' => $user,'status_send' => $send,'message' => "REGISTER SUKSES EMAIL GAGAL"], 200);
+                $data_user = UserModel::where('email', '=', $request->email)->first();
+                return response()->json(['token' => $token, 'status_query' => $user, 'data' => $data_user, 'status_send' => $send, 'message' => "REGISTER SUKSES EMAIL GAGAL"], 200);
             }
         } else {
-            return response()->json(['status_query' => $user,'message' => "REGISTER GAGAL"], 200);
+            return response()->json(['status_query' => $user, 'message' => "REGISTER GAGAL"], 200);
         }
     }
 
@@ -147,7 +151,8 @@ class UsersController extends Controller
 
         if (auth()->attempt($credentials)) {
             $token = auth()->user()->createToken('TutsForWeb')->accessToken;
-            return response()->json(['token' => $token], 200);
+            $data = UserModel::where('email', '=', $request->email)->first();
+            return response()->json(['token' => $token, "data" => $data], 200);
         } else {
             return response()->json(['error' => 'UnAuthorised'], 401);
         }
@@ -183,8 +188,9 @@ class UsersController extends Controller
 
         $where = ['email' => $email, 'code' => $code];
         $data = UserModel::where($where)->update($update);
-        if($data){
-            return response()->json(['status_query' => $data, 'message' => 'AKTIVASI SUKSES'], 200);
+        if ($data) {
+            $data_user = UserModel::where('email', '=', $request->email)->first();
+            return response()->json(['status_query' => $data, 'data' => $data_user, 'message' => 'AKTIVASI SUKSES'], 200);
         } else {
             return response()->json(['status_query' => $data, 'message' => 'AKTIVASI GAGAL'], 201);
         }
