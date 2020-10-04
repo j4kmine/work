@@ -21,8 +21,19 @@ class TrackingController extends Controller
     public function listing()
     {
         $data = TrackingModel::paginate(10);
-
-        return response()->json([$data], 200);
+        
+        $response = [
+            'pagination' => [
+                'total' => $data->total(),
+                'per_page' => $data->perPage(),
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'from' => $data->firstItem(),
+                'to' => $data->lastItem()
+            ],
+            'data' => $data
+        ];
+        return response()->json([$response], 200);
     }
 
     public function detail(Request $request)

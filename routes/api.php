@@ -37,10 +37,10 @@ Route::post('updatenegara/{id}', 'API\NegaraController@update');
 Route::post('deletenegara/{id}', 'API\NegaraController@destroy');
 ## address
 Route::post('getaddressbyuser', 'API\AddressController@getAddressByUser');
-Route::post('getaddressbyid', 'API\AddressController@getAddressById');
+Route::get('getaddressbyid/{id}', 'API\AddressController@getAddressById');
 Route::get('listaddress', 'API\AddressController@listing');
 Route::post('insertaddress', 'API\AddressController@store');
-Route::post('updateaddress/{id}', 'API\AddressController@update');
+Route::post('updateaddress', 'API\AddressController@update');
 Route::post('deleteaddress/{id}', 'API\AddressController@destroy');
 ## user
 Route::get('userselect2', 'API\UsersController@userSelect2');

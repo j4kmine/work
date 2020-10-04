@@ -17,8 +17,18 @@ class AddressController extends Controller
     public function listing()
     {
         $data = AddressModel::paginate(10);
-
-        return response()->json([$data], 200);
+          $response = [
+            'pagination' => [
+                'total' => $data->total(),
+                'per_page' => $data->perPage(),
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'from' => $data->firstItem(),
+                'to' => $data->lastItem()
+            ],
+            'data' => $data
+        ];
+        return response()->json([$response], 200);
     }
 
     public function getAddressByUser(Request $request)
@@ -39,7 +49,7 @@ class AddressController extends Controller
         return response()->json([$address], 200);
     }
 
-    public function getAddressById(Request $request)
+    public function getAddressById(Request $request,$id)
     {
 
         // $this->validate($request, [
@@ -47,10 +57,10 @@ class AddressController extends Controller
 
         // ]);
 
-        $id = $request->id;
+        // $id = $request->id;
 
-        $address = AddressModel::where('id', '=', $id)->paginate(10);
-        return response()->json([$address], 200);
+        $address = AddressModel::where('id', '=', $id)->first();
+        return response()->json(['list' => $address], 200);
     }
 
     public function store(Request $request)
@@ -83,11 +93,11 @@ class AddressController extends Controller
         if ($data) {
             return response()->json(['INSERT SUKSES'], 200);
         } else {
-            return response()->json(['INSERT GAGAL'], 201);
+            return response()->json(['INSERT GAGAL'], 200);
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         // $this->validate($request,[
         //     'id_user'=>'required',
@@ -97,7 +107,7 @@ class AddressController extends Controller
         //     'email'=>'required',
         //     'tipe_user'=>'required'
         // ]);
-
+        
         $update = [
             'id_user' => $request->input('id_user'),
             'nama' => $request->input('nama'),
@@ -113,7 +123,7 @@ class AddressController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
             'modified_by' => $request->input('modified_by')
         ];
-        $data = AddressModel::where('id', $id)->update($update);
+        $data = AddressModel::where('id', $request->input('id'))->update($update);
         if ($data) {
             return response()->json(['UPDATE SUKSES'], 200);
         } else {
@@ -127,7 +137,7 @@ class AddressController extends Controller
         if ($query) {
             return response()->json(['DELETE SUKSES'], 200);
         } else {
-            return response()->json(['DELETE GAGAL'], 201);
+            return response()->json(['DELETE GAGAL'], 200);
         }
     }
 }
