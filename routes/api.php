@@ -28,11 +28,11 @@ Route::get('listkotanegara', 'API\KotaController@index');
 Route::post('getkota', 'API\KotaController@getKota');
 Route::post('getkotabyid', 'API\KotaController@getDataById');
 Route::post('insertkota', 'API\KotaController@store');
-Route::post('kotaselect2', 'API\KotaController@select2');
+Route::get('kotaselect2', 'API\KotaController@select2');
 Route::post('updatekota/{id}', 'API\KotaController@update');
 Route::post('deletekota/{id}', 'API\KotaController@destroy');
 ## negara
-Route::post('negaraselect2', 'API\NegaraController@select2');
+Route::get('negaraselect2', 'API\NegaraController@select2');
 Route::post('listnegara', 'API\NegaraController@index');
 Route::post('insertnegara', 'API\NegaraController@store');
 Route::post('updatenegara/{id}', 'API\NegaraController@update');
