@@ -15,6 +15,7 @@
  use App\Models\TrackingModel;
  use Illuminate\Http\Request;
  use App\Http\Controllers\Controller;
+ use Illuminate\Support\Facades\DB;
  class OrderController extends Controller
 {
       /**
@@ -57,9 +58,7 @@
         
         $id = $request->input('q');
 
-        $data['order'] = OrderModel::where('id', 'like', '%' . $id . '%')->first();
-        $data['rel_item'] = RelitemModel::where('id_order', 'like', '%' . $id . '%')->get();
-        $data['rel_addons'] = ReladdonsModel::where('id_order', 'like', '%' . $id . '%')->get();
+        $data['order'] = OrderModel::select('id as id',DB::raw('CONCAT(id) AS text'),'pengirim_email')->where('id', 'like', '%' . $id . '%')->get();
 
         return response()->json([$data], 200);
     }
