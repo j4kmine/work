@@ -30,7 +30,7 @@
         return response()->json([$order], 200);
     }
 
-    public function getOrderById(Request $request,$id)
+    public function getOrderById(Request $request,$id,$status)
     {   
         // $this->validate($request, [
         //     'id' => 'required'      
@@ -42,7 +42,13 @@
         $where2 = array('id_order' => $id);
         $data['rel_item'] = RelitemModel::where($where2)->get();
         $data['rel_addons'] = ReladdonsModel::where($where2)->get();
-        $data['tracking'] = TrackingModel::where($where2)->get();
+        $where3 = array('status' => $status);
+        $data['tracking'] = TrackingModel::where($where2)->where($where3)->get();
+
+        $data['order']->date_create = date('d F Y', strtotime($data['order']->created_at ));
+        $data['order']->date_updated = date('d F Y', strtotime($data['order']->updated_at ));
+        $data['order']->date_order = date('d F Y', strtotime($data['order']->tanggal_order ));
+        $data['order']->date_sent = date('d F Y', strtotime($data['order']->tanggal_kirim ));
 
         return response()->json([$data], 200);
     }

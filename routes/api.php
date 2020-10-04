@@ -84,7 +84,7 @@ Route::post('updateasuransi/{id}', 'API\AsuransiController@update');
 Route::post('deleteasuransi/{id}', 'API\AsuransiController@destroy');
 ## order
 Route::get('listallorder', 'API\OrderController@listAllOrder');
-Route::get('getorderbyid/{id}', 'API\OrderController@getOrderById');
+Route::get('getorderbyid/{id}/{status}', 'API\OrderController@getOrderById');
 Route::post('orderselect2', 'API\OrderController@select2');
 Route::post('insertorder', 'API\OrderController@store');
 Route::post('updateorder/{id}', 'API\OrderController@update');
