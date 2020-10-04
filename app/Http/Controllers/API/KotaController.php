@@ -32,6 +32,16 @@
                       
         return response()->json([$kotaQuery], 200);
     }
+    public function select2(Request $request)
+    {
+        $nama = $request->input('q');
+     
+        $kotaQuery = KotaModel::select('id as id', 'nama as text')  
+                        ->where('nama', 'like', '%' . $nama . '%')
+                        ->paginate(10);
+                      
+        return response()->json([$kotaQuery], 200);
+    }
    
     public function getKota(Request $request)
     {
