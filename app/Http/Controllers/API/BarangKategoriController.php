@@ -1,48 +1,46 @@
 <?php
- 
- namespace App\Http\Controllers\API;
- 
- use App\Models\ItemModel;
- use Illuminate\Http\Request;
- use App\Http\Controllers\Controller;
- class ItemController extends Controller
+
+namespace App\Http\Controllers\API;
+
+use App\Models\BarangKategoriModel;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class BarangKategoriController extends Controller
 {
-      /**
+    /**
      * Handles Registration Request
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-
-    public function getItemById(Request $request)
+    public function index(Request $request)
     {
-   
+
         // $this->validate($request, [
         //     'title' => 'required'
-           
+
         // ]);
 
-        $id = $request->id;
-
-        $item = ItemModel::where('id', '=', $id)->paginate(10);
-        return response()->json([$item], 200);
+        $title = $request->title;
+        $data = BarangKategoriModel::where('title', 'LIKE', '%' . $title . '%')->paginate(10);
+        return response()->json([$data], 200);
     }
 
     public function store(Request $request)
     {
         // $this->validate($request,[
         //     'title'=>'required',
-        //     'id_barang_Package'=>'required'
+        //     'id_barang_kategori'=>'required'
         // ]);
 
-        $Fob = new ItemModel([
+        $barangKategori = new BarangKategoriModel([
             'title' => $request->input('title'),
-            'harga' => $request->input('harga'),
-            'kategori' => $request->input('kategori'),
-            'is_tampil' => $request->input('is_tampil'),
-            'created_at' => date('Y-m-d H:i:s')
+            'is_aktif' => $request->input('is_aktif'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_by' => $request->input('created_by')
         ]);
-        $data = $Fob->save();
+        $data = $barangKategori->save();
 
         if ($data) {
             return response()->json(['INSERT SUKSES'], 200);
@@ -55,18 +53,17 @@
     {
         // $this->validate($request,[
         //     'title'=>'required',
-        //     'id_barang_Package'=>'required',
+        //     'id_barang_kategori'=>'required',
         //     'is_aktif'=>'required'
         // ]);
 
         $update = [
-            'title' => $request->title, 
-            'harga' => $request->harga,
-            'kategori' => $request->kategori,
-            'is_tampil' => $request->is_tampil,
-            'updated_at' => date('Y-m-d H:i:s')
+            'title' => $request->title,
+            'is_aktif' => $request->is_aktif,
+            'updated_at' => date('Y-m-d H:i:s'),
+            'updated_by' => $request->updated_by
         ];
-        $data = ItemModel::where('id', $id)->update($update);
+        $data = BarangKategoriModel::where('id', $id)->update($update);
         if ($data) {
             return response()->json(['UPDATE SUKSES'], 200);
         } else {
@@ -76,7 +73,7 @@
 
     public function destroy($id)
     {
-        $data = ItemModel::where('id', $id)->delete();
+        $data = BarangKategoriModel::where('id', $id)->delete();
         if ($data) {
             return response()->json(['DELETE SUKSES'], 200);
         } else {

@@ -50,12 +50,36 @@ Route::post('authregistercompany', 'API\UsersController@registercompany');
 Route::post('aktivasi', 'API\UsersController@aktivasi');
 ## item
 Route::post('getitembyid', 'API\ItemController@getItemById');
+Route::post('insertitem', 'API\ItemController@store');
+Route::post('updateitem/{id}', 'API\ItemController@update');
+Route::post('deleteitem/{id}', 'API\ItemController@destroy');
 ## barang jenis
 Route::post('getbarangjenisbybarangkategori', 'API\BarangJenisController@getDataByBarangKategori');
 Route::post('getbarangjenisbyid', 'API\BarangJenisController@getDataById');
+Route::post('insertbarangjenis', 'API\BarangJenisController@store');
+Route::post('updatebarangjenis/{id}', 'API\BarangJenisController@update');
+Route::post('deletebarangjenis/{id}', 'API\BarangJenisController@destroy');
+## barang kategori
+Route::post('listbarangkategori', 'API\BarangKategoriController@index');
+Route::post('insertbarangkategori', 'API\BarangKategoriController@store');
+Route::post('updatebarangkategori/{id}', 'API\BarangKategoriController@update');
+Route::post('deletebarangkategori/{id}', 'API\BarangKategoriController@destroy');
+## barang package
+Route::post('listbarangpackage', 'API\BarangPackageController@index');
+Route::post('insertbarangpackage', 'API\BarangPackageController@store');
+Route::post('updatebarangpackage/{id}', 'API\BarangPackageController@update');
+Route::post('deletebarangpackage/{id}', 'API\BarangPackageController@destroy');
+## fob
+Route::post('listfob', 'API\FobController@index');
+Route::post('insertfob', 'API\FobController@store');
+Route::post('updatefob/{id}', 'API\FobController@update');
+Route::post('deletefob/{id}', 'API\FobController@destroy');
 ## asuransi
 Route::post('getasuransibybarangjenis', 'API\AsuransiController@getDataByBarangJenis');
 Route::post('getasuransibyid', 'API\AsuransiController@getDataById');
+Route::post('insertasuransi', 'API\AsuransiController@store');
+Route::post('updateasuransi/{id}', 'API\AsuransiController@update');
+Route::post('deleteasuransi/{id}', 'API\AsuransiController@destroy');
 ## order
 Route::get('listallorder', 'API\OrderController@listAllOrder');
 Route::post('getorderbyid', 'API\OrderController@getOrderById');

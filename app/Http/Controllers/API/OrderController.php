@@ -224,7 +224,7 @@
 
             return response()->json(['response' => $data,'message' => 'INSERT SUKSES'], 200);
         } else {
-            return response()->json(['response' => $data,'message' => 'INSERT GAGAL'], 200);
+            return response()->json(['response' => $data,'message' => 'INSERT GAGAL'], 201);
         }
     }
 
@@ -492,7 +492,7 @@
 
             return response()->json(['response' => $query,'message' => 'UPDATE SUKSES'], 200);
         } else {
-            return response()->json(['response' => $query,'message' => 'UPDATE GAGAL'], 200);
+            return response()->json(['response' => $query,'message' => 'UPDATE GAGAL'], 201);
         }
     }
 
@@ -506,7 +506,7 @@
     
             return response()->json(['response' => $query,'message' => 'DELETE SUKSES'], 200);
         } else {
-            return response()->json(['response' => $query,'message' => 'DELETE GAGAL'], 200);
+            return response()->json(['response' => $query,'message' => 'DELETE GAGAL'], 201);
         }
     }
 }

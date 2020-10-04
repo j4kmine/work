@@ -50,7 +50,7 @@ class AddressController extends Controller
         $id = $request->id;
 
         $address = AddressModel::where('id', '=', $id)->paginate(10);
-        return response()->json(['list' => $address], 200);
+        return response()->json([$address], 200);
     }
 
     public function store(Request $request)
@@ -83,7 +83,7 @@ class AddressController extends Controller
         if ($data) {
             return response()->json(['INSERT SUKSES'], 200);
         } else {
-            return response()->json(['INSERT GAGAL'], 200);
+            return response()->json(['INSERT GAGAL'], 201);
         }
     }
 
@@ -117,7 +117,7 @@ class AddressController extends Controller
         if ($data) {
             return response()->json(['UPDATE SUKSES'], 200);
         } else {
-            return response()->json(['UPDATE GAGAL'], 200);
+            return response()->json(['UPDATE GAGAL'], 201);
         }
     }
 
@@ -127,7 +127,7 @@ class AddressController extends Controller
         if ($query) {
             return response()->json(['DELETE SUKSES'], 200);
         } else {
-            return response()->json(['DELETE GAGAL'], 200);
+            return response()->json(['DELETE GAGAL'], 201);
         }
     }
 }

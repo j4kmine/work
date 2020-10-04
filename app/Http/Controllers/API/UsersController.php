@@ -186,7 +186,7 @@ class UsersController extends Controller
         if($data){
             return response()->json(['status_query' => $data, 'message' => 'AKTIVASI SUKSES'], 200);
         } else {
-            return response()->json(['status_query' => $data, 'message' => 'AKTIVASI GAGAL'], 200);
+            return response()->json(['status_query' => $data, 'message' => 'AKTIVASI GAGAL'], 201);
         }
     }
 }

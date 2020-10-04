@@ -174,9 +174,9 @@
                                 dataType: "json",
                                 success: function(data){
                                     // console.log(this);
-                                    // console.log(data.list.data[0]);
-                                    $("#title"+numbers).val(data.list.data[0].title);
-                                    $("#harga_satuan"+numbers).val(data.list.data[0].harga);
+                                    // console.log(data);
+                                    $("#title"+numbers).val(data[0].data[0].title);
+                                    $("#harga_satuan"+numbers).val(data[0].data[0].harga);
                                     $("table#addons-table").on("change", 'select[name^="id_item"],input[name^="namaid"], input[name^="title"], input[name^="jumlah"], input[name^="satuan"], input[name^="harga_satuan"], input[name^="harga_total"]', function (event) {
                                         // console.log(this);
                                         var jumlah = +$(this).closest("tr").find('input[name^="jumlah"]').val();
@@ -274,7 +274,7 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    var listdata = data.list.data;
+                                    var listdata = data[0].data;
                                     // console.log(listdata);
                                     $.each( listdata, function( key, value ) {
                                         $("#pengirim_negaras").val(value.id_negara).trigger('change');
@@ -297,8 +297,8 @@
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
                                             success: function(data){
-                                                // console.log(data.list.data);
-                                                var listdata = data.list.data;
+                                                // console.log(data[0].data);
+                                                var listdata = data[0].data;
 
                                                 $.each( listdata, function( key, value ) {
                                                     $('#pengirim_kota').val(value.nama);
@@ -334,7 +334,7 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    var listdata = data.list.data;
+                                    var listdata = data[0].data;
                                     // console.log(listdata);
                                     $.each( listdata, function( key, value ) {
                                         $("#penerima_negaras").val(value.id_negara).trigger('change');
@@ -357,8 +357,8 @@
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
                                             success: function(data){
-                                                // console.log(data.list.data);
-                                                var listdata = data.list.data;
+                                                // console.log(data[0].data);
+                                                var listdata = data[0].data;
 
                                                 $.each( listdata, function( key, value ) {
                                                     $('#penerima_kota').val(value.nama);
@@ -490,8 +490,8 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    // console.log(data.list.data);
-                                    var listdata = data.list.data;
+                                    // console.log(data[0].data);
+                                    var listdata = data[0].data;
                                     $.each( listdata, function( key, value ) {
                                       $('#pengirims_choose_address').append("<option value='"+value.id+"'>"+value.alamat+"</option>")
                                     });
@@ -517,8 +517,8 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    // console.log(data.list.data);
-                                    var listdata = data.list.data;
+                                    // console.log(data[0].data);
+                                    var listdata = data[0].data;
                                     $.each( listdata, function( key, value ) {
                                       $('#penerimas_choose_address').append("<option value='"+value.id+"'>"+value.alamat+"</option>")
                                     });
@@ -581,8 +581,8 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function(data){
-                                // console.log(data.list.data);
-                                var listdata = data.list.data;
+                                // console.log(data[0].data);
+                                var listdata = data[0].data;
 
                                 var newOptions = {};
                                 $.each( listdata, function( key, value ) {
@@ -609,8 +609,8 @@
                                     contentType: "application/json; charset=utf-8",
                                     dataType: "json",
                                     success: function(data){
-                                        // console.log(data.list.data);
-                                        var listdata = data.list.data;
+                                        // console.log(data[0].data);
+                                        var listdata = data[0].data;
 
                                         var newOptions = {};
                                         $.each( listdata, function( key, value ) {
@@ -648,8 +648,8 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    // console.log(data.list.data);
-                                    var listdata = data.list.data;
+                                    // console.log(data[0].data);
+                                    var listdata = data[0].data;
 
                                     var newOptions = {};
                                     $.each( listdata, function( key, value ) {
@@ -675,8 +675,8 @@
                                         contentType: "application/json; charset=utf-8",
                                         dataType: "json",
                                         success: function(data){
-                                            // console.log(data.list.data);
-                                            var listdata = data.list.data;
+                                            // console.log(data[0].data);
+                                            var listdata = data[0].data;
 
                                             var newOptions = {};
                                             $.each( listdata, function( key, value ) {
@@ -715,8 +715,8 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function(data){
-                                    // console.log(data.list.data);
-                                    var listdata = data.list.data;
+                                    // console.log(data[0].data);
+                                    var listdata = data[0].data;
 
                                     var newOptions = {};
                                     $.each( listdata, function( key, value ) {

@@ -62,8 +62,7 @@ class ItemController extends Controller
             'harga' => $request->get('harga'),
             'kategori' => $request->get('kategori'),
             'is_tampil' => $request->get('is_tampil'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'created_at' => date('Y-m-d H:i:s')
         ]);
         $data = $item->save();
        

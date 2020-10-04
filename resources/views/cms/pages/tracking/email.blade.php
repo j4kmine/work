@@ -645,7 +645,7 @@
                                 <td class="bg_light email-section" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;background-color:#fafafa;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;padding-top:2.5em;padding-bottom:2.5em;padding-right:2.5em;padding-left:2.5em;">
                                     <div class="heading-section" style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;text-align:center;padding-top:0;padding-bottom:0;padding-right:30px;padding-left:30px;">
                                         <h2 style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;font-family:'Montserrat', sans-serif;color:#000000;font-size:22px;margin-top:0;line-height:1.4;font-weight:400;">Hubungi Kami</h2>
-                                        <p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">Lorem Ipsum</p>
+                                        <p style="-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">xportir.cs@gmail.com</p>
                                     </div>
                                 </td>
                             </tr>

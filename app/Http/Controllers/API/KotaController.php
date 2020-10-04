@@ -113,7 +113,7 @@
         if ($data) {
             return response()->json(['response' => $data,'message' => 'INSERT SUKSES'], 200);
         } else {
-            return response()->json(['response' => $data,'message' => 'INSERT GAGAL'], 200);
+            return response()->json(['response' => $data,'message' => 'INSERT GAGAL'], 201);
         }
     }
 
@@ -166,7 +166,7 @@
         if ($data) {
             return response()->json(['response' => $data,'message' => 'UPDATE SUKSES'], 200);
         } else {
-            return response()->json(['response' => $data,'message' => 'UPDATE GAGAL'], 200);
+            return response()->json(['response' => $data,'message' => 'UPDATE GAGAL'], 201);
         } 
     }
 
@@ -176,7 +176,7 @@
         if ($data) {
             return response()->json(['response' => $data,'message' => 'DELETE SUKSES'], 200);
         } else {
-            return response()->json(['response' => $data,'message' => 'DELETE GAGAL'], 200);
+            return response()->json(['response' => $data,'message' => 'DELETE GAGAL'], 201);
         } 
     }
 }
