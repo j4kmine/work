@@ -58,16 +58,19 @@ Route::post('deleteitem/{id}', 'API\ItemController@destroy');
 ## barang jenis
 Route::post('getbarangjenisbybarangkategori', 'API\BarangJenisController@getDataByBarangKategori');
 Route::post('getbarangjenisbyid', 'API\BarangJenisController@getDataById');
+Route::post('barangjenisselect2', 'API\BarangJenisController@select2');
 Route::post('insertbarangjenis', 'API\BarangJenisController@store');
 Route::post('updatebarangjenis/{id}', 'API\BarangJenisController@update');
 Route::post('deletebarangjenis/{id}', 'API\BarangJenisController@destroy');
 ## barang kategori
 Route::post('listbarangkategori', 'API\BarangKategoriController@index');
+Route::post('barangkategoriselect2', 'API\BarangKategoriController@select2');
 Route::post('insertbarangkategori', 'API\BarangKategoriController@store');
 Route::post('updatebarangkategori/{id}', 'API\BarangKategoriController@update');
 Route::post('deletebarangkategori/{id}', 'API\BarangKategoriController@destroy');
 ## barang package
 Route::post('listbarangpackage', 'API\BarangPackageController@index');
+Route::post('barangpackageselect2', 'API\BarangPackageController@select2');
 Route::post('insertbarangpackage', 'API\BarangPackageController@store');
 Route::post('updatebarangpackage/{id}', 'API\BarangPackageController@update');
 Route::post('deletebarangpackage/{id}', 'API\BarangPackageController@destroy');

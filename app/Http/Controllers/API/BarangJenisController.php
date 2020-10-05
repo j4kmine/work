@@ -27,6 +27,22 @@
         return response()->json([$data], 200);
     }
 
+    public function select2(Request $request)
+    {
+   
+        // $this->validate($request, [
+        //     'id_barang_kategori' => 'required'
+        // ]);
+
+        $title = $request->input('q');
+
+        $data = BarangJenisModel::select('id as id', 'title as text')  
+                        ->where('title', 'like', '%' . $title . '%')
+                        ->paginate(10);
+
+        return response()->json([$data], 200);
+    }
+
     public function getDataById(Request $request)
     {
    
