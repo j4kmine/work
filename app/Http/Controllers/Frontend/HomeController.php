@@ -11,7 +11,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $blogs = BlogModel::where('url_youtube','=',"")->paginate(3);
+        $blogs = BlogModel::where('url_youtube','=',NULL)->paginate(3);
+        // echo "<pre>";var_dump($blogs);exit();
         foreach($blogs as $key=>$value){
             if($value->id_image != 0){
                 $where = array('id' => $value->id_image);
@@ -20,5 +21,23 @@ class HomeController extends Controller
         }
       
         return view('frontend.pages.home.index', compact('blogs'));
+    }
+
+    public function layanan()
+    { 
+        $blogs = BlogModel::where('url_youtube','=',NULL)->paginate(3);
+        return view('frontend.pages.layanan.index', compact('blogs'));
+    }
+
+    public function ketentuan()
+    { 
+        $blogs = BlogModel::where('url_youtube','=',NULL)->paginate(3);
+        return view('frontend.pages.ketentuan.index', compact('blogs'));
+    }
+
+    public function panduan()
+    { 
+        $blogs = BlogModel::where('url_youtube','=',NULL)->paginate(3);
+        return view('frontend.pages.panduan.index', compact('blogs'));
     }
 }

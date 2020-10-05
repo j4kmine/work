@@ -25,6 +25,9 @@ Route::get('userregister', 'Frontend\UserController@register')->name('userregist
 Route::post('registeruser', 'Frontend\UserController@registeruser')->name('registeruser');
 Route::get('userreset', 'Frontend\UserController@resetpassword')->name('userreset');
 Route::get('userforgot', 'Frontend\UserController@forgotpassword')->name('userforgot');
+Route::get('layanan', 'Frontend\HomeController@layanan')->name('layanan');
+Route::get('ketentuan', 'Frontend\HomeController@ketentuan')->name('ketentuan');
+Route::get('panduan', 'Frontend\HomeController@panduan')->name('panduan');
 Route::get('read/{slug}/{id}', 'Frontend\BlogController@read')->name('read');
 Route::post('loginuser', 'Frontend\UserController@loginuser')->name('loginuser');
 Route::get('login', 'Auth\LoginController@login')->name('login');

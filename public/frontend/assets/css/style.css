@@ -9,8 +9,17 @@ body {
     height: auto;
 }
 
+.navbar {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
 .logo-top {
-    max-width: 150px;
+    max-width: 200px;
+}
+
+.logo-bottom {
+    width: 80%;
 }
 
 .navbar-nav>li {
@@ -43,6 +52,7 @@ body {
     border: 1.1px solid #bebebe;
     border-radius: 8px;
     padding: 30px 51px;
+    background-color: #FFFFFF;
 }
 
 .tab-lacak {
@@ -67,8 +77,8 @@ button.btn.btn-cek:focus {
 button.btn.btn-cek,
 button.btn.btn-cek:hover,
 button.btn.btn-cek:active {
-    background: #C2262D;
-    border: 1px solid #C2262D;
+    background: #D45700;
+    border: 1px solid #D45700;
     color: #fff;
     padding: 3px 15px;
 }
@@ -208,11 +218,20 @@ div#s2id_id_daerah {
 
 footer {
     padding: 50px 20px;
-    background: #C2262D;
+}
+
+footer {
+    background-image: url('../images/footer_bg.png');
 }
 
 ul.list-footer {
-    margin-bottom: 30px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    padding-left: 0px;
+}
+
+img.img-responsive.playstore {
+    margin-top: -15px;
 }
 
 footer h4,
@@ -239,18 +258,18 @@ ul.social li {
 }
 
 ul.social li i {
-    color: #C2262D;
-    padding: 8px 10px;
-    background: #fff;
-    font-size: 16px;
+    color: #fff;
+    padding: 8px 0px;
+    font-size: 26px;
+    font-weight: bold;
 }
 
 i.fa.fa-pinterest-p {
-    padding: 8px 13px;
+    padding: 8px 0px;
 }
 
 i.fa.fa-facebook-f {
-    padding: 8px 15px;
+    padding: 8px 0px;
 }
 
 
@@ -439,9 +458,9 @@ i.fa.fa-facebook-f {
 
 .group-addon-resi {
     padding: 0px;
-    background-color: #C2262D;
-    border: 1px solid #C2262D;
-    color: #C2262D;
+    background-color: #D45700;
+    border: 1px solid #D45700;
+    color: #D45700;
     border-radius: 4px;
 }
 
@@ -453,12 +472,14 @@ i.fa.fa-facebook-f {
 }
 
 .widget-resi {
+    margin-top: 40px;
     margin-bottom: 40px;
 }
 
 .body-resi {
     padding: 30px 20px;
     border: 1px solid #ddd;
+    background-color: white;
 }
 
 .body-resi ul li {
@@ -495,16 +516,17 @@ i.fa.fa-facebook-f {
 }
 
 .footer-resi a {
-    color: #BF202F;
+    color: #2082BF;
     text-decoration: none;
 }
 
 .panel-table {
     display: none;
+    background-color: white;
 }
 
 .panel-table thead {
-    background: #C2262D;
+    background: #D45700;
     color: #fff;
     font-size: 20px;
 }
