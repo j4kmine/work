@@ -32,6 +32,7 @@
         $dtd = false;
         $lower = false;
         $field2 = ""; //nama field
+       
         if ($tipe_pengiriman == 1) {
             if($tipe_delivery == 1){
                
