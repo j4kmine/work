@@ -21,18 +21,18 @@ class TrackingController extends Controller
     public function listing(Request $request)
     {
         $id_order = $request->input('id_order');
-        // $id_user = $request->input('id_user');
+        $id_user = $request->input('id_order');
         $page = $request->input('page');
 
-        $data = TrackingModel::where('id_order','=',$id_order)
-        // ->where('id_user', 'like', '%' . $id_user . '%')
-        ->orderBy('id', 'desc')
-        ->paginate($page);
-        
+        $data = TrackingModel::where('id_order', '=', $id_order)
+            ->where('id_user', '=', $id_user)
+            ->orderBy('id', 'desc')
+            ->paginate($page);
+
         foreach ($data as $key => $value) {
-             $data[$key]->date_create = date('d F Y', strtotime($value->created_at ));
-             $where = array('id' => $id_order);
-             $data[$key]->order =  OrderModel::where($where)->first();
+            $data[$key]->date_create = date('d F Y', strtotime($value->created_at));
+            $where = array('id' => $id_order);
+            $data[$key]->order =  OrderModel::where($where)->first();
         }
         $response = [
             'pagination' => [
@@ -79,9 +79,18 @@ class TrackingController extends Controller
         //     'flag'=>'required',
         //     'status'=>'required'
         // ]);
+        $get = OrderModel::select('id_user')
+            ->where('id', '=', $request->input('id_order'))
+            ->first();
+
+        $id_user = 0;
+        foreach($get as $value) {
+            $id_user = $value->id_user;
+        }
 
         $tracking = new TrackingModel([
             'id_order' => $request->input('id_order'),
+            'id_user' => $id_user,
             'keterangan' => $request->input('keterangan'),
             'flag' => $request->input('flag'),
             'status' => $request->input('status'),
@@ -91,6 +100,7 @@ class TrackingController extends Controller
         if ($data) {
             $data_email['tracking'] = [
                 'id_order' => $request->input('id_order'),
+                'id_user' => $id_user,
                 'keterangan' => $request->input('keterangan'),
                 'flag' => $request->input('flag'),
                 'status' => $request->input('status'),
@@ -129,9 +139,16 @@ class TrackingController extends Controller
         // ];
         // $return = new TrackingEmail($data_email);
         // return response()->json([$return], 200);
-
+        $get = OrderModel::select('id_user')
+            ->where('id', '=', $request->input('id_order'))
+            ->first();
+        $id_user = 0;
+        foreach($get as $value) {
+            $id_user = $value->id_user;
+        }
         $update = [
             'id_order' => $request->input('id_order'),
+            'id_user' => $id_user,
             'keterangan' => $request->input('keterangan'),
             'flag' => $request->input('flag'),
             'status' => $request->input('status'),
@@ -141,6 +158,7 @@ class TrackingController extends Controller
         if ($data) {
             $data_email['tracking'] = [
                 'id_order' => $request->input('id_order'),
+                'id_user' => $id_user,
                 'keterangan' => $request->input('keterangan'),
                 'flag' => $request->input('flag'),
                 'status' => $request->input('status'),

@@ -15,6 +15,6 @@ class TrackingModel extends Model
      */
     protected $table ="tracking";
     protected $fillable = [
-        'id_order','keterangan', 'flag', 'status'
+        'id_order','keterangan', 'flag', 'status', 'id_user'
     ];
 }

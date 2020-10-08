@@ -59,8 +59,16 @@ class TrackingController extends Controller
             'status'=>'required'
         ]);
 
+        $get = OrderModel::select('id_user')
+        ->where('id', '=', $request->input('id_order'))
+        ->first();
+        $id_user = 0;
+        foreach($get as $value) {
+            $id_user = $value->id_user;
+        }
         $tracking = new TrackingModel([
             'id_order' => $request->get('id_order'),
+            'id_user' => $id_user,
             'keterangan' => $request->get('keterangan'),
             'flag' => $request->get('flag'),
             'status' => $request->get('status'),
@@ -70,6 +78,7 @@ class TrackingController extends Controller
         if ($data) {
             $data_email['tracking'] = [
                 'id_order' => $request->get('id_order'),
+                'id_user' => $id_user,
                 'keterangan' => $request->get('keterangan'),
                 'flag' => $request->get('flag'),
                 'status' => $request->get('status'),
@@ -137,8 +146,18 @@ class TrackingController extends Controller
             'status'=>'required'
         ]);
          
+        $get = OrderModel::select('id_user')
+        ->where('id', '=', $request->id_order)
+        ->get();
+
+        $id_user = 0;
+        foreach($get as $value) {
+            $id_user = $value->id_user;
+        }
+            
         $update = [
                     'id_order' => $request->id_order, 
+                    'id_user' => $id_user, 
                     'keterangan' => $request->keterangan,
                     'flag' => $request->flag,
                     'status' => $request->status,
@@ -148,6 +167,7 @@ class TrackingController extends Controller
         if ($data) {
             $data_email['tracking'] = [
                 'id_order' => $request->id_order, 
+                'id_user' => $id_user, 
                 'keterangan' => $request->keterangan,
                 'flag' => $request->flag,
                 'status' => $request->status,
