@@ -62,8 +62,12 @@
         // ]);
         
         $id = $request->input('q');
+        $id_user = $request->input('id_user');
 
-        $data['order'] = OrderModel::select('id as id',DB::raw('CONCAT(id) AS text'),'pengirim_email')->where('id', 'like', '%' . $id . '%')->get();
+        $data['order'] = OrderModel::select('id as id',DB::raw('CONCAT(id) AS text'),'pengirim_email')
+        ->where('id', 'like', '%' . $id . '%')
+        ->where('id_user','=',$id_user)
+        ->get();
 
         return response()->json([$data], 200);
     }

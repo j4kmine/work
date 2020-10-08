@@ -18,16 +18,21 @@ class TrackingController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function listing()
+    public function listing(Request $request)
     {
-        $data = TrackingModel::paginate(10);
+        $id_order = $request->input('id_order');
+        // $id_user = $request->input('id_user');
+        $page = $request->input('page');
+
+        $data = TrackingModel::where('id_order','=',$id_order)
+        // ->where('id_user', 'like', '%' . $id_user . '%')
+        ->orderBy('id', 'desc')
+        ->paginate($page);
+        
         foreach ($data as $key => $value) {
              $data[$key]->date_create = date('d F Y', strtotime($value->created_at ));
-             if(isset($value->id_order) && $value->id_order != 0){
-                  $where = array('id' => $value->id_order );
-                  $data[$key]->order =  OrderModel::where($where)->first();
-
-             }
+             $where = array('id' => $id_order);
+             $data[$key]->order =  OrderModel::where($where)->first();
         }
         $response = [
             'pagination' => [

@@ -15,9 +15,17 @@ class AddressController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function listing()
+    public function listing(Request $request)
     {
-        $data = AddressModel::paginate(10);
+        $keyword = $request->input('keyword');
+        $id_user = $request->input('id_user');
+        $page = $request->input('page');
+
+        $data = AddressModel::where('alamat', 'like', '%' . $keyword . '%')
+        ->where('id_user','=',$id_user)
+        ->orderBy('id', 'desc')
+        ->paginate($page);
+
           $response = [
             'pagination' => [
                 'total' => $data->total(),
