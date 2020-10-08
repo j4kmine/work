@@ -52,6 +52,8 @@ Route::post('authregistercompany', 'API\UsersController@registercompany');
 Route::post('aktivasi', 'API\UsersController@aktivasi');
 ## item
 Route::post('getitembyid', 'API\ItemController@getItemById');
+Route::get('listitem', 'API\ItemController@listing');
+Route::get('itemselect2', 'API\ItemController@select2');
 Route::post('insertitem', 'API\ItemController@store');
 Route::post('updateitem/{id}', 'API\ItemController@update');
 Route::post('deleteitem/{id}', 'API\ItemController@destroy');

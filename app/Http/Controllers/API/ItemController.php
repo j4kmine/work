@@ -1,13 +1,15 @@
 <?php
- 
- namespace App\Http\Controllers\API;
- 
- use App\Models\ItemModel;
- use Illuminate\Http\Request;
- use App\Http\Controllers\Controller;
- class ItemController extends Controller
+
+namespace App\Http\Controllers\API;
+
+use App\Models\ItemModel;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+
+class ItemController extends Controller
 {
-      /**
+    /**
      * Handles Registration Request
      *
      * @param Request $request
@@ -16,16 +18,61 @@
 
     public function getItemById(Request $request)
     {
-   
+
         // $this->validate($request, [
         //     'title' => 'required'
-           
+
         // ]);
 
         $id = $request->id;
 
         $item = ItemModel::where('id', '=', $id)->paginate(10);
         return response()->json([$item], 200);
+    }
+
+    public function listing(Request $request)
+    {
+        $kategori = $request->input('kategori');
+        $page = $request->input('page');
+
+        $data = ItemModel::where('kategori', '=', $kategori)
+            ->orderBy('id', 'desc')
+            ->paginate($page);
+
+        foreach ($data as $key => $value) {
+            $data[$key]->date_create = date('d F Y', strtotime($value->created_at));
+        }
+        $response = [
+            'pagination' => [
+                'total' => $data->total(),
+                'per_page' => $data->perPage(),
+                'current_page' => $data->currentPage(),
+                'last_page' => $data->lastPage(),
+                'from' => $data->firstItem(),
+                'to' => $data->lastItem()
+            ],
+            'data' => $data
+        ];
+        return response()->json([$response], 200);
+    }
+
+    public function select2(Request $request)
+    {
+
+        // $this->validate($request, [
+        //     'id_kota' => 'required'
+
+        // ]);
+
+        $title = $request->input('q');
+        $kategori = $request->input('kategori');
+
+        $data = ItemModel::select('id as id', 'title as text', 'kategori')  
+            ->where('title', 'like', '%' . $title . '%')
+            ->where('kategori', '=', $kategori)
+            ->get();
+
+        return response()->json([$data], 200);
     }
 
     public function store(Request $request)
@@ -60,7 +107,7 @@
         // ]);
 
         $update = [
-            'title' => $request->title, 
+            'title' => $request->title,
             'harga' => $request->harga,
             'kategori' => $request->kategori,
             'is_tampil' => $request->is_tampil,
