@@ -80,11 +80,16 @@
                             {{ session()->get('error') }}
                     </div>
                 @endif
+                @if(session()->has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session()->get('success') }}
+                </div>
+                @endif
                 <h3>Welcome Back</h3>
                 <p>Hey Soldier welcome back signin now there is lot of
                     new stuff waiting
                     for you</p>
-                <form action="" method="POST">
+                <form action="{{ route('dologin') }}" method="POST">
                     <div class="form-group has-icon"><i class="icon-envelope-o"></i>
                         <input type="text" name="email" class="form-control form-control-lg"
                                placeholder="Email Address">
@@ -95,6 +100,8 @@
                     </div>
                     <input type="submit" class="btn btn-primary btn-lg btn-block" value="Log In">
                 </form>
+                <br/>
+                <a class="btn btn-danger btn-lg btn-block" href="{{url('register')}}">Register</a>
             </div>
         </div>
         <div class="col-md-9  height-full blue accent-3 align-self-center text-center d-none d-md-block" data-bg-repeat="false"

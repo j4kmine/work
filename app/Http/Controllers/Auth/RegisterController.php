@@ -6,7 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use App\Models\UserModel;
+use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
     /*
@@ -60,6 +61,46 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+    public function register(){
+        return view('cms/pages/users/register');
+    }
+    public function doRegisterCms(Request $request){
+        $this->validate($request,[
+            'name'=>'required',
+            'lastname'=>'required',
+            'email'=>'required|email',
+            'tos'=>'required',
+            'address'=>'required',
+            'datebirth'=>'required',
+            'membershiptype'=>'required',
+            'membershifee'=>'required',
+            'ccnumber'=>'required',
+            'cctype'=>'required',
+            'gender'=>'required',
+            'ccexpiremonth'=>'required',
+            'ccexpireyear'=>'required',
+            'password'=>'required|min:6|confirmed'
+        ]);
+    
+      
+        $contact = new UserModel([
+            'name' => $request->get('name'),
+            'lastname' => $request->get('lastname'),
+            'password' => bcrypt($request->get('password')),
+            'email' => $request->get('email'),
+            'address' => $request->get('address'),
+            'membershiptype' => $request->get('membershiptype'),
+            'membershifee' => $request->get('membershifee'),
+            'ccnumber' => $request->get('ccnumber'),
+            'datebirth' => date('Y-m-d H:i:s', strtotime($request->get('datebirth'))),
+            'cctype' => $request->get('cctype'),
+            'gender' => $request->get('gender'),
+            'ccexpiremonth' => $request->get('ccexpiremonth'),
+            'ccexpireyear' => $request->get('ccexpireyear')
+        ]);
+        $data = $contact->save();
+        return redirect('/login')->with('success', 'Success Input Data');
+    }
     protected function create(array $data)
     {
         return User::create([

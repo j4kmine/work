@@ -50,15 +50,16 @@ class LoginController extends Controller
         return redirect('login'); // redirection to login screen
     }
     public function doLoginCms(Request $request){
+        
         $this->validate($request,[
             'email'=>'required',
             'password'=>'required|min:6'
         ]);
         $userdata = array(
             'email' => $request->get('email'),
-            'password' => $request->get('password'),
-            'role' => 1
+            'password' => $request->get('password')
         );
+  
         if (Auth::attempt($userdata)){
                 return redirect('/');
         }else{

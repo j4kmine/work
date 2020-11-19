@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNamaToAddress extends Migration
+class AlterTableUserGender extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddNamaToAddress extends Migration
      */
     public function up()
     {
-        Schema::table('address', function (Blueprint $table) {
-            $table->string('nama')->nullable();
+        //
+        Schema::table('users', function($table) {
+            $table->integer('gender')->nullable();
+          
         });
     }
 
@@ -25,8 +27,6 @@ class AddNamaToAddress extends Migration
      */
     public function down()
     {
-        Schema::table('address', function (Blueprint $table) {
-            $table->dropColumn('nama');
-        });
+        //
     }
 }
